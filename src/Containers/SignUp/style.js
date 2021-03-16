@@ -24,6 +24,7 @@ export const Wrapper = styled.div`
     .signup-back-button {
       right: 0;
       top: 0;
+      z-index: 10;
     }
   }
 `;

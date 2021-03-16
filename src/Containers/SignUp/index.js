@@ -10,7 +10,6 @@ import {
   Input,
   FormFeedback,
   InputGroup,
-  InputGroupText,
   Button,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,7 +35,7 @@ const SignUp = (props) => {
           <FontAwesomeIcon icon={faTimes} className="text-white" size="3x" />
         </Button>
         <Row className="justify-content-center min-vh-100 align-items-center">
-          <Col className="shadow-lg p-4 bg-white" md={4}>
+          <Col className="shadow-lg p-4 bg-white" md={5} lg={4}>
             <div className="d-flex justify-content-center my-2">
               <h1 className="px-3 py-2 d-inline-block text-white signup-title">
                 Sign Up
