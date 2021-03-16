@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Wrapper } from "./style";
 
@@ -26,7 +27,9 @@ const Profile = (props) => {
               your guests.
             </p>
             <div className="wrapper-description-button my-3">
-              <Button className="description-button">Sign Up Now</Button>
+              <Button tag={Link} to="signup" className="description-button">
+                Sign Up Now
+              </Button>
             </div>
           </Col>
         </Row>

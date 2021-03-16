@@ -1,5 +1,8 @@
-import { Beranda } from "../Pages";
+import { Home, SignUp } from "../Pages";
 
-const routes = [{ path: "/", component: Beranda }];
+const routes = [
+  { path: "/signup", component: SignUp },
+  { path: "/", component: Home },
+];
 
 export default routes;

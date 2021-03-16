@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Profile } from "../../Containers";
 
-const Beranda = (props) => {
+const Home = (props) => {
   return (
     <Layout>
       <Profile />
@@ -9,4 +9,4 @@ const Beranda = (props) => {
   );
 };
 
-export default Beranda;
+export default Home;

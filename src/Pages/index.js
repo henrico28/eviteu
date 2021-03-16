@@ -1,2 +1,3 @@
 // Export Pages Here
-export { default as Beranda } from "./Beranda";
+export { default as Home } from "./Home";
+export { default as SignUp } from "./SignUp";
