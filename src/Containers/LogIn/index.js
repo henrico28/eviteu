@@ -56,7 +56,7 @@ const LogIn = (props) => {
                     placeholder="Enter Password"
                   />
                   <Button
-                    className="login-button login-button-hide"
+                    className="btn-indigo login-button-hide"
                     onClick={changeType}
                   >
                     {type === "password" ? (
@@ -71,7 +71,7 @@ const LogIn = (props) => {
                 Don't have an account? <Link to="signup">Sign Up</Link>
               </div>
               <div className="d-flex justify-content-center my-2">
-                <Button className="login-button">Log In</Button>
+                <Button className="btn-indigo">Log In</Button>
               </div>
               <div className="mt-3 text-center my-2">
                 <small className="text-muted">Copyright © EViteU 2021</small>

@@ -8,17 +8,8 @@ export const Wrapper = styled.div`
       background-color: var(--indigo);
     }
 
-    .signup-button {
-      color: var(--white);
-      background-color: var(--indigo);
-
-      &.button-hide {
-        width: 45px;
-      }
-    }
-
-    .signup-button:hover {
-      background-color: #570ecc;
+    .signup-button-hide {
+      width: 45px;
     }
 
     .signup-back-button {

@@ -34,11 +34,6 @@ export const Wrapper = styled.div`
         .wrapper-description-button {
           display: flex;
           justify-content: center;
-
-          .description-button {
-            color: white;
-            background-color: var(--indigo);
-          }
         }
       }
 
@@ -52,16 +47,6 @@ export const Wrapper = styled.div`
           color: var(--indigo);
           font-size: 18px;
         }
-        .wrapper-description-button {
-          .description-button {
-            color: white;
-            background-color: var(--indigo);
-          }
-        }
-      }
-
-      .description-button:hover {
-        background-color: #570ecc;
       }
     }
   }

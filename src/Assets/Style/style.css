@@ -1,0 +1,9 @@
+/* BUTTON */
+.btn-indigo {
+  color: var(--white);
+  background-color: var(--indigo);
+}
+
+.btn-indigo:hover {
+  background-color: #570ecc;
+}

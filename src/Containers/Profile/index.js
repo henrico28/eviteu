@@ -27,7 +27,7 @@ const Profile = (props) => {
               your guests.
             </p>
             <div className="wrapper-description-button my-3">
-              <Button tag={Link} to="signup" className="description-button">
+              <Button tag={Link} to="signup" className="btn-indigo">
                 Sign Up Now
               </Button>
             </div>

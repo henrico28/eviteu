@@ -22,17 +22,8 @@ export const Wrapper = styled.div`
       }
     }
 
-    .login-button {
-      color: var(--white);
-      background-color: var(--indigo);
-
-      &.login-button-hide {
-        width: 45px;
-      }
-    }
-
-    .login-button:hover {
-      background-color: #570ecc;
+    .login-button-hide {
+      width: 45px;
     }
 
     .login-back-button {
