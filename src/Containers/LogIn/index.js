@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
 import {
   Container,
   Row,
@@ -10,17 +11,74 @@ import {
   Input,
   InputGroup,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "./style";
+import { Loading } from "../../Components";
+import useUserData from "../../LocalStorage/useUserData";
 
 const LogIn = (props) => {
+  const history = useHistory();
   const [type, setType] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [messageTitle, setMessageTitle] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+  const { setUserData } = useUserData();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    await axios
+      .post("http://localhost:8000/login", {
+        userEmail: email,
+        userPassword: password,
+      })
+      .then((res) => {
+        let data = {
+          email: email,
+          accessToken: res.data.accessToken,
+          refreshToken: res.data.refreshToken,
+        };
+        setUserData(data);
+        history.push("manage-event/event-list");
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+        setMessageTitle("Error");
+        setMessageContent(err.response.data.error);
+        setModal(true);
+        setLoading(false);
+      });
+  };
+
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
 
   const changeType = () => {
     setType(type === "password" ? "text" : "password");
   };
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Wrapper>
       <Container className="wrapper-login" fluid>
@@ -42,10 +100,17 @@ const LogIn = (props) => {
             </h1>
           </Col>
           <Col md={{ size: 5, offset: 1 }}>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <FormGroup>
                 <Label for="email">E-mail</Label>
-                <Input type="text" name="email" placeholder="Enter Email" />
+                <Input
+                  type="text"
+                  name="email"
+                  value={email}
+                  onChange={handleEmail}
+                  placeholder="Enter Email"
+                  required
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
@@ -53,7 +118,10 @@ const LogIn = (props) => {
                   <Input
                     type={type}
                     name="password"
+                    value={password}
+                    onChange={handlePassword}
                     placeholder="Enter Password"
+                    required
                   />
                   <Button
                     className="btn-indigo login-button-hide"
@@ -80,6 +148,15 @@ const LogIn = (props) => {
           </Col>
         </Row>
       </Container>
+      <Modal isOpen={modal} toggle={toggleModal} centered={true}>
+        <ModalHeader toggle={toggleModal}>{messageTitle}</ModalHeader>
+        <ModalBody>{messageContent}</ModalBody>
+        <ModalFooter>
+          <Button className="btn-indigo" onClick={toggleModal}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </Wrapper>
   );
 };

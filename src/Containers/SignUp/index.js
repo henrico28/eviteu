@@ -45,7 +45,7 @@ const SignUp = (props) => {
         userPassword: password,
         phoneNumber: phonenumber,
       })
-      .then((data) => {
+      .then((res) => {
         setName("");
         setEmail("");
         setPassword("");
@@ -57,7 +57,7 @@ const SignUp = (props) => {
       .catch((err) => {
         setError(true);
         setMessageTitle("Error");
-        setMessageContent(err.response.data.message);
+        setMessageContent(err.response.data.error);
         setModal(true);
       });
     setLoading(false);
