@@ -4,12 +4,12 @@ import { Wrapper } from "./style";
 import useUserData from "../../LocalStorage/useUserData";
 
 const EventList = (props) => {
-  const { userData, setUserData } = useUserData();
+  const { userData } = useUserData();
 
   return (
     <Wrapper>
       <Container className="wrapper-event-list" fluid>
-        {userData.email}
+        {userData.name}
       </Container>
     </Wrapper>
   );

@@ -44,6 +44,7 @@ const LogIn = (props) => {
       .then((res) => {
         let data = {
           email: email,
+          name: res.data.name,
           accessToken: res.data.accessToken,
           refreshToken: res.data.refreshToken,
         };
@@ -104,7 +105,7 @@ const LogIn = (props) => {
               <FormGroup>
                 <Label for="email">E-mail</Label>
                 <Input
-                  type="text"
+                  type="email"
                   name="email"
                   value={email}
                   onChange={handleEmail}
