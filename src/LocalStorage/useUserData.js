@@ -14,8 +14,14 @@ export default function useUserData() {
     setUserData(userData);
   };
 
+  const removeUserData = () => {
+    localStorage.removeItem("userData");
+    setUserData(null);
+  };
+
   return {
     setUserData: saveUserData,
+    removeUserData: removeUserData,
     userData,
   };
 }

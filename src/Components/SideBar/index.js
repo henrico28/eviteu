@@ -69,7 +69,14 @@ const SideBar = (props) => {
               </NavLink>
             </NavItem>
             <div className="wrapper-sidebar-logout mt-5">
-              <Button className="btn-indigo sidebar-logout">Log Out</Button>
+              <Button
+                className="btn-indigo sidebar-logout"
+                onClick={() => {
+                  props.handleLogOut();
+                }}
+              >
+                Log Out
+              </Button>
             </div>
           </div>
         </Nav>

@@ -2,7 +2,15 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   .wrapper-dashboard-header {
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
+
+    .header-button-logout {
+      color: #6c757d;
+    }
+
+    .header-button-logout:hover {
+      color: #5a6268;
+    }
 
     @media only screen and (max-width: 600px) {
       .wrapper-header-button {

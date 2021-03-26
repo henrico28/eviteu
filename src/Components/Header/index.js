@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Button, Row, Col, Label } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,21 +29,24 @@ const Header = (props) => {
             />
           </Button>
         </Col>
-        <Col md={8} className="wrapper-header-user mt-1">
+        <Col md={8} className="wrapper-header-user ">
           <Row>
-            <Col xs={5}>
-              <Label className="text-muted text-truncate">
+            <Col xs={5} className="align-self-center">
+              <Label className="text-muted text-truncate mt-2 mb-0">
                 <span className="font-weight-bold">Logged in as:</span>{" "}
                 {props.userName}
               </Label>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Link
-                className="text-muted text-decoration-none mr-2"
-                to="/Login"
+              <Button
+                color="link"
+                className="mr-2 text-decoration-none header-button-logout"
+                onClick={() => {
+                  props.handleLogOut();
+                }}
               >
                 <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
-              </Link>
+              </Button>
             </Col>
           </Row>
         </Col>
