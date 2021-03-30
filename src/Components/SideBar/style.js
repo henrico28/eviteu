@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
     #sidebar {
       width: 100%;
       position: relative;
-      background: var(--white);
+      background: var(--dark);
       color: var(--indigo);
       margin-right: 0.7em;
       .content {
@@ -53,7 +53,7 @@ export const Wrapper = styled.div`
           }
         }
         .sidebar-menu {
-          color: var(--indigo);
+          color: var(--white);
           font-size: 16px;
         }
         .sidebar-menu:hover {
@@ -62,7 +62,7 @@ export const Wrapper = styled.div`
         }
         .sidebar-menu.active {
           background-color: var(--indigo);
-          border-left: 5px solid var(--dark);
+          border-left: 5px solid var(--purple);
         }
       }
     }

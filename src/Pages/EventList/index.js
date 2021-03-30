@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { LayoutManageEvent, EventList } from "../../Containers";
 
 const EventListPage = (props) => {
-  let [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
+  const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
+  const [data, setData] = useState([]);
 
   return (
     <LayoutManageEvent
@@ -11,7 +12,7 @@ const EventListPage = (props) => {
       page={"event-list"}
       title={"Event"}
     >
-      <EventList />
+      <EventList data={data} />
     </LayoutManageEvent>
   );
 };

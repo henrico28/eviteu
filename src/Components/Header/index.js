@@ -32,7 +32,7 @@ const Header = (props) => {
         <Col md={8} className="wrapper-header-user ">
           <Row>
             <Col xs={5} className="align-self-center">
-              <Label className="text-muted text-truncate mt-2 mb-0">
+              <Label className="text-muted text-truncate mt-1 mb-0">
                 <span className="font-weight-bold">Logged in as:</span>{" "}
                 {props.userName}
               </Label>
