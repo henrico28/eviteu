@@ -19,7 +19,7 @@ const EventList = (props) => {
     if (props.data.length === 0) {
       return (
         <tr>
-          <td colspan="6" className="text-center">
+          <td colSpan="6" className="text-center">
             No event present.
           </td>
         </tr>
@@ -41,7 +41,9 @@ const EventList = (props) => {
           </Row>
           <Row>
             <Col md={2}>
-              <Button className="btn-indigo">Add Event</Button>
+              <Button className="btn-indigo" tag={Link} to="add-event">
+                Add Event
+              </Button>
             </Col>
             <Col
               md={{ size: 6, offset: 4 }}
@@ -50,7 +52,7 @@ const EventList = (props) => {
               <Label className="mt-1 mr-2 text-muted">Search :</Label>
               <InputGroup className="event-list-search-input">
                 <Input type="text" name="search" placeholder="Search here" />
-                <Button className="btn-indigo" tag={Link} to="add-event">
+                <Button className="btn-indigo">
                   <FontAwesomeIcon icon={faTimesCircle} />
                 </Button>
               </InputGroup>

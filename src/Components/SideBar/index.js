@@ -18,7 +18,7 @@ const SideBar = (props) => {
                 className={`text-white sidebar-menu p-3 ${
                   props.page === "event-list" ? "active" : ""
                 }`}
-                to="/event-list"
+                to="event-list"
                 tag={Link}
               >
                 Event
@@ -29,7 +29,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "guest-list" ? "active" : ""
                 }`}
-                to="/guest-list"
+                to="guest-list"
                 tag={Link}
               >
                 Guest
@@ -40,7 +40,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "committee-list" ? "active" : ""
                 }`}
-                to="/committee-list"
+                to="committee-list"
                 tag={Link}
               >
                 Committee
@@ -51,7 +51,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "annuncement-list" ? "active" : ""
                 }`}
-                to="/annuncement-list"
+                to="annuncement-list"
                 tag={Link}
               >
                 Announcement
@@ -62,7 +62,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "lottery" ? "active" : ""
                 }`}
-                to="/lottery"
+                to="lottery"
                 tag={Link}
               >
                 Lottery
