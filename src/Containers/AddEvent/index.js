@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
 import {
   Container,
   Row,
@@ -14,11 +12,8 @@ import {
   FormFeedback,
 } from "reactstrap";
 import { Wrapper } from "./style";
-import useUserData from "../../LocalStorage/useUserData";
 
 const AddEvent = (props) => {
-  const history = useHistory();
-  const { userData, setUserData, removeUserData } = useUserData();
   const [type, setType] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -33,56 +28,9 @@ const AddEvent = (props) => {
   const [max, setMax] = useState("");
   const [preview, setPreview] = useState(null);
   const [invalid, setInvalid] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const fetchData = async (data) => {
-    setError(false);
-    setIsOpen(false);
-    setMessage("");
-    await axios
-      .post("http://localhost:8000/event/create", data, {
-        headers: { authorization: `Bearer ${userData.accessToken}` },
-      })
-      .then((res) => {
-        setIsOpen(true);
-        setMessage(res.data.message);
-        window.scrollTo(0, 0);
-      })
-      .catch((err) => {
-        if (
-          err.response.data.error &&
-          err.response.data.error === "jwt expired"
-        ) {
-          axios
-            .post("http://localhost:8000/token", {
-              userEmail: userData.email,
-              refreshToken: userData.refreshToken,
-            })
-            .then((res) => {
-              let tmp = userData;
-              tmp.accessToken = res.data.accessToken;
-              setUserData(tmp);
-              fetchData(data);
-            })
-            .catch((err) => {
-              removeUserData();
-              props.setLoading(false);
-              history.push("../..");
-            });
-        } else {
-          setIsOpen(true);
-          setError(true);
-          let errorMessage = "Error";
-          if (err.response.data.error) {
-            errorMessage = err.response.data.error;
-          }
-          setMessage(errorMessage);
-          window.scrollTo(0, 0);
-        }
-      });
-  };
+  const [isOpen] = useState(props.alert);
+  const [error] = useState(props.error);
+  const [message] = useState(props.message);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -99,7 +47,8 @@ const AddEvent = (props) => {
     data.append("eventAccent", accentColor);
     data.append("max", max);
     data.append("idType", type);
-    fetchData(data);
+    props.addEvent(data);
+    window.scrollTo(0, 0);
   };
 
   const handleType = (event) => {
