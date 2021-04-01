@@ -10,7 +10,7 @@ const AddEventPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState([]);
-  const { userData, setUserData } = useUserData();
+  const { userData, setUserData, removeUserData } = useUserData();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,9 +42,11 @@ const AddEventPage = (props) => {
                 fetchData();
               })
               .catch((err) => {
+                removeUserData();
                 history.push("../..");
               });
           } else {
+            removeUserData();
             history.push("../..");
           }
         });
@@ -64,7 +66,7 @@ const AddEventPage = (props) => {
       page={"event-list"}
       title={"Event / Add Event"}
     >
-      <AddEvent type={type} />
+      <AddEvent type={type} setLoading={setLoading} />
     </LayoutManageEvent>
   );
 };

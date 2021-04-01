@@ -9,5 +9,11 @@ export const Wrapper = styled.div`
     .add-event-title {
       font-size: 16px;
     }
+
+    .add-event-preview-image {
+      width: auto;
+      height: 150px;
+      border: solid 1px black;
+    }
   }
 `;
