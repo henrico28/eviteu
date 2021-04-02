@@ -48,7 +48,6 @@ const AddEvent = (props) => {
     data.append("max", max);
     data.append("idType", type);
     props.addEvent(data);
-    window.scrollTo(0, 0);
   };
 
   const handleType = (event) => {
