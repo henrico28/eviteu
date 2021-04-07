@@ -11,6 +11,7 @@ import {
   Alert,
   FormFeedback,
 } from "reactstrap";
+import { LocationSearch } from "../../Components";
 import { Wrapper } from "./style";
 
 const AddEvent = (props) => {
@@ -21,13 +22,14 @@ const AddEvent = (props) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
+  const [latlng, setLatLng] = useState([]);
   const [highlightImage, setHighlightImage] = useState([]);
   const [primaryColor, setPrimaryColor] = useState("#000000");
   const [secondaryColor, setSecondaryColor] = useState("#000000");
   const [accentColor, setAccentColor] = useState("#000000");
   const [max, setMax] = useState("");
   const [preview, setPreview] = useState(null);
-  const [invalid, setInvalid] = useState("");
+  const [invalidImage, setInvalidImage] = useState("");
   const [isOpen] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
@@ -42,6 +44,7 @@ const AddEvent = (props) => {
     data.append("date", date);
     data.append("time", time);
     data.append("location", location);
+    data.append("coordinates", latlng.lat + "&" + latlng.lng);
     data.append("eventPrimary", primaryColor);
     data.append("eventSecondary", secondaryColor);
     data.append("eventAccent", accentColor);
@@ -74,21 +77,17 @@ const AddEvent = (props) => {
     setTime(event.target.value);
   };
 
-  const handleLocation = (event) => {
-    setLocation(event.target.value);
-  };
-
   const handleHighlightImage = (event) => {
-    setInvalid("");
+    setInvalidImage("");
     const tmpImage = event.target.files[0];
     if (!tmpImage) {
-      setInvalid("No image uploaded.");
+      setInvalidImage("No image uploaded.");
       setPreview(null);
     } else if (tmpImage.type.match(/\.(jpg|jpeg|png)$/)) {
-      setInvalid("Invalid image type.");
+      setInvalidImage("Invalid image type.");
       setPreview(null);
     } else if (tmpImage.size > 5000000) {
-      setInvalid("Image size exceeds allowed limit.");
+      setInvalidImage("Image size exceeds allowed limit.");
       setPreview(null);
     } else {
       setHighlightImage(tmpImage);
@@ -215,13 +214,10 @@ const AddEvent = (props) => {
                 </Row>
                 <FormGroup>
                   <Label for="eventLocation">Location</Label>
-                  <Input
-                    type="text"
-                    name="eventLocation"
-                    value={location}
-                    onChange={handleLocation}
-                    placeholder="Enter event location"
-                    required
+                  <LocationSearch
+                    address={location}
+                    setAddress={setLocation}
+                    setLatLng={setLatLng}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -231,7 +227,7 @@ const AddEvent = (props) => {
                     name="eventHighlightImage"
                     onChange={handleHighlightImage}
                     required
-                    invalid={invalid !== ""}
+                    invalid={invalidImage !== ""}
                   />
                   <img
                     src={preview}
@@ -240,7 +236,7 @@ const AddEvent = (props) => {
                     }`}
                     alt="preview"
                   />
-                  <FormFeedback>{invalid}</FormFeedback>
+                  <FormFeedback>{invalidImage}</FormFeedback>
                 </FormGroup>
                 <Row className="justify-content-between" form>
                   <Col md={3}>
@@ -295,7 +291,7 @@ const AddEvent = (props) => {
                   />
                 </FormGroup>
                 <div className="d-flex my-3 justify-content-center">
-                  <Button className="btn-indigo" disabled={invalid !== ""}>
+                  <Button className="btn-indigo" disabled={invalidImage !== ""}>
                     Create
                   </Button>
                 </div>
