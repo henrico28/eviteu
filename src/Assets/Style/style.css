@@ -4,6 +4,6 @@
   background-color: var(--indigo);
 }
 
-.btn-indigo:not(.disabled):hover {
+.btn-indigo:not(.disabled):not(.active):hover {
   background-color: #570ecc;
 }
