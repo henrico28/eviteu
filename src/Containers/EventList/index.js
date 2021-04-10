@@ -9,6 +9,10 @@ import {
   Input,
   Label,
   Table,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +20,7 @@ import {
   faTimesCircle,
   faInfoCircle,
   faEdit,
+  faSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
@@ -26,6 +31,8 @@ const EventList = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
+  const [detail, setDetail] = useState([]);
+  const [modal, setModal] = useState(false);
 
   // Get Current Data
   const indexOfLastPage = currentPage * dataPerPage;
@@ -50,6 +57,15 @@ const EventList = (props) => {
     setCurrentPage(1);
     setData(originalData);
     setNumberOfData(originalData.length);
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  const handleDetail = (eventDetail) => {
+    toggleModal();
+    setDetail(eventDetail);
   };
 
   const renderEvent = () => {
@@ -98,7 +114,13 @@ const EventList = (props) => {
                       : event.totalGuestRsvp)}
                 </td>
                 <td className="align-middle">
-                  <Button color="primary" className="mx-1">
+                  <Button
+                    color="primary"
+                    className="mx-1"
+                    onClick={() => {
+                      handleDetail(event);
+                    }}
+                  >
                     <FontAwesomeIcon icon={faInfoCircle} /> Detail
                   </Button>
                   <Button color="warning" className="mx-1">
@@ -180,6 +202,95 @@ const EventList = (props) => {
             />
           </div>
         </Container>
+        <Modal isOpen={modal} toggle={toggleModal} centered={true}>
+          <ModalHeader toggle={toggleModal}>
+            <span className="font-weight-bold">Event Detail:</span>{" "}
+            {detail.eventTitle}
+          </ModalHeader>
+          <ModalBody>
+            <div>
+              <span className="font-weight-bold">Title:</span>{" "}
+              {detail.eventTitle}
+            </div>
+            <div>
+              <span className="font-weight-bold">Subtitle:</span>{" "}
+              {detail.eventSubTitle}
+            </div>
+            <div>
+              <span className="font-weight-bold">Description:</span>{" "}
+              {detail.eventDescription}
+            </div>
+            <div>
+              <Container fluid>
+                <Row>
+                  <span className="font-weight-bold">Highlight Image:</span>
+                </Row>
+                <Row>
+                  <img
+                    src={`http://localhost:8000/images/${detail.eventHighlight}`}
+                    alt="Event highlight"
+                    className="border"
+                    width="auto"
+                    height="150px"
+                  />
+                </Row>
+              </Container>
+            </div>
+            <div>
+              <span className="font-weight-bold">Date:</span>{" "}
+              {detail.date && detail.date.substring(0, 10)}
+            </div>
+            <div>
+              <span className="font-weight-bold">Time:</span> {detail.time}
+            </div>
+            <div>
+              <span className="font-weight-bold">Location:</span>{" "}
+              {detail.location}
+            </div>
+            <div>
+              <div>
+                <span className="font-weight-bold">Primary Color:</span>{" "}
+                {detail.eventPrimary}
+                <FontAwesomeIcon
+                  icon={faSquare}
+                  style={{ color: `${detail.eventPrimary}` }}
+                  className="mx-1"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <span className="font-weight-bold">Secondary Color:</span>{" "}
+                {detail.eventSecondary}
+                <FontAwesomeIcon
+                  icon={faSquare}
+                  style={{ color: `${detail.eventSecondary}` }}
+                  className="mx-1"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <span className="font-weight-bold">Accent Color:</span>{" "}
+                {detail.eventAccent}
+                <FontAwesomeIcon
+                  icon={faSquare}
+                  style={{ color: `${detail.eventAccent}` }}
+                  className="mx-1"
+                />
+              </div>
+            </div>
+            <div>
+              <span className="font-weight-bold">Max People per Guest:</span>{" "}
+              {detail.max}
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button className="btn-indigo" onClick={toggleModal}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </Wrapper>
   );
