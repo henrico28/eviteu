@@ -18,7 +18,7 @@ const SideBar = (props) => {
                 className={`text-white sidebar-menu p-3 ${
                   props.page === "event-list" ? "active" : ""
                 }`}
-                to="event-list"
+                to="../../manage-event/event-list"
                 tag={Link}
               >
                 Event

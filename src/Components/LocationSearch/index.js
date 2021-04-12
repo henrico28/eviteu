@@ -9,7 +9,7 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "./style";
 
 const LocationSearch = (props) => {
-  const [address, setAddress] = useState(props.address);
+  const [address, setAddress] = useState(props.address ? props.address : "");
 
   const handleAddress = (address) => {
     setAddress(address);

@@ -14,33 +14,43 @@ import {
 import { LocationSearch } from "../../Components";
 import { Wrapper } from "./style";
 
-const AddEvent = (props) => {
-  const [type, setType] = useState("");
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [latlng, setLatLng] = useState([]);
-  const [highlightImage, setHighlightImage] = useState([]);
-  const [primaryColor, setPrimaryColor] = useState("#000000");
-  const [secondaryColor, setSecondaryColor] = useState("#000000");
-  const [accentColor, setAccentColor] = useState("#000000");
-  const [max, setMax] = useState("");
+const EditEvent = (props) => {
+  const tmpLatLng = props.data.coordinates
+    ? props.data.coordinates.split("&")
+    : "";
+  const tmpDate = props.data.date ? props.data.date.substring(0, 10) : "";
+  const [type, setType] = useState(props.data.idType);
+  const [title, setTitle] = useState(props.data.eventTitle);
+  const [subtitle, setSubtitle] = useState(props.data.eventSubTitle);
+  const [description, setDescription] = useState(props.data.eventDescription);
+  const [date, setDate] = useState(tmpDate);
+  const [time, setTime] = useState(props.data.time);
+  const [location, setLocation] = useState(props.data.location);
+  const [latlng, setLatLng] = useState({
+    lat: tmpLatLng[0],
+    lng: tmpLatLng[1],
+  });
+  const [highlightImage, setHighlightImage] = useState(null);
+  const [primaryColor, setPrimaryColor] = useState(props.data.eventPrimary);
+  const [secondaryColor, setSecondaryColor] = useState(
+    props.data.eventSecondary
+  );
+  const [accentColor, setAccentColor] = useState(props.data.eventAccent);
+  const [max, setMax] = useState(props.data.max);
   const [preview, setPreview] = useState(null);
   const [invalidImage, setInvalidImage] = useState("");
   const [isOpen] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData();
+    data.append("idEvent", props.data.idEvent);
     data.append("eventTitle", title);
     data.append("eventSubTitle", subtitle);
     data.append("eventDescription", description);
-    data.append("eventHighlight", highlightImage);
+    data.append("eventHighlightName", props.data.eventHighlight);
     data.append("date", date);
     data.append("time", time);
     data.append("location", location);
@@ -50,7 +60,8 @@ const AddEvent = (props) => {
     data.append("eventAccent", accentColor);
     data.append("max", max);
     data.append("idType", type);
-    props.addEvent(data);
+    data.append("eventHighlight", highlightImage);
+    await props.updateEvent(data);
   };
 
   const handleType = (event) => {
@@ -113,12 +124,12 @@ const AddEvent = (props) => {
 
   return (
     <Wrapper>
-      <div className="wrapper-add-event">
+      <div className="wrapper-edit-event">
         <Container fluid>
           <Row>
             <Col>
-              <h4 className="text-muted pt-2 font-weight-light add-event-title">
-                Add Event
+              <h4 className="text-muted pt-2 font-weight-light edit-event-title">
+                Edit Event
               </h4>
               <hr className="mt-0" />
             </Col>
@@ -139,15 +150,17 @@ const AddEvent = (props) => {
                   <Input
                     type="select"
                     name="eventType"
-                    defaultValue={type === "" ? "Select event type" : type}
+                    defaultValue={type}
                     onChange={handleType}
                     required
                   >
-                    <option defaultChecked disabled>
-                      Select event type
-                    </option>
+                    <option disabled>Select event type</option>
                     {props.type.map((type) => (
-                      <option key={type.idType} value={type.idType}>
+                      <option
+                        key={type.idType}
+                        value={type.idType}
+                        checked={type.idType === type}
+                      >
                         {type.typeName}
                       </option>
                     ))}
@@ -226,13 +239,17 @@ const AddEvent = (props) => {
                     type="file"
                     name="eventHighlightImage"
                     onChange={handleHighlightImage}
-                    required
                     invalid={invalidImage !== ""}
                   />
                   <img
-                    src={preview}
-                    className={`add-event-preview-image mt-3 ${
-                      preview === null ? "d-none" : ""
+                    key={Date.now()}
+                    src={
+                      props.data.eventHighlight && preview === null
+                        ? `http://localhost:8000/images/${props.data.eventHighlight}`
+                        : preview
+                    }
+                    className={`edit-event-preview-image mt-3 ${
+                      invalidImage !== "" ? "d-none" : ""
                     }`}
                     alt="preview"
                   />
@@ -292,7 +309,7 @@ const AddEvent = (props) => {
                 </FormGroup>
                 <div className="d-flex my-3 justify-content-center">
                   <Button className="btn-indigo" disabled={invalidImage !== ""}>
-                    Create
+                    Update
                   </Button>
                 </div>
               </Form>
@@ -304,4 +321,4 @@ const AddEvent = (props) => {
   );
 };
 
-export default AddEvent;
+export default EditEvent;

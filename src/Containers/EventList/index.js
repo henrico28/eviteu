@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Container,
   Row,
@@ -25,6 +25,7 @@ import {
 import { Pagination } from "../../Components";
 
 const EventList = (props) => {
+  const history = useHistory();
   const [originalData] = useState(props.data);
   const [data, setData] = useState(props.data);
   const [search, setSearch] = useState("");
@@ -123,7 +124,13 @@ const EventList = (props) => {
                   >
                     <FontAwesomeIcon icon={faInfoCircle} /> Detail
                   </Button>
-                  <Button color="warning" className="mx-1">
+                  <Button
+                    color="warning"
+                    className="mx-1"
+                    onClick={() => {
+                      history.push(`edit-event/${event.idEvent}`);
+                    }}
+                  >
                     <FontAwesomeIcon icon={faEdit} />
                     Edit
                   </Button>
