@@ -242,10 +242,11 @@ const EditEvent = (props) => {
                     invalid={invalidImage !== ""}
                   />
                   <img
-                    key={Date.now()}
                     src={
                       props.data.eventHighlight && preview === null
-                        ? `http://localhost:8000/images/${props.data.eventHighlight}`
+                        ? `http://localhost:8000/images/${
+                            props.data.eventHighlight
+                          }?${Date.now()}`
                         : preview
                     }
                     className={`edit-event-preview-image mt-3 ${
