@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Alert,
 } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +22,7 @@ import {
   faInfoCircle,
   faEdit,
   faSquare,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
@@ -33,7 +35,12 @@ const EventList = (props) => {
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
   const [detail, setDetail] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [detailModal, setDetailModal] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [confirmation, setConfirmation] = useState("");
+  const [alert, setAlert] = useState(props.alert);
+  const [error] = useState(props.error);
+  const [message] = useState(props.message);
 
   // Get Current Data
   const indexOfLastPage = currentPage * dataPerPage;
@@ -60,13 +67,22 @@ const EventList = (props) => {
     setNumberOfData(originalData.length);
   };
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleDetailModal = () => {
+    setDetailModal(!detailModal);
+  };
+
+  const toggleConfirmationModal = () => {
+    setConfirmationModal(!confirmationModal);
   };
 
   const handleDetail = (eventDetail) => {
-    toggleModal();
+    toggleDetailModal();
     setDetail(eventDetail);
+  };
+
+  const handleConfirmation = (event) => {
+    toggleConfirmationModal();
+    setConfirmation(event);
   };
 
   const renderEvent = () => {
@@ -134,6 +150,15 @@ const EventList = (props) => {
                     <FontAwesomeIcon icon={faEdit} />
                     Edit
                   </Button>
+                  <Button
+                    color="danger"
+                    className="mx-1"
+                    onClick={() => {
+                      handleConfirmation(event);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </Button>
                 </td>
               </tr>
             );
@@ -155,6 +180,17 @@ const EventList = (props) => {
               <hr className="mt-0" />
             </Col>
           </Row>
+          <div>
+            <Alert
+              isOpen={alert}
+              toggle={() => {
+                setAlert(false);
+              }}
+              color={error === false ? "success" : "danger"}
+            >
+              {message}
+            </Alert>
+          </div>
           <Row>
             <Col md={2}>
               <Button className="btn-indigo" tag={Link} to="add-event">
@@ -209,8 +245,8 @@ const EventList = (props) => {
             />
           </div>
         </Container>
-        <Modal isOpen={modal} toggle={toggleModal} centered={true}>
-          <ModalHeader toggle={toggleModal}>
+        <Modal isOpen={detailModal} toggle={toggleDetailModal} centered={true}>
+          <ModalHeader toggle={toggleDetailModal}>
             <span className="font-weight-bold">Event Detail:</span>{" "}
             {detail.eventTitle}
           </ModalHeader>
@@ -293,8 +329,33 @@ const EventList = (props) => {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button className="btn-indigo" onClick={toggleModal}>
+            <Button className="btn-indigo" onClick={toggleDetailModal}>
               Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <Modal
+          isOpen={confirmationModal}
+          toggle={toggleConfirmationModal}
+          centered={true}
+        >
+          <ModalHeader toggle={toggleConfirmationModal}>
+            Confirmation
+          </ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete Event {confirmation.eventTitle}?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn-indigo"
+              onClick={() => {
+                props.deleteEvent(confirmation.idEvent);
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={toggleConfirmationModal} color="danger">
+              No
             </Button>
           </ModalFooter>
         </Modal>

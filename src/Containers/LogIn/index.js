@@ -52,7 +52,6 @@ const LogIn = (props) => {
         history.push("manage-event/event-list");
       })
       .catch((err) => {
-        console.log(err.response.status);
         setMessageTitle("Error");
         setMessageContent(err.response.data.error);
         setModal(true);

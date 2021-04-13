@@ -10,6 +10,9 @@ const EventListPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [alert, setAlert] = useState(false);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
   const { userData, setUserData, removeUserData } = useUserData();
 
   useEffect(() => {
@@ -55,6 +58,57 @@ const EventListPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const deleteEvent = async (event) => {
+    setError(false);
+    setAlert(false);
+    setMessage("");
+    setLoading(true);
+    await axios
+      .delete("http://localhost:8000/event/delete", {
+        headers: {
+          authorization: `Bearer ${userData.accessToken}`,
+        },
+        data: { idEvent: event },
+      })
+      .then((res) => {
+        setAlert(true);
+        setMessage(res.data.message);
+        setData(res.data.result);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (
+          err.response.data.error &&
+          err.response.data.error === "jwt expired"
+        ) {
+          axios
+            .post("http://localhost:8000/token", {
+              userEmail: userData.email,
+              refreshToken: userData.refreshToken,
+            })
+            .then((res) => {
+              let tmp = userData;
+              tmp.accessToken = res.data.accessToken;
+              setUserData(tmp);
+              deleteEvent();
+            })
+            .catch((err) => {
+              removeUserData();
+              history.push("../..");
+            });
+        } else {
+          setAlert(true);
+          setError(true);
+          let errorMessage = "Error";
+          if (err.response.data.error) {
+            errorMessage = err.response.data.error;
+          }
+          setMessage(errorMessage);
+          setLoading(false);
+        }
+      });
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -66,7 +120,13 @@ const EventListPage = (props) => {
       page={"event-list"}
       title={"Event"}
     >
-      <EventList data={data} />
+      <EventList
+        data={data}
+        alert={alert}
+        error={error}
+        message={message}
+        deleteEvent={deleteEvent}
+      />
     </LayoutManageEvent>
   );
 };
