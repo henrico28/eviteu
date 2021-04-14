@@ -34,7 +34,7 @@ const LayoutManageEvent = (props) => {
   }
 
   return (
-    <Wrapper style={{ overflowX: "hidden", overflowY: "hidden" }}>
+    <Wrapper style={{ overflow: "hidden" }}>
       <SideBar isOpen={props.isOpen} page={props.page} handleLogOut={logOut} />
       <div className={`right ${props.isOpen ? "active" : ""}`}>
         <Container fluid className="min-vh-100 p-0">

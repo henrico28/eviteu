@@ -23,6 +23,7 @@ import {
   faEdit,
   faSquare,
   faTrash,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
@@ -150,6 +151,12 @@ const EventList = (props) => {
                     <FontAwesomeIcon icon={faEdit} />
                     Edit
                   </Button>
+                  <Button color="info" className="mx-1 my-1">
+                    <FontAwesomeIcon icon={faUsers} /> Guest
+                  </Button>
+                  <Button color="success" className="mx-1">
+                    <FontAwesomeIcon icon={faUsers} /> Committee
+                  </Button>
                   <Button
                     color="danger"
                     className="mx-1"
@@ -221,7 +228,7 @@ const EventList = (props) => {
             </Col>
           </Row>
           <Row className="justify-content-center px-3 pt-3 pb-1">
-            <Table className="border" striped>
+            <Table className="border table-responsive-sm" striped>
               <thead>
                 <tr>
                   <th>No.</th>
