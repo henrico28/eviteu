@@ -1,6 +1,7 @@
 /* BUTTON */
 .btn-indigo {
   color: var(--white);
+  border: var(--indigo);
   background-color: var(--indigo);
 }
 

@@ -1,4 +1,5 @@
 // Export Pages Here
+export { default as NotFound } from "./NotFound";
 export { default as Layout } from "./_layout";
 export { default as LayoutManageEvent } from "./_layoutManageEvent";
 export { default as Profile } from "./Profile";

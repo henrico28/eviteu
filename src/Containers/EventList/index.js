@@ -14,16 +14,17 @@ import {
   ModalBody,
   ModalFooter,
   Alert,
+  UncontrolledButtonDropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
 } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTimesCircle,
-  faInfoCircle,
-  faEdit,
   faSquare,
-  faTrash,
-  faUsers,
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
@@ -101,14 +102,12 @@ const EventList = (props) => {
           {data.slice(indexOfFirstPage, indexOfLastPage).map((event, idx) => {
             return (
               <tr key={idx}>
-                <td width="3%" className="align-middle">
-                  {idx + 1}
-                </td>
+                <td className="align-middle">{idx + 1}</td>
                 <td className="align-middle">{event.eventTitle}</td>
-                <td width="15%" className="align-middle">
+                <td className="align-middle">
                   {event.date.substring(0, 10) + " " + event.time}
                 </td>
-                <td width="10%" className="align-middle">
+                <td className="align-middle">
                   {(event.totalGuestRsvp === null
                     ? "0"
                     : event.totalGuestRsvp) +
@@ -117,12 +116,12 @@ const EventList = (props) => {
                       ? "0"
                       : event.totalGuestInvited)}
                 </td>
-                <td width="10%" className="align-middle">
+                <td className="align-middle">
                   {event.totalGuestBrought === null
                     ? "0"
                     : event.totalGuestBrought}
                 </td>
-                <td width="15%" className="align-middle">
+                <td className="align-middle">
                   {(event.totalGuestAttended === null
                     ? "0"
                     : event.totalGuestAttended) +
@@ -132,40 +131,37 @@ const EventList = (props) => {
                       : event.totalGuestRsvp)}
                 </td>
                 <td className="align-middle">
-                  <Button
-                    color="primary"
-                    className="mx-1"
-                    onClick={() => {
-                      handleDetail(event);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} /> Detail
-                  </Button>
-                  <Button
-                    color="warning"
-                    className="mx-1"
-                    onClick={() => {
-                      history.push(`edit-event/${event.idEvent}`);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faEdit} />
-                    Edit
-                  </Button>
-                  <Button color="info" className="mx-1 my-1">
-                    <FontAwesomeIcon icon={faUsers} /> Guest
-                  </Button>
-                  <Button color="success" className="mx-1">
-                    <FontAwesomeIcon icon={faUsers} /> Committee
-                  </Button>
-                  <Button
-                    color="danger"
-                    className="mx-1"
-                    onClick={() => {
-                      handleConfirmation(event);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </Button>
+                  <UncontrolledButtonDropdown>
+                    <DropdownToggle className="btn-indigo" caret>
+                      <FontAwesomeIcon icon={faCog} /> Actions
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem>Guest</DropdownItem>
+                      <DropdownItem>Committee</DropdownItem>
+                      <DropdownItem>Announcement</DropdownItem>
+                      <DropdownItem
+                        onClick={() => {
+                          handleDetail(event);
+                        }}
+                      >
+                        Detail
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={() => {
+                          history.push(`edit-event/${event.idEvent}`);
+                        }}
+                      >
+                        Edit
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={() => {
+                          handleConfirmation(event);
+                        }}
+                      >
+                        Delete
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledButtonDropdown>
                 </td>
               </tr>
             );
@@ -231,12 +227,12 @@ const EventList = (props) => {
             <Table className="border table-responsive-sm" striped>
               <thead>
                 <tr>
-                  <th>No.</th>
+                  <th width="3%">No.</th>
                   <th>Event Title</th>
                   <th>Date & Time</th>
-                  <th>Guest RSVP</th>
-                  <th>Total Guest</th>
-                  <th>Guest Attended</th>
+                  <th>RSVP</th>
+                  <th>Participant</th>
+                  <th>Attended</th>
                   <th>Actions</th>
                 </tr>
               </thead>
