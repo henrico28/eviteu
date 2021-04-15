@@ -10,6 +10,7 @@ const EventListPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [committee, setCommitee] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
@@ -109,6 +110,41 @@ const EventListPage = (props) => {
       });
   };
 
+  const committeeEvent = async (event) => {
+    await axios
+      .get(`http://localhost:8000/committee/lists/${event}`, {
+        headers: { authorization: `Bearer ${userData.accessToken}` },
+      })
+      .then((res) => {
+        setCommitee(res.data.result);
+      })
+      .catch((err) => {
+        if (
+          err.response.data.error &&
+          err.response.data.error === "jwt expired"
+        ) {
+          axios
+            .post("http://localhost:8000/token", {
+              userEmail: userData.email,
+              refreshToken: userData.refreshToken,
+            })
+            .then((res) => {
+              let tmp = userData;
+              tmp.accessToken = res.data.accessToken;
+              setUserData(tmp);
+              deleteEvent();
+            })
+            .catch((err) => {
+              committeeEvent();
+              history.push("../..");
+            });
+        } else {
+          removeUserData();
+          history.push("/");
+        }
+      });
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -122,10 +158,12 @@ const EventListPage = (props) => {
     >
       <EventList
         data={data}
+        committee={committee}
         alert={alert}
         error={error}
         message={message}
         deleteEvent={deleteEvent}
+        committeeEvent={committeeEvent}
       />
     </LayoutManageEvent>
   );

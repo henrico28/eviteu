@@ -18,6 +18,7 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
+  Spinner,
 } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,10 +40,13 @@ const EventList = (props) => {
   const [detail, setDetail] = useState([]);
   const [detailModal, setDetailModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [confirmation, setConfirmation] = useState("");
+  const [committeeModal, setCommitteeModal] = useState(false);
+  const [event, setEvent] = useState("");
   const [alert, setAlert] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
+  const [loading, setLoading] = useState(false);
+  console.log(props.committee);
 
   // Get Current Data
   const indexOfLastPage = currentPage * dataPerPage;
@@ -77,14 +81,26 @@ const EventList = (props) => {
     setConfirmationModal(!confirmationModal);
   };
 
-  const handleDetail = (eventDetail) => {
+  const toggleCommitteeModal = () => {
+    setCommitteeModal(!committeeModal);
+  };
+
+  const handleCommittee = (event) => {
+    setLoading(true);
+    props.committeeEvent(event.idEvent);
+    setEvent(event);
+    setCommitteeModal(true);
+    setLoading(false);
+  };
+
+  const handleDetail = (event) => {
     toggleDetailModal();
-    setDetail(eventDetail);
+    setDetail(event);
   };
 
   const handleConfirmation = (event) => {
     toggleConfirmationModal();
-    setConfirmation(event);
+    setEvent(event);
   };
 
   const renderEvent = () => {
@@ -137,7 +153,13 @@ const EventList = (props) => {
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem>Guest</DropdownItem>
-                      <DropdownItem>Committee</DropdownItem>
+                      <DropdownItem
+                        onClick={() => {
+                          handleCommittee(event);
+                        }}
+                      >
+                        Committee
+                      </DropdownItem>
                       <DropdownItem>Announcement</DropdownItem>
                       <DropdownItem
                         onClick={() => {
@@ -346,19 +368,48 @@ const EventList = (props) => {
             Confirmation
           </ModalHeader>
           <ModalBody>
-            Are you sure you want to delete Event {confirmation.eventTitle}?
+            Are you sure you want to delete Event {event.eventTitle}?
           </ModalBody>
           <ModalFooter>
             <Button
               className="btn-indigo"
               onClick={() => {
-                props.deleteEvent(confirmation.idEvent);
+                props.deleteEvent(event.idEvent);
               }}
             >
               Yes
             </Button>
             <Button onClick={toggleConfirmationModal} color="danger">
               No
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <Modal
+          isOpen={committeeModal}
+          toggle={toggleCommitteeModal}
+          centered={true}
+        >
+          <ModalHeader toggle={toggleCommitteeModal}>
+            Committee {event.eventTitle}
+          </ModalHeader>
+          <ModalBody>
+            {loading ? (
+              <div className="d-flex justify-content-center">
+                <Spinner />
+              </div>
+            ) : (
+              <ul>
+                {props.committee &&
+                  props.committee.map((committee) => (
+                    <li key={committee.idCommittee}>{committee.userName}</li>
+                  ))}
+              </ul>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button className="btn-indigo">Assign Committee</Button>
+            <Button onClick={toggleCommitteeModal} color="danger">
+              Close
             </Button>
           </ModalFooter>
         </Modal>
