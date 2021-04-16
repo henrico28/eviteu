@@ -8,4 +8,5 @@ export { default as AddEvent } from "./AddEventPage";
 export { default as EditEvent } from "./EditEventPage";
 export { default as CommitteeList } from "./CommitteeListPage";
 export { default as AddCommittee } from "./AddCommitteePage";
+export { default as EditCommittee } from "./EditCommitteePage";
 export { default as SandBox } from "./SandBox";

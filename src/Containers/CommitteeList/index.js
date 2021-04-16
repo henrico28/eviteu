@@ -95,6 +95,16 @@ const CommitteeList = (props) => {
                         <DropdownItem>
                           {committee.active === 0 ? "Activate" : "Re-Activate"}
                         </DropdownItem>
+                        <DropdownItem
+                          onClick={() => {
+                            history.push(
+                              `edit-committee/${committee.idCommittee}`
+                            );
+                          }}
+                        >
+                          Edit
+                        </DropdownItem>
+                        <DropdownItem>Delete</DropdownItem>
                       </DropdownMenu>
                     </UncontrolledButtonDropdown>
                   </td>

@@ -43,11 +43,11 @@ const CommitteeListPage = (props) => {
               })
               .catch((err) => {
                 removeUserData();
-                history.push("../..");
+                history.push("/");
               });
           } else {
             removeUserData();
-            history.push("../..");
+            history.push("/");
           }
         });
     };

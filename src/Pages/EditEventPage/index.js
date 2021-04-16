@@ -33,11 +33,11 @@ const EditEventPage = (props) => {
           })
           .catch((err) => {
             removeUserData();
-            history.push("../..");
+            history.push("/");
           });
       } else {
         removeUserData();
-        history.push("../..");
+        history.push("/");
       }
     };
 
@@ -51,7 +51,7 @@ const EditEventPage = (props) => {
         })
         .then((res) => {
           if (res.data.length === 0) {
-            history.push("../../404");
+            history.push("/404");
           } else {
             setData(res.data.result[0]);
             axios
@@ -118,7 +118,7 @@ const EditEventPage = (props) => {
             })
             .catch((err) => {
               removeUserData();
-              history.push("../..");
+              history.push("/");
             });
         } else {
           setAlert(true);

@@ -46,11 +46,11 @@ const AddEventPage = (props) => {
               })
               .catch((err) => {
                 removeUserData();
-                history.push("../..");
+                history.push("/");
               });
           } else {
             removeUserData();
-            history.push("../..");
+            history.push("/");
           }
         });
     };
@@ -90,7 +90,7 @@ const AddEventPage = (props) => {
             })
             .catch((err) => {
               removeUserData();
-              history.push("../..");
+              history.push("/");
             });
         } else {
           setAlert(true);

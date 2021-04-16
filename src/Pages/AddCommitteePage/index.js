@@ -46,7 +46,7 @@ const AddCommitteePage = (props) => {
             })
             .catch((err) => {
               removeUserData();
-              history.push("../..");
+              history.push("/");
             });
         } else {
           setAlert(true);
