@@ -1,23 +1,23 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  .wrapper-profile {
+  .wrapper-home {
     .wrapper-content {
       min-height: 90vh;
     }
 
-    .profile-illustration {
+    .home-illustration {
       width: 80%;
       height: auto;
     }
 
     @media only screen and (max-width: 600px) {
-      .profile-illustration {
+      .home-illustration {
         margin: -60px 0 -60px 0;
       }
     }
 
-    .profile-description {
+    .home-description {
       @media only screen and (max-width: 600px) {
         .description-title {
           color: var(--purple);
@@ -52,7 +52,7 @@ export const Wrapper = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    .wrapper-profile {
+    .wrapper-home {
       margin-bottom: 70px;
     }
   }

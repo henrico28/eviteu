@@ -5,6 +5,7 @@ import {
   EventList,
   AddEvent,
   EditEvent,
+  CommitteeList,
   SandBox,
 } from "../Pages";
 
@@ -14,6 +15,7 @@ const routes = [
   { path: "/manage-event/event-list", component: EventList },
   { path: "/manage-event/add-event", component: AddEvent },
   { path: "/manage-event/edit-event/:id", component: EditEvent },
+  { path: "/manage-event/committee-list", component: CommitteeList },
   { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];

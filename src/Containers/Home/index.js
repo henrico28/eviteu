@@ -5,19 +5,19 @@ import { Wrapper } from "./style";
 
 import illustration from "../../Assets/Image/Profile/illustration.svg";
 
-const Profile = (props) => {
+const Home = (props) => {
   return (
     <Wrapper>
-      <Container className="wrapper-profile" fluid>
+      <Container className="wrapper-home" fluid>
         <Row className="justify-content-center align-items-center wrapper-content">
           <Col md={6} className="d-flex justify-content-center">
             <img
               src={illustration}
-              className="profile-illustration"
+              className="home-illustration"
               alt="invitation"
             />
           </Col>
-          <Col md={6} className="profile-description">
+          <Col md={6} className="home-description">
             <h3 className="description-title text-xs-center text-md-left my-3">
               EViteU
             </h3>
@@ -38,4 +38,4 @@ const Profile = (props) => {
   );
 };
 
-export default Profile;
+export default Home;
