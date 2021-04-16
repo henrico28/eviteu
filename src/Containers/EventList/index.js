@@ -116,7 +116,7 @@ const EventList = (props) => {
         <>
           {data.slice(indexOfFirstPage, indexOfLastPage).map((event, idx) => {
             return (
-              <tr key={idx}>
+              <tr key={event.idEvent}>
                 <td className="align-middle">{idx + 1}</td>
                 <td className="align-middle">{event.eventTitle}</td>
                 <td className="align-middle">
