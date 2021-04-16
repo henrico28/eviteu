@@ -6,6 +6,7 @@ import {
   AddEvent,
   EditEvent,
   CommitteeList,
+  AddCommittee,
   SandBox,
 } from "../Pages";
 
@@ -16,6 +17,7 @@ const routes = [
   { path: "/manage-event/add-event", component: AddEvent },
   { path: "/manage-event/edit-event/:id", component: EditEvent },
   { path: "/manage-event/committee-list", component: CommitteeList },
+  { path: "/manage-event/add-committee", component: AddCommittee },
   { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];

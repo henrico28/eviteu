@@ -30,7 +30,7 @@ const AddEvent = (props) => {
   const [max, setMax] = useState("");
   const [preview, setPreview] = useState(null);
   const [invalidImage, setInvalidImage] = useState("");
-  const [isOpen] = useState(props.alert);
+  const [alert] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
 
@@ -124,10 +124,7 @@ const AddEvent = (props) => {
             </Col>
           </Row>
           <div>
-            <Alert
-              isOpen={isOpen}
-              color={error === false ? "success" : "danger"}
-            >
+            <Alert isOpen={alert} color={error ? "danger" : "success"}>
               {message}
             </Alert>
           </div>

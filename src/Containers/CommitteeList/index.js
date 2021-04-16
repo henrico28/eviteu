@@ -29,7 +29,6 @@ const CommitteeList = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
-  console.log(data);
 
   // Get Current Data
   const indexOfLastPage = currentPage * dataPerPage;
