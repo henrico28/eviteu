@@ -29,7 +29,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "guest-list" ? "active" : ""
                 }`}
-                to="guest-list"
+                to="/manage-event/guest-list"
                 tag={Link}
               >
                 Guest
@@ -40,7 +40,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "committee-list" ? "active" : ""
                 }`}
-                to="committee-list"
+                to="/manage-event/committee-list"
                 tag={Link}
               >
                 Committee
@@ -49,9 +49,9 @@ const SideBar = (props) => {
             <NavItem>
               <NavLink
                 className={` sidebar-menu p-3 ${
-                  props.page === "annuncement-list" ? "active" : ""
+                  props.page === "announcement-list" ? "active" : ""
                 }`}
-                to="annuncement-list"
+                to="/manage-event/announcement-list"
                 tag={Link}
               >
                 Announcement
@@ -62,7 +62,7 @@ const SideBar = (props) => {
                 className={` sidebar-menu p-3 ${
                   props.page === "lottery" ? "active" : ""
                 }`}
-                to="lottery"
+                to="/manage-event/lottery"
                 tag={Link}
               >
                 Lottery

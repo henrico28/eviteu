@@ -46,7 +46,6 @@ const EventList = (props) => {
   const [error] = useState(props.error);
   const [message] = useState(props.message);
   const [loading, setLoading] = useState(false);
-  console.log(props.committee);
 
   // Get Current Data
   const indexOfLastPage = currentPage * dataPerPage;

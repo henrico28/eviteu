@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -31,7 +31,18 @@ const LogIn = (props) => {
   const [modal, setModal] = useState(false);
   const [messageTitle, setMessageTitle] = useState("");
   const [messageContent, setMessageContent] = useState("");
-  const { setUserData } = useUserData();
+  const { userData, setUserData } = useUserData();
+
+  useEffect(() => {
+    if (
+      userData.email &&
+      userData.name &&
+      userData.accessToken &&
+      userData.refreshToken
+    ) {
+      history.push("/manage-event/event-list");
+    }
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
