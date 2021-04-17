@@ -210,7 +210,7 @@ const EventList = (props) => {
               toggle={() => {
                 setAlert(false);
               }}
-              color={error === false ? "success" : "danger"}
+              color={error ? "danger" : "success"}
             >
               {message}
             </Alert>

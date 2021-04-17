@@ -9,6 +9,10 @@ import {
   Input,
   Label,
   Table,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Alert,
   Badge,
   UncontrolledButtonDropdown,
@@ -29,6 +33,11 @@ const CommitteeList = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [committee, setCommittee] = useState("");
+  const [alert, setAlert] = useState(props.alert);
+  const [error] = useState(props.error);
+  const [message] = useState(props.message);
 
   // Get Current Data
   const indexOfLastPage = currentPage * dataPerPage;
@@ -56,6 +65,23 @@ const CommitteeList = (props) => {
     setCurrentPage(1);
     setData(originalData);
     setNumberOfData(originalData.length);
+  };
+
+  const toggleConfirmationModal = () => {
+    setConfirmationModal(!confirmationModal);
+  };
+
+  const handleConfirmation = (committee) => {
+    toggleConfirmationModal();
+    setCommittee(committee);
+  };
+
+  const handleDelete = () => {
+    const data = {
+      idUser: committee.idUser,
+      idCommittee: committee.idCommittee,
+    };
+    props.deleteCommittee(data);
   };
 
   const renderCommittee = () => {
@@ -104,7 +130,13 @@ const CommitteeList = (props) => {
                         >
                           Edit
                         </DropdownItem>
-                        <DropdownItem>Delete</DropdownItem>
+                        <DropdownItem
+                          onClick={() => {
+                            handleConfirmation(committee);
+                          }}
+                        >
+                          Delete
+                        </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledButtonDropdown>
                   </td>
@@ -128,8 +160,16 @@ const CommitteeList = (props) => {
               <hr className="mt-0" />
             </Col>
           </Row>
-          <div className="d-none">
-            <Alert></Alert>
+          <div>
+            <Alert
+              isOpen={alert}
+              toggle={() => {
+                setAlert(false);
+              }}
+              color={error ? "danger" : "success"}
+            >
+              {message}
+            </Alert>
           </div>
           <Row>
             <Col md={4}>
@@ -184,6 +224,31 @@ const CommitteeList = (props) => {
             />
           </div>
         </Container>
+        <Modal
+          isOpen={confirmationModal}
+          toggle={toggleConfirmationModal}
+          centered={true}
+        >
+          <ModalHeader toggle={toggleConfirmationModal}>
+            Confirmation
+          </ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete Committee {committee.userName}?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn-indigo"
+              onClick={() => {
+                handleDelete();
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={toggleConfirmationModal} color="danger">
+              No
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </Wrapper>
   );
