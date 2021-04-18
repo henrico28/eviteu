@@ -8,6 +8,7 @@ export { default as LogIn } from "./LogIn";
 export { default as EventList } from "./EventList";
 export { default as AddEvent } from "./AddEvent";
 export { default as EditEvent } from "./EditEvent";
+export { default as AssignCommittee } from "./AssignCommittee";
 export { default as CommitteeList } from "./CommitteeList";
 export { default as AddCommittee } from "./AddCommittee";
 export { default as EditCommittee } from "./EditCommittee";

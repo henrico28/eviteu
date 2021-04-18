@@ -34,7 +34,10 @@ const EditCommitteePage = (props) => {
           }
         })
         .catch((err) => {
-          if (error === "jwt expired") {
+          if (
+            err.response.data.error &&
+            err.response.data.error === "jwt expired"
+          ) {
             axios
               .post("http://localhost:8000/token", {
                 userEmail: userData.email,
@@ -52,7 +55,7 @@ const EditCommitteePage = (props) => {
               });
           } else {
             removeUserData();
-            history.push("/");
+            history.push("/404");
           }
         });
     };

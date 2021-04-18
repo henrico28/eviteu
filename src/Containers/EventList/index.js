@@ -192,6 +192,29 @@ const EventList = (props) => {
     }
   };
 
+  const renderCommittee = () => {
+    if (loading) {
+      return (
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
+      );
+    } else {
+      if (props.committee.length === 0) {
+        return <div>No committee assigned.</div>;
+      } else {
+        return (
+          <ul>
+            {props.committee &&
+              props.committee.map((committee) => (
+                <li key={committee.idCommittee}>{committee.userName}</li>
+              ))}
+          </ul>
+        );
+      }
+    }
+  };
+
   return (
     <Wrapper>
       <div className="wrapper-event-list">
@@ -389,24 +412,17 @@ const EventList = (props) => {
           centered={true}
         >
           <ModalHeader toggle={toggleCommitteeModal}>
-            Committee {event.eventTitle}
+            Committee: {event.eventTitle}
           </ModalHeader>
-          <ModalBody>
-            {loading ? (
-              <div className="d-flex justify-content-center">
-                <Spinner />
-              </div>
-            ) : (
-              <ul>
-                {props.committee &&
-                  props.committee.map((committee) => (
-                    <li key={committee.idCommittee}>{committee.userName}</li>
-                  ))}
-              </ul>
-            )}
-          </ModalBody>
+          <ModalBody>{renderCommittee()}</ModalBody>
           <ModalFooter>
-            <Button className="btn-indigo">Assign Committee</Button>
+            <Button
+              className="btn-indigo"
+              tag={Link}
+              to={`assign-committee/${event.idEvent}`}
+            >
+              Assign Committee
+            </Button>
             <Button onClick={toggleCommitteeModal} color="danger">
               Close
             </Button>

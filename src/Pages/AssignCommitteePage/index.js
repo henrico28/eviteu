@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, EditEvent } from "../../Containers";
+import { LayoutManageEvent, AssignCommittee } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const EditEventPage = (props) => {
+const AssignCommitteePage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
+  const [event, setEvent] = useState([]);
   const [data, setData] = useState([]);
-  const [type, setType] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
@@ -20,7 +20,7 @@ const EditEventPage = (props) => {
   useEffect(() => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
-        await axios
+        axios
           .post("http://localhost:8000/token", {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
@@ -44,34 +44,30 @@ const EditEventPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/event/detail/${id}`, {
+        .get(`http://localhost:8000/event/assigned/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
         })
         .then((res) => {
-          if (res.data.length === 0) {
-            history.push("/404");
-          } else {
-            setData(res.data.result[0]);
-            axios
-              .get("http://localhost:8000/type/lists", {
-                headers: {
-                  authorization: `Bearer ${userData.accessToken}`,
-                },
-              })
-              .then((res) => {
-                setType(res.data.result);
-                setLoading(false);
-              })
-              .catch((err) => {
-                let error = "";
-                if (err.response.data.error) {
-                  error = err.response.data.error;
-                }
-                errorHandling(error);
-              });
-          }
+          setData(res.data.result);
+          axios
+            .get("http://localhost:8000/event/lists", {
+              headers: {
+                authorization: `Bearer ${userData.accessToken}`,
+              },
+            })
+            .then((res) => {
+              setEvent(res.data.result);
+              setLoading(false);
+            })
+            .catch((err) => {
+              let error = "";
+              if (err.response.data.error) {
+                error = err.response.data.error;
+              }
+              errorHandling(error);
+            });
         })
         .catch((err) => {
           let error = "";
@@ -83,15 +79,12 @@ const EditEventPage = (props) => {
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
-  const updateEvent = async (data) => {
-    setError(false);
-    setAlert(false);
-    setMessage("");
+  const assignCommittee = async (data) => {
     setLoading(true);
     await axios
-      .put("http://localhost:8000/event/update", data, {
+      .post("http://localhost:8000/event/assign", data, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -114,7 +107,7 @@ const EditEventPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              updateEvent(data);
+              assignCommittee(data);
             })
             .catch((err) => {
               removeUserData();
@@ -142,18 +135,19 @@ const EditEventPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"event-list"}
-      title={"Event / Edit Event"}
+      title={"Event / Assign Committee"}
     >
-      <EditEvent
+      <AssignCommittee
+        id={id}
+        event={event}
         data={data}
-        type={type}
         alert={alert}
         error={error}
         message={message}
-        updateEvent={updateEvent}
+        assignCommittee={assignCommittee}
       />
     </LayoutManageEvent>
   );
 };
 
-export default EditEventPage;
+export default AssignCommitteePage;

@@ -132,7 +132,7 @@ const EventListPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              deleteEvent();
+              committeeEvent();
             })
             .catch((err) => {
               committeeEvent();
