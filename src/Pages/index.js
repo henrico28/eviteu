@@ -11,4 +11,5 @@ export { default as CommitteeList } from "./CommitteeListPage";
 export { default as AddCommittee } from "./AddCommitteePage";
 export { default as EditCommittee } from "./EditCommitteePage";
 export { default as AssignEvent } from "./AssignEventPage";
+export { default as AnnouncementList } from "./AnnouncementListPage";
 export { default as SandBox } from "./SandBox";

@@ -66,6 +66,7 @@ const AssignCommittee = (props) => {
             </FormGroup>
           );
         })}
+        {data.length === 0 ? <Label>No committee present</Label> : <></>}
       </>
     );
   };
@@ -114,10 +115,11 @@ const AssignCommittee = (props) => {
                     </Input>
                   </Col>
                 </FormGroup>
-                <Label>Committee List:</Label>
-                {renderCommittee()}
+                <Label>Committee List:</Label> {renderCommittee()}
                 <div className="d-flex my-3 justify-content-center">
-                  <Button className="btn-indigo">Assign</Button>
+                  <Button className="btn-indigo" disabled={data.length === 0}>
+                    Assign
+                  </Button>
                 </div>
               </Form>
             </Col>

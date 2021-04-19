@@ -10,6 +10,7 @@ import {
   AddCommittee,
   EditCommittee,
   AssignEvent,
+  AnnouncementList,
   SandBox,
 } from "../Pages";
 
@@ -24,7 +25,8 @@ const routes = [
   { path: "/manage-event/add-committee", component: AddCommittee },
   { path: "/manage-event/edit-committee/:id", component: EditCommittee },
   { path: "/manage-event/assign-event/:id", component: AssignEvent },
-  { path: "/sandbox", component: SandBox },
+  { path: "/manage-event/announcement-list/:id?", component: AnnouncementList },
+  { path: "/sandbox/:id?", component: SandBox },
   { path: "/", component: Home },
 ];
 

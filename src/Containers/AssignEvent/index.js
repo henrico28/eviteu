@@ -66,6 +66,7 @@ const AssignEvent = (props) => {
             </FormGroup>
           );
         })}
+        {data.length === 0 ? <Label>No event present</Label> : <></>}
       </>
     );
   };
@@ -114,10 +115,11 @@ const AssignEvent = (props) => {
                     </Input>
                   </Col>
                 </FormGroup>
-                <Label>Event List:</Label>
-                {renderEvent()}
+                <Label>Event List:</Label> {renderEvent()}
                 <div className="d-flex my-3 justify-content-center">
-                  <Button className="btn-indigo">Assign</Button>
+                  <Button className="btn-indigo" disabled={data.length === 0}>
+                    Assign
+                  </Button>
                 </div>
               </Form>
             </Col>

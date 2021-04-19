@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -30,7 +30,6 @@ import {
 import { Pagination } from "../../Components";
 
 const EventList = (props) => {
-  const history = useHistory();
   const [originalData] = useState(props.data);
   const [data, setData] = useState(props.data);
   const [search, setSearch] = useState("");
@@ -168,9 +167,8 @@ const EventList = (props) => {
                         Detail
                       </DropdownItem>
                       <DropdownItem
-                        onClick={() => {
-                          history.push(`edit-event/${event.idEvent}`);
-                        }}
+                        tag={Link}
+                        to={`edit-event/${event.idEvent}`}
                       >
                         Edit
                       </DropdownItem>

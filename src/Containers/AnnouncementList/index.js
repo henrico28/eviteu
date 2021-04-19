@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Container,
   Row,
@@ -25,15 +25,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
-const CommitteeList = (props) => {
+const AnnouncementList = (props) => {
+  const history = useHistory();
+  const [id] = useState(props.id);
   const [originalData] = useState(props.data);
   const [data, setData] = useState(props.data);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
-  const [confirmationModal, setConfirmationModal] = useState(false);
-  const [committee, setCommittee] = useState("");
+  const [publishConfirmationModal, setPublishConfirmationModal] = useState(
+    false
+  );
+  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
   const [alert, setAlert] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
@@ -42,16 +47,19 @@ const CommitteeList = (props) => {
   const indexOfLastPage = currentPage * dataPerPage;
   const indexOfFirstPage = indexOfLastPage - dataPerPage;
 
+  const handleSelect = (event) => {
+    history.push(event.target.value);
+  };
+
   const handleSearch = (event) => {
     let query = event.target.value;
     setSearch(query);
     let tmpData = originalData;
     if (query !== "") {
       tmpData = tmpData.filter((data) => {
-        return (
-          data.userName.toLowerCase().includes(query.toLowerCase()) ||
-          data.userEmail.toLowerCase().includes(query.toLowerCase())
-        );
+        return data.announcementTitle
+          .toLowerCase()
+          .includes(query.toLowerCase());
       });
     }
     setCurrentPage(1);
@@ -66,29 +74,50 @@ const CommitteeList = (props) => {
     setNumberOfData(originalData.length);
   };
 
-  const toggleConfirmationModal = () => {
-    setConfirmationModal(!confirmationModal);
+  const togglePublishConfirmationModal = () => {
+    setPublishConfirmationModal(!publishConfirmationModal);
   };
 
-  const handleConfirmation = (committee) => {
-    toggleConfirmationModal();
-    setCommittee(committee);
+  const toggleDeleteConfirmationModal = () => {
+    setDeleteConfirmationModal(!deleteConfirmationModal);
+  };
+
+  const handleConfirmation = (announcement, confirmation) => {
+    switch (confirmation) {
+      case "publish":
+        togglePublishConfirmationModal();
+        break;
+      case "delete":
+        toggleDeleteConfirmationModal();
+        break;
+      default:
+        console.log("Error");
+        break;
+    }
+    setAnnouncement(announcement);
+  };
+
+  const handlePublish = () => {
+    const data = {
+      idAnnouncement: announcement.idAnnouncement,
+      announcementStatus: announcement.announcementStatus ? 0 : 1,
+    };
+    props.publishAnnouncement(data);
   };
 
   const handleDelete = () => {
     const data = {
-      idUser: committee.idUser,
-      idCommittee: committee.idCommittee,
+      idAnnouncement: announcement.idAnnouncement,
     };
-    props.deleteCommittee(data);
+    props.deleteAnnouncement(data);
   };
 
-  const renderCommittee = () => {
+  const renderAnnouncement = () => {
     if (data.length === 0) {
       return (
         <tr>
           <td colSpan="5" className="text-center">
-            No committee present.
+            No announcement present.
           </td>
         </tr>
       );
@@ -97,43 +126,47 @@ const CommitteeList = (props) => {
         <>
           {data
             .slice(indexOfFirstPage, indexOfLastPage)
-            .map((committee, idx) => {
+            .map((announcement, idx) => {
               return (
-                <tr key={committee.idCommittee}>
+                <tr key={announcement.idAnnouncement}>
                   <td className="align-middle">{idx + 1}</td>
-                  <td className="align-middle">{committee.userName}</td>
-                  <td className="align-middle">{committee.userEmail}</td>
                   <td className="align-middle">
-                    {committee.active ? (
-                      <Badge color="success">Active</Badge>
-                    ) : (
-                      <Badge color="danger">Not active</Badge>
-                    )}
+                    {announcement.announcementTitle}
+                  </td>
+                  <td className="align-middle text-wrap">
+                    {announcement.announcementDescription}
                   </td>
                   <td className="align-middle">
+                    {announcement.announcementStatus ? (
+                      <Badge color="success">Published</Badge>
+                    ) : (
+                      <Badge color="danger">Not published</Badge>
+                    )}
+                  </td>
+                  <td>
                     <UncontrolledButtonDropdown>
                       <DropdownToggle className="btn-indigo" caret>
                         <FontAwesomeIcon icon={faCog} /> Actions
                       </DropdownToggle>
                       <DropdownMenu>
                         <DropdownItem
-                          tag={Link}
-                          to={`assign-event/${committee.idCommittee}`}
+                          onClick={() => {
+                            handleConfirmation(announcement, "publish");
+                          }}
                         >
-                          Assign
-                        </DropdownItem>
-                        <DropdownItem>
-                          {committee.active === 0 ? "Activate" : "Re-Activate"}
+                          {announcement.announcementStatus
+                            ? "Unpublish"
+                            : "Publish"}
                         </DropdownItem>
                         <DropdownItem
                           tag={Link}
-                          to={`edit-committee/${committee.idCommittee}`}
+                          to={`/manage-event/edit-announcement/${announcement.idAnnouncement}`}
                         >
                           Edit
                         </DropdownItem>
                         <DropdownItem
                           onClick={() => {
-                            handleConfirmation(committee);
+                            handleConfirmation(announcement, "delete");
                           }}
                         >
                           Delete
@@ -151,12 +184,12 @@ const CommitteeList = (props) => {
 
   return (
     <Wrapper>
-      <div className="wrapper-committee-list">
+      <div className="wrapper-announcement-list">
         <Container fluid>
           <Row>
             <Col>
-              <h4 className="text-muted pt-2 font-weight-light committee-list-title">
-                Committee List
+              <h4 className="text-muted pt-2 font-weight-light announcement-list-title">
+                Announcement List
               </h4>
               <hr className="mt-0" />
             </Col>
@@ -173,24 +206,46 @@ const CommitteeList = (props) => {
             </Alert>
           </div>
           <Row>
-            <Col md={4}>
-              <Button className="btn-indigo" tag={Link} to="add-committee">
-                Add Committee
+            <Col md={5} className="d-flex">
+              <InputGroup className="announcement-list-event-select">
+                <Input
+                  type="select"
+                  name="event"
+                  defaultValue={id}
+                  onChange={handleSelect}
+                >
+                  {props.event &&
+                    props.event.map((event) => (
+                      <option
+                        key={event.idEvent}
+                        value={event.idEvent}
+                        checked={event.idEvent === id}
+                      >
+                        {event.eventTitle}
+                      </option>
+                    ))}
+                </Input>
+              </InputGroup>
+              <Button
+                className="btn-indigo mx-2"
+                tag={Link}
+                to={`/manage-event/add-announcement/${id}`}
+              >
+                Add Announcement
               </Button>
-              <Button className="btn-indigo mx-2">Activate All</Button>
             </Col>
             <Col
-              md={{ size: 6, offset: 2 }}
-              className="wrapper-committee-list-search"
+              md={{ size: 6, offset: 1 }}
+              className="wrapper-announcement-list-search"
             >
               <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="committee-list-search-input">
+              <InputGroup className="announcement-list-search-input">
                 <Input
                   type="text"
                   name="search"
                   value={search}
                   onChange={handleSearch}
-                  placeholder="Search committee name & email here"
+                  placeholder="Search announcement title here"
                 />
                 <Button
                   className="btn-indigo"
@@ -207,13 +262,13 @@ const CommitteeList = (props) => {
               <thead>
                 <tr>
                   <th width="3%">No.</th>
-                  <th>Name</th>
-                  <th>E-mail</th>
-                  <th>Active</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>{renderCommittee()}</tbody>
+              <tbody>{renderAnnouncement()}</tbody>
             </Table>
           </Row>
           <div className="d-flex justify-content-center">
@@ -226,15 +281,42 @@ const CommitteeList = (props) => {
           </div>
         </Container>
         <Modal
-          isOpen={confirmationModal}
-          toggle={toggleConfirmationModal}
+          isOpen={publishConfirmationModal}
+          toggle={togglePublishConfirmationModal}
           centered={true}
         >
-          <ModalHeader toggle={toggleConfirmationModal}>
+          <ModalHeader toggle={togglePublishConfirmationModal}>
             Confirmation
           </ModalHeader>
           <ModalBody>
-            Are you sure you want to delete Committee {committee.userName}?
+            Are you sure you want to publish Announcement{" "}
+            {announcement.announcementTitle}?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn-indigo"
+              onClick={() => {
+                handlePublish();
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={togglePublishConfirmationModal} color="danger">
+              No
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <Modal
+          isOpen={deleteConfirmationModal}
+          toggle={toggleDeleteConfirmationModal}
+          centered={true}
+        >
+          <ModalHeader toggle={toggleDeleteConfirmationModal}>
+            Confirmation
+          </ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete Announcement{" "}
+            {announcement.announcementTitle}?
           </ModalBody>
           <ModalFooter>
             <Button
@@ -245,7 +327,7 @@ const CommitteeList = (props) => {
             >
               Yes
             </Button>
-            <Button onClick={toggleConfirmationModal} color="danger">
+            <Button onClick={toggleDeleteConfirmationModal} color="danger">
               No
             </Button>
           </ModalFooter>
@@ -255,4 +337,4 @@ const CommitteeList = (props) => {
   );
 };
 
-export default CommitteeList;
+export default AnnouncementList;
