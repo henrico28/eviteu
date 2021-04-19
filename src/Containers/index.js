@@ -12,3 +12,4 @@ export { default as AssignCommittee } from "./AssignCommittee";
 export { default as CommitteeList } from "./CommitteeList";
 export { default as AddCommittee } from "./AddCommittee";
 export { default as EditCommittee } from "./EditCommittee";
+export { default as AssignEvent } from "./AssignEvent";

@@ -117,7 +117,12 @@ const CommitteeList = (props) => {
                         <FontAwesomeIcon icon={faCog} /> Actions
                       </DropdownToggle>
                       <DropdownMenu>
-                        <DropdownItem>Assign</DropdownItem>
+                        <DropdownItem
+                          tag={Link}
+                          to={`assign-event/${committee.idCommittee}`}
+                        >
+                          Assign
+                        </DropdownItem>
                         <DropdownItem>
                           {committee.active === 0 ? "Activate" : "Re-Activate"}
                         </DropdownItem>
