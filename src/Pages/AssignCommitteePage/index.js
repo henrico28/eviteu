@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, AssignCommittee } from "../../Containers";
+import { LayoutManageEvent, NotFound, AssignCommittee } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -10,6 +10,7 @@ const AssignCommitteePage = (props) => {
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [event, setEvent] = useState([]);
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState(false);
@@ -36,8 +37,13 @@ const AssignCommitteePage = (props) => {
             history.push("/");
           });
       } else {
-        removeUserData();
-        history.push("/404");
+        if (error === "No event found") {
+          setNotFound(true);
+          setLoading(false);
+        } else {
+          removeUserData();
+          history.push("/404");
+        }
       }
     };
 
@@ -128,6 +134,10 @@ const AssignCommitteePage = (props) => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (notFound) {
+    return <NotFound />;
   }
 
   return (

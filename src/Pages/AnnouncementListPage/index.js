@@ -4,6 +4,7 @@ import { Loading } from "../../Components";
 import {
   LayoutManageEvent,
   WarningNoEvent,
+  NotFound,
   AnnouncementList,
 } from "../../Containers";
 import axios from "axios";
@@ -14,6 +15,7 @@ const AnnouncementListPage = (props) => {
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [noEvent, setNoEvent] = useState(false);
   const [event, setEvent] = useState([]);
   const [data, setData] = useState([]);
@@ -57,9 +59,11 @@ const AnnouncementListPage = (props) => {
         .then((res) => {
           if (res.data.result.length === 0) {
             if (id) {
-              history.push("/404");
+              setNotFound(true);
+            } else {
+              setNoEvent(true);
             }
-            setNoEvent(true);
+
             setLoading(false);
           } else {
             if (!id) {
@@ -201,6 +205,10 @@ const AnnouncementListPage = (props) => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (notFound) {
+    return <NotFound />;
   }
 
   return (

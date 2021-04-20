@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, EditCommittee } from "../../Containers";
+import { LayoutManageEvent, NotFound, AddAnnouncement } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const EditCommitteePage = (props) => {
+const AddAnnouncementPage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [data, setData] = useState([]);
+  const [event, setEvent] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
@@ -21,16 +21,18 @@ const EditCommitteePage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/committee/detail/${id}`, {
+        .get("http://localhost:8000/event/lists", {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
         })
         .then((res) => {
-          if (res.data.length === 0) {
+          const tmp = res.data.result;
+          const valid = tmp.some((event) => event.idEvent === Number(id));
+          if (!valid) {
             setNotFound(true);
           } else {
-            setData(res.data.result[0]);
+            setEvent(tmp);
           }
           setLoading(false);
         })
@@ -64,19 +66,18 @@ const EditCommitteePage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateCommittee = async (committee) => {
+  const addAnnouncement = async (announcement) => {
     setError(false);
     setAlert(false);
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/committee/update", committee, {
+      .post("http://localhost:8000/announcement/create", announcement, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
         setAlert(true);
         setMessage(res.data.message);
-        setData(res.data.result);
         setLoading(false);
       })
       .catch((err) => {
@@ -93,11 +94,11 @@ const EditCommitteePage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              updateCommittee(committee);
+              addAnnouncement(announcement);
             })
             .catch((err) => {
               removeUserData();
-              history.push("../..");
+              history.push("/");
             });
         } else {
           setAlert(true);
@@ -124,18 +125,19 @@ const EditCommitteePage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"committee-list"}
-      title={"Committee / Edit Committee"}
+      page={"announcement-list"}
+      title={"Announcement / Add Announcement"}
     >
-      <EditCommittee
-        data={data}
+      <AddAnnouncement
+        id={id}
+        event={event}
         alert={alert}
         error={error}
         message={message}
-        updateCommittee={updateCommittee}
+        addAnnouncement={addAnnouncement}
       />
     </LayoutManageEvent>
   );
 };
 
-export default EditCommitteePage;
+export default AddAnnouncementPage;

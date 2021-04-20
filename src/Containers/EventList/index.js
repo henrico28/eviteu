@@ -102,11 +102,19 @@ const EventList = (props) => {
   };
 
   const renderEvent = () => {
-    if (data.length === 0) {
+    if (originalData.length === 0) {
       return (
         <tr>
           <td colSpan="7" className="text-center">
             No event present.
+          </td>
+        </tr>
+      );
+    } else if (data.length === 0) {
+      return (
+        <tr>
+          <td colSpan="7" className="text-center">
+            No event with that title.
           </td>
         </tr>
       );

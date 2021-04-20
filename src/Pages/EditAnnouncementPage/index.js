@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, EditCommittee } from "../../Containers";
+import {
+  LayoutManageEvent,
+  NotFound,
+  EditAnnouncement,
+} from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const EditCommitteePage = (props) => {
+const EditAnnouncementPage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -21,7 +25,7 @@ const EditCommitteePage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/committee/detail/${id}`, {
+        .get(`http://localhost:8000/announcement/detail/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -64,13 +68,13 @@ const EditCommitteePage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateCommittee = async (committee) => {
+  const updateAnnouncement = async (announcement) => {
     setError(false);
     setAlert(false);
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/committee/update", committee, {
+      .put("http://localhost:8000/announcement/update", announcement, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -93,7 +97,7 @@ const EditCommitteePage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              updateCommittee(committee);
+              updateAnnouncement(announcement);
             })
             .catch((err) => {
               removeUserData();
@@ -124,18 +128,18 @@ const EditCommitteePage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"committee-list"}
-      title={"Committee / Edit Committee"}
+      page={"announcement-list"}
+      title={"Announcement / Edit Announcement"}
     >
-      <EditCommittee
+      <EditAnnouncement
         data={data}
         alert={alert}
         error={error}
         message={message}
-        updateCommittee={updateCommittee}
+        updateAnnouncement={updateAnnouncement}
       />
     </LayoutManageEvent>
   );
 };
 
-export default EditCommitteePage;
+export default EditAnnouncementPage;

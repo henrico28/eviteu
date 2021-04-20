@@ -99,6 +99,7 @@ const AnnouncementList = (props) => {
 
   const handlePublish = () => {
     const data = {
+      idEvent: id,
       idAnnouncement: announcement.idAnnouncement,
       announcementStatus: announcement.announcementStatus ? 0 : 1,
     };
@@ -107,17 +108,26 @@ const AnnouncementList = (props) => {
 
   const handleDelete = () => {
     const data = {
+      idEvent: id,
       idAnnouncement: announcement.idAnnouncement,
     };
     props.deleteAnnouncement(data);
   };
 
   const renderAnnouncement = () => {
-    if (data.length === 0) {
+    if (originalData.length === 0) {
       return (
         <tr>
           <td colSpan="5" className="text-center">
             No announcement present.
+          </td>
+        </tr>
+      );
+    } else if (data.length === 0) {
+      return (
+        <tr>
+          <td colSpan="5" className="text-center">
+            No announcement with that title.
           </td>
         </tr>
       );
@@ -143,7 +153,7 @@ const AnnouncementList = (props) => {
                       <Badge color="danger">Not published</Badge>
                     )}
                   </td>
-                  <td>
+                  <td className="align-middle">
                     <UncontrolledButtonDropdown>
                       <DropdownToggle className="btn-indigo" caret>
                         <FontAwesomeIcon icon={faCog} /> Actions
@@ -206,7 +216,7 @@ const AnnouncementList = (props) => {
             </Alert>
           </div>
           <Row>
-            <Col md={5} className="d-flex">
+            <Col md={6} className="d-flex">
               <InputGroup className="announcement-list-event-select">
                 <Input
                   type="select"
@@ -234,10 +244,7 @@ const AnnouncementList = (props) => {
                 Add Announcement
               </Button>
             </Col>
-            <Col
-              md={{ size: 6, offset: 1 }}
-              className="wrapper-announcement-list-search"
-            >
+            <Col md={6} className="wrapper-announcement-list-search">
               <Label className="mt-1 mr-2 text-muted">Search :</Label>
               <InputGroup className="announcement-list-search-input">
                 <Input
@@ -262,10 +269,10 @@ const AnnouncementList = (props) => {
               <thead>
                 <tr>
                   <th width="3%">No.</th>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th width="20%">Title</th>
+                  <th width="30%">Description</th>
+                  <th width="10%">Status</th>
+                  <th width="10%">Actions</th>
                 </tr>
               </thead>
               <tbody>{renderAnnouncement()}</tbody>

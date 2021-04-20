@@ -84,11 +84,19 @@ const CommitteeList = (props) => {
   };
 
   const renderCommittee = () => {
-    if (data.length === 0) {
+    if (originalData.length === 0) {
       return (
         <tr>
           <td colSpan="5" className="text-center">
             No committee present.
+          </td>
+        </tr>
+      );
+    } else if (data.length === 0) {
+      return (
+        <tr>
+          <td colSpan="5" className="text-center">
+            No committee with that name or email.
           </td>
         </tr>
       );

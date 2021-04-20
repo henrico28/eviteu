@@ -14,13 +14,13 @@ const AddCommitteePage = (props) => {
   const [message, setMessage] = useState("");
   const { userData, setUserData, removeUserData } = useUserData();
 
-  const addCommittee = async (data) => {
+  const addCommittee = async (committee) => {
     setError(false);
     setAlert(false);
     setMessage("");
     setLoading(true);
     await axios
-      .post("http://localhost:8000/committee/create", data, {
+      .post("http://localhost:8000/committee/create", committee, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -42,7 +42,7 @@ const AddCommitteePage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              addCommittee(data);
+              addCommittee(committee);
             })
             .catch((err) => {
               removeUserData();
