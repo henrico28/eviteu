@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, AddAnnouncement } from "../../Containers";
+import { LayoutManageEvent, NotFound, EditGuest } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const AddAnnouncementPage = (props) => {
+const EditGuestPage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [event, setEvent] = useState([]);
+  const [data, setData] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
@@ -21,18 +21,16 @@ const AddAnnouncementPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/event/lists", {
+        .get(`http://localhost:8000/guest/detail/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
         })
         .then((res) => {
-          const tmp = res.data.result;
-          const valid = tmp.some((event) => event.idEvent === Number(id));
-          if (!valid) {
+          if (res.data.length === 0) {
             setNotFound(true);
           } else {
-            setEvent(tmp);
+            setData(res.data.result[0]);
           }
           setLoading(false);
         })
@@ -66,18 +64,19 @@ const AddAnnouncementPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addAnnouncement = async (announcement) => {
+  const updateGuest = async (guest) => {
     setError(false);
     setAlert(false);
     setMessage("");
     setLoading(true);
     await axios
-      .post("http://localhost:8000/announcement/create", announcement, {
+      .put("http://localhost:8000/guest/update", guest, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
         setAlert(true);
         setMessage(res.data.message);
+        setData(res.data.result);
         setLoading(false);
       })
       .catch((err) => {
@@ -94,11 +93,11 @@ const AddAnnouncementPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              addAnnouncement(announcement);
+              updateGuest(guest);
             })
             .catch((err) => {
               removeUserData();
-              history.push("/");
+              history.push("../..");
             });
         } else {
           setAlert(true);
@@ -125,20 +124,18 @@ const AddAnnouncementPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"announcement-list"}
-      title={"Announcement / Add Announcement"}
+      page={"guest-list"}
+      title={"Guest / Edit Guest"}
     >
-      <AddAnnouncement
-        id={id}
-        event={event}
+      <EditGuest
+        data={data}
         alert={alert}
-        setAlert={setAlert}
         error={error}
         message={message}
-        addAnnouncement={addAnnouncement}
+        updateGuest={updateGuest}
       />
     </LayoutManageEvent>
   );
 };
 
-export default AddAnnouncementPage;
+export default EditGuestPage;

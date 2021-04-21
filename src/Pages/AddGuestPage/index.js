@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, AddAnnouncement } from "../../Containers";
+import { LayoutManageEvent, NotFound, AddGuest } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const AddAnnouncementPage = (props) => {
+const AddGuestPage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -66,13 +66,13 @@ const AddAnnouncementPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addAnnouncement = async (announcement) => {
+  const addGuest = async (guest) => {
     setError(false);
     setAlert(false);
     setMessage("");
     setLoading(true);
     await axios
-      .post("http://localhost:8000/announcement/create", announcement, {
+      .post("http://localhost:8000/guest/create", guest, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -94,7 +94,7 @@ const AddAnnouncementPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              addAnnouncement(announcement);
+              addGuest(guest);
             })
             .catch((err) => {
               removeUserData();
@@ -125,20 +125,20 @@ const AddAnnouncementPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"announcement-list"}
-      title={"Announcement / Add Announcement"}
+      page={"guest-list"}
+      title={"Guest / Add Guest"}
     >
-      <AddAnnouncement
+      <AddGuest
         id={id}
         event={event}
         alert={alert}
         setAlert={setAlert}
         error={error}
         message={message}
-        addAnnouncement={addAnnouncement}
+        addGuest={addGuest}
       />
     </LayoutManageEvent>
   );
 };
 
-export default AddAnnouncementPage;
+export default AddGuestPage;

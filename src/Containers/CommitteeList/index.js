@@ -131,7 +131,7 @@ const CommitteeList = (props) => {
                           Assign
                         </DropdownItem>
                         <DropdownItem>
-                          {committee.active === 0 ? "Activate" : "Re-Activate"}
+                          {committee.active ? "Re-Activate" : "Activate"}
                         </DropdownItem>
                         <DropdownItem
                           tag={Link}

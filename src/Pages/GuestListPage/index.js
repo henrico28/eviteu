@@ -4,13 +4,13 @@ import { Loading } from "../../Components";
 import {
   LayoutManageEvent,
   WarningNoEvent,
+  GuestList,
   NotFound,
-  AnnouncementList,
 } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const AnnouncementListPage = (props) => {
+const GuestListPage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -67,12 +67,12 @@ const AnnouncementListPage = (props) => {
           } else {
             if (!id) {
               history.push(
-                `/manage-event/announcement-list/${res.data.result[0].idEvent}`
+                `/manage-event/guest-list/${res.data.result[0].idEvent}`
               );
             } else {
               setEvent(res.data.result);
               axios
-                .get(`http://localhost:8000/announcement/lists/${id}`, {
+                .get(`http://localhost:8000/guest/lists/${id}`, {
                   headers: {
                     authorization: `Bearer ${userData.accessToken}`,
                   },
@@ -103,65 +103,17 @@ const AnnouncementListPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const publishAnnouncement = async (announcement) => {
+  const deleteGuest = async (guest) => {
     setError(false);
     setAlert(false);
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/announcement/publish", announcement, {
-        headers: { authorization: `Bearer ${userData.accessToken}` },
-      })
-      .then((res) => {
-        setAlert(true);
-        setMessage(res.data.message);
-        setData(res.data.result);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (
-          err.response.data.error &&
-          err.response.data.error === "jwt expired"
-        ) {
-          axios
-            .post("http://localhost:8000/token", {
-              userEmail: userData.email,
-              refreshToken: userData.refreshToken,
-            })
-            .then((res) => {
-              let tmp = userData;
-              tmp.accessToken = res.data.accessToken;
-              setUserData(tmp);
-              publishAnnouncement();
-            })
-            .catch((err) => {
-              removeUserData();
-              history.push("/");
-            });
-        } else {
-          setAlert(true);
-          setError(true);
-          let errorMessage = "Error";
-          if (err.response.data.error) {
-            errorMessage = err.response.data.error;
-          }
-          setMessage(errorMessage);
-          setLoading(false);
-        }
-      });
-  };
-
-  const deleteAnnouncement = async (announcement) => {
-    setError(false);
-    setAlert(false);
-    setMessage("");
-    setLoading(true);
-    await axios
-      .delete("http://localhost:8000/announcement/delete", {
+      .delete("http://localhost:8000/guest/delete", {
         headers: {
           authorization: `Bearer ${userData.accessToken}`,
         },
-        data: announcement,
+        data: guest,
       })
       .then((res) => {
         setAlert(true);
@@ -183,7 +135,7 @@ const AnnouncementListPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              publishAnnouncement();
+              deleteGuest();
             })
             .catch((err) => {
               removeUserData();
@@ -214,13 +166,13 @@ const AnnouncementListPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"announcement-list"}
-      title={"Announcement"}
+      page={"guest-list"}
+      title={"Guest"}
     >
       {noEvent ? (
         <WarningNoEvent />
       ) : (
-        <AnnouncementList
+        <GuestList
           id={id}
           event={event}
           data={data}
@@ -228,12 +180,11 @@ const AnnouncementListPage = (props) => {
           setAlert={setAlert}
           error={error}
           message={message}
-          publishAnnouncement={publishAnnouncement}
-          deleteAnnouncement={deleteAnnouncement}
+          deleteGuest={deleteGuest}
         />
       )}
     </LayoutManageEvent>
   );
 };
 
-export default AnnouncementListPage;
+export default GuestListPage;

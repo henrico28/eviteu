@@ -13,12 +13,11 @@ import {
 } from "reactstrap";
 import { Wrapper } from "./style";
 
-const AddAnnouncement = (props) => {
+const AddGuest = (props) => {
   const history = useHistory();
   const [id] = useState(props.id);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState(0);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [alert, setAlert] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
@@ -26,12 +25,11 @@ const AddAnnouncement = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
-      announcementTitle: title,
-      announcementDescription: description,
-      announcementStatus: status,
+      userName: name,
+      userEmail: email,
       idEvent: id,
     };
-    props.addAnnouncement(data);
+    props.addGuest(data);
   };
 
   const handleSelect = (event) => {
@@ -40,30 +38,22 @@ const AddAnnouncement = (props) => {
     history.push(event.target.value);
   };
 
-  const handleTitle = (event) => {
-    setTitle(event.target.value);
+  const handleName = (event) => {
+    setName(event.target.value);
   };
 
-  const handleDescription = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const handleStatus = (event) => {
-    if (event.target.checked) {
-      setStatus(event.target.value);
-    } else {
-      setStatus(0);
-    }
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
   };
 
   return (
     <Wrapper>
-      <div className="wrapper-add-announcement">
+      <div className="wrapper-add-guest">
         <Container fluid>
           <Row>
             <Col>
-              <h4 className="text-muted pt-2 font-weight-light add-announcement-title">
-                Add Announcement
+              <h4 className="text-muted pt-2 font-weight-light add-guest-title">
+                Add Guest
               </h4>
               <hr className="mt-0" />
             </Col>
@@ -95,41 +85,26 @@ const AddAnnouncement = (props) => {
                   </Input>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="announcementTitle">Announcement Title</Label>
+                  <Label for="guestName">Guest Name</Label>
                   <Input
                     type="text"
-                    name="announcementTitle"
-                    value={title}
-                    onChange={handleTitle}
-                    placeholder="Enter announcement title"
+                    name="guestName"
+                    value={name}
+                    onChange={handleName}
+                    placeholder="Enter guest name"
                     required
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="announcementDescription">
-                    Announcement Description
-                  </Label>
+                  <Label for="guestEmail">Guest Email</Label>
                   <Input
-                    type="textarea"
-                    name="announcementDescription"
-                    value={description}
-                    onChange={handleDescription}
-                    placeholder="Enter announcement description"
+                    type="email"
+                    name="guestEmail"
+                    value={email}
+                    onChange={handleEmail}
+                    placeholder="Enter guest email"
                     required
                   />
-                </FormGroup>
-                <Label>Announcement Status</Label>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="announcementStatus"
-                      checked={status}
-                      onChange={handleStatus}
-                      value={1}
-                    />{" "}
-                    Publish
-                  </Label>
                 </FormGroup>
                 <div className="d-flex my-3 justify-content-center">
                   <Button className="btn-indigo">Create</Button>
@@ -143,4 +118,4 @@ const AddAnnouncement = (props) => {
   );
 };
 
-export default AddAnnouncement;
+export default AddGuest;

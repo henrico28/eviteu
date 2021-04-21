@@ -25,7 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
-const AnnouncementList = (props) => {
+const GuestList = (props) => {
   const history = useHistory();
   const [id] = useState(props.id);
   const [originalData] = useState(props.data);
@@ -34,11 +34,9 @@ const AnnouncementList = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
-  const [publishConfirmationModal, setPublishConfirmationModal] = useState(
-    false
-  );
+  const [inviteConfirmationModal, setInviteConfirmationModal] = useState(false);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
-  const [announcement, setAnnouncement] = useState("");
+  const [guest, setGuest] = useState("");
   const [alert, setAlert] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
@@ -58,9 +56,10 @@ const AnnouncementList = (props) => {
     let tmpData = originalData;
     if (query !== "") {
       tmpData = tmpData.filter((data) => {
-        return data.announcementTitle
-          .toLowerCase()
-          .includes(query.toLowerCase());
+        return (
+          data.userName.toLowerCase().includes(query.toLowerCase()) ||
+          data.userEmail.toLowerCase().includes(query.toLowerCase())
+        );
       });
     }
     setCurrentPage(1);
@@ -75,18 +74,18 @@ const AnnouncementList = (props) => {
     setNumberOfData(originalData.length);
   };
 
-  const togglePublishConfirmationModal = () => {
-    setPublishConfirmationModal(!publishConfirmationModal);
+  const toggleInviteConfirmationModal = () => {
+    setInviteConfirmationModal(!inviteConfirmationModal);
   };
 
   const toggleDeleteConfirmationModal = () => {
     setDeleteConfirmationModal(!deleteConfirmationModal);
   };
 
-  const handleConfirmation = (announcement, confirmation) => {
+  const handleConfirmation = (guest, confirmation) => {
     switch (confirmation) {
-      case "publish":
-        togglePublishConfirmationModal();
+      case "invite":
+        toggleInviteConfirmationModal();
         break;
       case "delete":
         toggleDeleteConfirmationModal();
@@ -95,99 +94,103 @@ const AnnouncementList = (props) => {
         console.log("Error");
         break;
     }
-    setAnnouncement(announcement);
+    setGuest(guest);
   };
 
-  const handlePublish = () => {
-    const data = {
-      idEvent: id,
-      idAnnouncement: announcement.idAnnouncement,
-      announcementStatus: announcement.announcementStatus ? 0 : 1,
-    };
-    props.publishAnnouncement(data);
+  const handleInvite = () => {
+    console.log("Invite");
+    // Do Something
   };
 
   const handleDelete = () => {
     const data = {
+      idUser: guest.idUser,
+      idGuest: guest.idGuest,
       idEvent: id,
-      idAnnouncement: announcement.idAnnouncement,
     };
-    props.deleteAnnouncement(data);
+    props.deleteGuest(data);
   };
 
-  const renderAnnouncement = () => {
+  const renderGuest = () => {
     if (originalData.length === 0) {
       return (
         <tr>
-          <td colSpan="5" className="text-center">
-            No announcement present.
+          <td colSpan="8" className="text-center">
+            No guest present.
           </td>
         </tr>
       );
     } else if (data.length === 0) {
       return (
         <tr>
-          <td colSpan="5" className="text-center">
-            No announcement with that title.
+          <td colSpan="8" className="text-center">
+            No guest with that name or email.
           </td>
         </tr>
       );
     } else {
       return (
         <>
-          {data
-            .slice(indexOfFirstPage, indexOfLastPage)
-            .map((announcement, idx) => {
-              return (
-                <tr key={announcement.idAnnouncement}>
-                  <td className="align-middle">{idx + 1}</td>
-                  <td className="align-middle">
-                    {announcement.announcementTitle}
-                  </td>
-                  <td className="align-middle text-wrap">
-                    {announcement.announcementDescription}
-                  </td>
-                  <td className="align-middle">
-                    {announcement.announcementStatus ? (
-                      <Badge color="success">Published</Badge>
-                    ) : (
-                      <Badge color="danger">Not published</Badge>
-                    )}
-                  </td>
-                  <td className="align-middle">
-                    <UncontrolledButtonDropdown>
-                      <DropdownToggle className="btn-indigo" caret>
-                        <FontAwesomeIcon icon={faCog} /> Actions
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem
-                          onClick={() => {
-                            handleConfirmation(announcement, "publish");
-                          }}
-                        >
-                          {announcement.announcementStatus
-                            ? "Unpublish"
-                            : "Publish"}
-                        </DropdownItem>
-                        <DropdownItem
-                          tag={Link}
-                          to={`/manage-event/edit-announcement/${announcement.idAnnouncement}`}
-                        >
-                          Edit
-                        </DropdownItem>
-                        <DropdownItem
-                          onClick={() => {
-                            handleConfirmation(announcement, "delete");
-                          }}
-                        >
-                          Delete
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledButtonDropdown>
-                  </td>
-                </tr>
-              );
-            })}
+          {data.slice(indexOfFirstPage, indexOfLastPage).map((guest, idx) => {
+            return (
+              <tr key={guest.idGuest}>
+                <td className="align-middle">{idx + 1}</td>
+                <td className="align-middle">{guest.userName}</td>
+                <td className="align-middle">{guest.userEmail}</td>
+                <td className="align-middle">{guest.qty}</td>
+                <td className="align-middle">
+                  {guest.status ? (
+                    <Badge color="success">Attending</Badge>
+                  ) : (
+                    <Badge color="danger">Not attending</Badge>
+                  )}
+                </td>
+                <td className="align-middle">
+                  {guest.invited ? (
+                    <Badge color="success">Invited</Badge>
+                  ) : (
+                    <Badge color="danger">Not invited</Badge>
+                  )}
+                </td>
+                <td className="align-middle">
+                  {guest.attend ? (
+                    <Badge color="success">Present</Badge>
+                  ) : (
+                    <Badge color="danger">Absent</Badge>
+                  )}
+                </td>
+                <td className="align-middle">
+                  <UncontrolledButtonDropdown>
+                    <DropdownToggle className="btn-indigo" caret>
+                      <FontAwesomeIcon icon={faCog} /> Actions
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem
+                        onClick={() => {
+                          handleConfirmation(guest, "invite");
+                        }}
+                      >
+                        {guest.invited ? "Re-Invite" : "Invite"}
+                      </DropdownItem>
+                      <DropdownItem
+                        tag={Link}
+                        to={`/manage-event/edit-guest/${guest.idGuest}`}
+                      >
+                        Edit
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={() => {
+                          handleConfirmation(guest, "delete");
+                        }}
+                      >
+                        Delete
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledButtonDropdown>
+                </td>
+              </tr>
+            );
+          })}
         </>
       );
     }
@@ -195,12 +198,12 @@ const AnnouncementList = (props) => {
 
   return (
     <Wrapper>
-      <div className="wrapper-announcement-list">
+      <div className="wrapper-guest-list">
         <Container fluid>
           <Row>
             <Col>
-              <h4 className="text-muted pt-2 font-weight-light announcement-list-title">
-                Announcement List
+              <h4 className="text-muted pt-2 font-weight-light guest-list-title">
+                Guest List
               </h4>
               <hr className="mt-0" />
             </Col>
@@ -218,7 +221,7 @@ const AnnouncementList = (props) => {
           </div>
           <Row>
             <Col md={6} className="d-flex">
-              <InputGroup className="announcement-list-event-select">
+              <InputGroup className="guest-list-event-select">
                 <Input
                   type="select"
                   name="event"
@@ -238,22 +241,23 @@ const AnnouncementList = (props) => {
                 </Input>
               </InputGroup>
               <Button
-                className="btn-indigo mx-2"
+                className="btn-indigo ml-2"
                 tag={Link}
-                to={`/manage-event/add-announcement/${id}`}
+                to={`/manage-event/add-guest/${id}`}
               >
-                Add Announcement
+                Add Guest
               </Button>
+              <Button className="btn-indigo ml-2">Invite All</Button>
             </Col>
-            <Col md={6} className="wrapper-announcement-list-search">
+            <Col md={6} className="wrapper-guest-list-search">
               <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="announcement-list-search-input">
+              <InputGroup className="guest-list-search-input">
                 <Input
                   type="text"
                   name="search"
                   value={search}
                   onChange={handleSearch}
-                  placeholder="Search announcement title here"
+                  placeholder="Search guest name or email here"
                 />
                 <Button
                   className="btn-indigo"
@@ -270,13 +274,16 @@ const AnnouncementList = (props) => {
               <thead>
                 <tr>
                   <th width="3%">No.</th>
-                  <th width="20%">Title</th>
-                  <th width="30%">Description</th>
-                  <th width="10%">Status</th>
-                  <th width="10%">Actions</th>
+                  <th width="20%">Name</th>
+                  <th width="20%">E-mail</th>
+                  <th width="10%">Num of People</th>
+                  <th width="10%">RSVP</th>
+                  <th width="10%">Invited</th>
+                  <th width="10%">Attendance</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>{renderAnnouncement()}</tbody>
+              <tbody>{renderGuest()}</tbody>
             </Table>
           </Row>
           <div className="d-flex justify-content-center">
@@ -289,27 +296,27 @@ const AnnouncementList = (props) => {
           </div>
         </Container>
         <Modal
-          isOpen={publishConfirmationModal}
-          toggle={togglePublishConfirmationModal}
+          isOpen={inviteConfirmationModal}
+          toggle={toggleInviteConfirmationModal}
           centered={true}
         >
-          <ModalHeader toggle={togglePublishConfirmationModal}>
+          <ModalHeader toggle={toggleInviteConfirmationModal}>
             Confirmation
           </ModalHeader>
           <ModalBody>
-            Are you sure you want to publish Announcement{" "}
-            {announcement.announcementTitle}?
+            Are you sure you want to {guest.invited ? "re-invite" : "invite"}{" "}
+            Guest {guest.userName}?
           </ModalBody>
           <ModalFooter>
             <Button
               className="btn-indigo"
               onClick={() => {
-                handlePublish();
+                handleInvite();
               }}
             >
               Yes
             </Button>
-            <Button onClick={togglePublishConfirmationModal} color="danger">
+            <Button onClick={toggleInviteConfirmationModal} color="danger">
               No
             </Button>
           </ModalFooter>
@@ -323,8 +330,7 @@ const AnnouncementList = (props) => {
             Confirmation
           </ModalHeader>
           <ModalBody>
-            Are you sure you want to delete Announcement{" "}
-            {announcement.announcementTitle}?
+            Are you sure you want to delete Guest {guest.userName}?
           </ModalBody>
           <ModalFooter>
             <Button
@@ -345,4 +351,4 @@ const AnnouncementList = (props) => {
   );
 };
 
-export default AnnouncementList;
+export default GuestList;
