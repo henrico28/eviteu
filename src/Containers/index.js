@@ -1,5 +1,6 @@
 // Export Pages Here
 export { default as NotFound } from "./NotFound";
+export { default as Error } from "./Error";
 export { default as WarningNoEvent } from "./WarningNoEvent";
 export { default as Layout } from "./_layout";
 export { default as LayoutManageEvent } from "./_layoutManageEvent";

@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, AssignEvent } from "../../Containers";
+import {
+  LayoutManageEvent,
+  NotFound,
+  Error,
+  AssignEvent,
+} from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -11,6 +16,7 @@ const AssignEventPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [errorRequest, setErrorRequest] = useState(false);
   const [committee, setCommittee] = useState([]);
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState(false);
@@ -39,11 +45,10 @@ const AssignEventPage = (props) => {
       } else {
         if (error === "No event found") {
           setNotFound(true);
-          setLoading(false);
         } else {
-          removeUserData();
-          history.push("/404");
+          setErrorRequest(true);
         }
+        setLoading(false);
       }
     };
 
@@ -69,7 +74,7 @@ const AssignEventPage = (props) => {
             })
             .catch((err) => {
               let error = "";
-              if (err.response.data.error) {
+              if (err.response && err.response.data.error) {
                 error = err.response.data.error;
               }
               errorHandling(error);
@@ -77,7 +82,7 @@ const AssignEventPage = (props) => {
         })
         .catch((err) => {
           let error = "";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             error = err.response.data.error;
           }
           errorHandling(error);
@@ -101,6 +106,7 @@ const AssignEventPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -123,7 +129,7 @@ const AssignEventPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -138,6 +144,10 @@ const AssignEventPage = (props) => {
 
   if (notFound) {
     return <NotFound />;
+  }
+
+  if (errorRequest) {
+    return <Error />;
   }
 
   return (

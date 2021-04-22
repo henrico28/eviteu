@@ -56,6 +56,7 @@ const LogIn = (props) => {
         let data = {
           email: email,
           name: res.data.name,
+          role: res.data.role,
           accessToken: res.data.accessToken,
           refreshToken: res.data.refreshToken,
         };

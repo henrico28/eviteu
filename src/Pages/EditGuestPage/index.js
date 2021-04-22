@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, EditGuest } from "../../Containers";
+import {
+  LayoutManageEvent,
+  NotFound,
+  Error,
+  EditGuest,
+} from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -11,6 +16,7 @@ const EditGuestPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [errorRequest, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
@@ -36,6 +42,7 @@ const EditGuestPage = (props) => {
         })
         .catch((err) => {
           if (
+            err.response &&
             err.response.data.error &&
             err.response.data.error === "jwt expired"
           ) {
@@ -55,8 +62,8 @@ const EditGuestPage = (props) => {
                 history.push("/");
               });
           } else {
-            removeUserData();
-            history.push("/404");
+            setErrorRequest(true);
+            setLoading(false);
           }
         });
     };
@@ -81,6 +88,7 @@ const EditGuestPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -103,7 +111,7 @@ const EditGuestPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -118,6 +126,10 @@ const EditGuestPage = (props) => {
 
   if (notFound) {
     return <NotFound />;
+  }
+
+  if (errorRequest) {
+    return <Error />;
   }
 
   return (

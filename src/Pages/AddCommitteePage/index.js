@@ -30,6 +30,7 @@ const AddCommitteePage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -52,7 +53,7 @@ const AddCommitteePage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);

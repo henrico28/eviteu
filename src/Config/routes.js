@@ -36,7 +36,7 @@ const routes = [
   { path: "/manage-event/announcement-list/:id?", component: AnnouncementList },
   { path: "/manage-event/add-announcement/:id", component: AddAnnouncement },
   { path: "/manage-event/edit-announcement/:id", component: EditAnnouncement },
-  { path: "/sandbox/:id?", component: SandBox },
+  { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];
 

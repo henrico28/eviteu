@@ -4,6 +4,7 @@ import { Loading } from "../../Components";
 import {
   LayoutManageEvent,
   NotFound,
+  Error,
   EditAnnouncement,
 } from "../../Containers";
 import axios from "axios";
@@ -15,6 +16,7 @@ const EditAnnouncementPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [errorRequst, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
@@ -40,6 +42,7 @@ const EditAnnouncementPage = (props) => {
         })
         .catch((err) => {
           if (
+            err.response &&
             err.response.data.error &&
             err.response.data.error === "jwt expired"
           ) {
@@ -59,8 +62,8 @@ const EditAnnouncementPage = (props) => {
                 history.push("/");
               });
           } else {
-            removeUserData();
-            history.push("/404");
+            setErrorRequest(true);
+            setLoading(false);
           }
         });
     };
@@ -85,6 +88,7 @@ const EditAnnouncementPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -107,7 +111,7 @@ const EditAnnouncementPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -122,6 +126,10 @@ const EditAnnouncementPage = (props) => {
 
   if (notFound) {
     return <NotFound />;
+  }
+
+  if (errorRequst) {
+    return <Error />;
   }
 
   return (

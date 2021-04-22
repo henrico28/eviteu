@@ -5,6 +5,7 @@ import {
   LayoutManageEvent,
   WarningNoEvent,
   NotFound,
+  Error,
   AnnouncementList,
 } from "../../Containers";
 import axios from "axios";
@@ -16,6 +17,7 @@ const AnnouncementListPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [errorRequest, setErrorRequest] = useState(false);
   const [noEvent, setNoEvent] = useState(false);
   const [event, setEvent] = useState([]);
   const [data, setData] = useState([]);
@@ -43,8 +45,8 @@ const AnnouncementListPage = (props) => {
             history.push("/");
           });
       } else {
-        removeUserData();
-        history.push("/404");
+        setErrorRequest(true);
+        setLoading(false);
       }
     };
 
@@ -83,7 +85,7 @@ const AnnouncementListPage = (props) => {
                 })
                 .catch((err) => {
                   let error = "";
-                  if (err.response.data.error) {
+                  if (err.response && err.response.data.error) {
                     error = err.response.data.error;
                   }
                   errorHandling(error);
@@ -93,7 +95,7 @@ const AnnouncementListPage = (props) => {
         })
         .catch((err) => {
           let error = "";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             error = err.response.data.error;
           }
           errorHandling(error);
@@ -120,6 +122,7 @@ const AnnouncementListPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -142,7 +145,7 @@ const AnnouncementListPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -171,6 +174,7 @@ const AnnouncementListPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -193,7 +197,7 @@ const AnnouncementListPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -208,6 +212,10 @@ const AnnouncementListPage = (props) => {
 
   if (notFound) {
     return <NotFound />;
+  }
+
+  if (errorRequest) {
+    return <Error />;
   }
 
   return (

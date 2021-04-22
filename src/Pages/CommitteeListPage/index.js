@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, CommitteeList } from "../../Containers";
+import { LayoutManageEvent, Error, CommitteeList } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -9,6 +9,7 @@ const CommitteeListPage = (props) => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
+  const [errorRequest, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
@@ -30,6 +31,7 @@ const CommitteeListPage = (props) => {
         })
         .catch((err) => {
           if (
+            err.response &&
             err.response.data.error &&
             err.response.data.error === "jwt expired"
           ) {
@@ -49,8 +51,8 @@ const CommitteeListPage = (props) => {
                 history.push("/");
               });
           } else {
-            removeUserData();
-            history.push("/");
+            setErrorRequest(true);
+            setLoading(false);
           }
         });
     };
@@ -78,6 +80,7 @@ const CommitteeListPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -100,7 +103,7 @@ const CommitteeListPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -111,6 +114,10 @@ const CommitteeListPage = (props) => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (errorRequest) {
+    return <Error />;
   }
 
   return (

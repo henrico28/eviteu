@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, EventList } from "../../Containers";
+import { LayoutManageEvent, Error, EventList } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -9,6 +9,7 @@ const EventListPage = (props) => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
+  const [errorRequest, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
   const [committee, setCommitee] = useState([]);
   const [alert, setAlert] = useState(false);
@@ -31,6 +32,7 @@ const EventListPage = (props) => {
         })
         .catch((err) => {
           if (
+            err.response &&
             err.response.data.error &&
             err.response.data.error === "jwt expired"
           ) {
@@ -50,8 +52,8 @@ const EventListPage = (props) => {
                 history.push("/");
               });
           } else {
-            removeUserData();
-            history.push("/");
+            setErrorRequest(true);
+            setLoading(false);
           }
         });
     };
@@ -79,6 +81,7 @@ const EventListPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -101,7 +104,7 @@ const EventListPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -120,6 +123,7 @@ const EventListPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -139,14 +143,18 @@ const EventListPage = (props) => {
               history.push("/");
             });
         } else {
-          removeUserData();
-          history.push("/");
+          setErrorRequest(true);
+          setLoading(false);
         }
       });
   };
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (errorRequest) {
+    return <Error />;
   }
 
   return (

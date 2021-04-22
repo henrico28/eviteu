@@ -4,6 +4,7 @@ import { Loading } from "../../Components";
 import {
   LayoutManageEvent,
   WarningNoEvent,
+  Error,
   GuestList,
   NotFound,
 } from "../../Containers";
@@ -16,6 +17,7 @@ const GuestListPage = (props) => {
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [errorRequest, setErrorRequest] = useState(false);
   const [noEvent, setNoEvent] = useState(false);
   const [event, setEvent] = useState([]);
   const [data, setData] = useState([]);
@@ -43,8 +45,8 @@ const GuestListPage = (props) => {
             history.push("/");
           });
       } else {
-        removeUserData();
-        history.push("/404");
+        setErrorRequest(true);
+        setLoading(false);
       }
     };
 
@@ -83,7 +85,7 @@ const GuestListPage = (props) => {
                 })
                 .catch((err) => {
                   let error = "";
-                  if (err.response.data.error) {
+                  if (err.response && err.response.data.error) {
                     error = err.response.data.error;
                   }
                   errorHandling(error);
@@ -93,7 +95,7 @@ const GuestListPage = (props) => {
         })
         .catch((err) => {
           let error = "";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             error = err.response.data.error;
           }
           errorHandling(error);
@@ -123,6 +125,7 @@ const GuestListPage = (props) => {
       })
       .catch((err) => {
         if (
+          err.response &&
           err.response.data.error &&
           err.response.data.error === "jwt expired"
         ) {
@@ -145,7 +148,7 @@ const GuestListPage = (props) => {
           setAlert(true);
           setError(true);
           let errorMessage = "Error";
-          if (err.response.data.error) {
+          if (err.response && err.response.data.error) {
             errorMessage = err.response.data.error;
           }
           setMessage(errorMessage);
@@ -160,6 +163,10 @@ const GuestListPage = (props) => {
 
   if (notFound) {
     return <NotFound />;
+  }
+
+  if (errorRequest) {
+    return <Error />;
   }
 
   return (

@@ -2,9 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { NavbarBrand, Nav, NavItem, NavLink, Button } from "reactstrap";
 import { Wrapper } from "./style";
+import useUserData from "../../LocalStorage/useUserData";
 import logo from "./../../Assets/Image/Profile/Logo.png";
 
 const SideBar = (props) => {
+  const { userData } = useUserData();
+
   return (
     <Wrapper>
       <div className={`left ${props.isOpen ? "active" : ""}`}>
@@ -13,7 +16,7 @@ const SideBar = (props) => {
             <NavbarBrand className="my-5 d-flex flex-column align-items-center">
               <img src={logo} className="sidebar-brand" alt="Logo EViteU" />
             </NavbarBrand>
-            <NavItem className="mt-2">
+            <NavItem className={`mt-2 ${userData.role !== 1 ? "d-none" : ""}`}>
               <NavLink
                 className={`text-white sidebar-menu p-3 ${
                   props.page === "event-list" ? "active" : ""
@@ -24,7 +27,7 @@ const SideBar = (props) => {
                 Event
               </NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
                   props.page === "guest-list" ? "active" : ""
@@ -35,7 +38,7 @@ const SideBar = (props) => {
                 Guest
               </NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
                   props.page === "committee-list" ? "active" : ""
@@ -46,7 +49,7 @@ const SideBar = (props) => {
                 Committee
               </NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
                   props.page === "announcement-list" ? "active" : ""
@@ -57,15 +60,26 @@ const SideBar = (props) => {
                 Announcement
               </NavLink>
             </NavItem>
-            <NavItem>
+            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
                   props.page === "lottery" ? "active" : ""
                 }`}
-                to="/manage-event/lottery"
+                to="/manage-event/lottery-list"
                 tag={Link}
               >
                 Lottery
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={` sidebar-menu p-3 ${
+                  props.page === "attendance-list" ? "active" : ""
+                }`}
+                to="/manage-event/attendance-list"
+                tag={Link}
+              >
+                Attendance
               </NavLink>
             </NavItem>
             <div className="wrapper-sidebar-logout mt-5">
