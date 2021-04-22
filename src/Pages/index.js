@@ -17,4 +17,6 @@ export { default as AssignEvent } from "./AssignEventPage";
 export { default as AnnouncementList } from "./AnnouncementListPage";
 export { default as AddAnnouncement } from "./AddAnnouncementPage";
 export { default as EditAnnouncement } from "./EditAnnouncementPage";
+export { default as LotteryList } from "./LotteryListPage";
+export { default as Lottery } from "./LotteryPage";
 export { default as SandBox } from "./SandBox";

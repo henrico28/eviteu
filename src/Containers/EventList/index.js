@@ -305,6 +305,9 @@ const EventList = (props) => {
           </ModalHeader>
           <ModalBody>
             <div>
+              <span className="font-weight-bold">Type:</span> {detail.typeName}
+            </div>
+            <div>
               <span className="font-weight-bold">Title:</span>{" "}
               {detail.eventTitle}
             </div>

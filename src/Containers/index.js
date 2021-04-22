@@ -21,3 +21,5 @@ export { default as AssignEvent } from "./AssignEvent";
 export { default as AnnouncementList } from "./AnnouncementList";
 export { default as AddAnnouncement } from "./AddAnnouncement";
 export { default as EditAnnouncement } from "./EditAnnouncement ";
+export { default as LotteryList } from "./LotteryList";
+export { default as Lottery } from "./Lottery ";

@@ -16,6 +16,8 @@ import {
   AnnouncementList,
   AddAnnouncement,
   EditAnnouncement,
+  LotteryList,
+  Lottery,
   SandBox,
 } from "../Pages";
 
@@ -36,6 +38,8 @@ const routes = [
   { path: "/manage-event/announcement-list/:id?", component: AnnouncementList },
   { path: "/manage-event/add-announcement/:id", component: AddAnnouncement },
   { path: "/manage-event/edit-announcement/:id", component: EditAnnouncement },
+  { path: "/manage-event/lottery-list", component: LotteryList },
+  { path: "/manage-event/lottery/:id", component: Lottery },
   { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];

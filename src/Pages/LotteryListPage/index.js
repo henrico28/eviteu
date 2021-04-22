@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, Error } from "../../Containers";
+import { LayoutManageEvent, Error, LotteryList } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -11,16 +11,13 @@ const LotteryListPage = (props) => {
   const [loading, setLoading] = useState(false);
   const [errorRequest, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
-  const [alert, setAlert] = useState(false);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState("");
   const { userData, setUserData, removeUserData } = useUserData();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/event/lists", {
+        .get("http://localhost:8000/event/wedding", {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -73,8 +70,10 @@ const LotteryListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"lottery"}
-      title={"Event"}
-    ></LayoutManageEvent>
+      title={"Lottery"}
+    >
+      <LotteryList data={data} />
+    </LayoutManageEvent>
   );
 };
 
