@@ -19,7 +19,7 @@ const SideBar = (props) => {
             <NavItem className={`mt-2 ${userData.role !== 1 ? "d-none" : ""}`}>
               <NavLink
                 className={`text-white sidebar-menu p-3 ${
-                  props.page === "event-list" ? "active" : ""
+                  props.page === "event" ? "active" : ""
                 }`}
                 to="/manage-event/event-list"
                 tag={Link}
@@ -30,7 +30,7 @@ const SideBar = (props) => {
             <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
-                  props.page === "guest-list" ? "active" : ""
+                  props.page === "guest" ? "active" : ""
                 }`}
                 to="/manage-event/guest-list"
                 tag={Link}
@@ -41,7 +41,7 @@ const SideBar = (props) => {
             <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
-                  props.page === "committee-list" ? "active" : ""
+                  props.page === "committee" ? "active" : ""
                 }`}
                 to="/manage-event/committee-list"
                 tag={Link}
@@ -52,7 +52,7 @@ const SideBar = (props) => {
             <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
-                  props.page === "announcement-list" ? "active" : ""
+                  props.page === "announcement" ? "active" : ""
                 }`}
                 to="/manage-event/announcement-list"
                 tag={Link}

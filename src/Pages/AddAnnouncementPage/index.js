@@ -137,7 +137,7 @@ const AddAnnouncementPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"announcement-list"}
+      page={"announcement"}
       title={"Announcement / Add Announcement"}
     >
       <AddAnnouncement

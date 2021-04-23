@@ -124,7 +124,7 @@ const CommitteeListPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"committee-list"}
+      page={"committee"}
       title={"Committee"}
     >
       <CommitteeList

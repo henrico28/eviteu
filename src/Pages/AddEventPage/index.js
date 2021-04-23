@@ -120,7 +120,7 @@ const AddEventPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"event-list"}
+      page={"event"}
       title={"Event / Add Event"}
     >
       <AddEvent

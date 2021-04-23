@@ -136,7 +136,7 @@ const EditAnnouncementPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"announcement-list"}
+      page={"announcement"}
       title={"Announcement / Edit Announcement"}
     >
       <EditAnnouncement

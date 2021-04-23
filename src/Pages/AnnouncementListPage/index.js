@@ -222,7 +222,7 @@ const AnnouncementListPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"announcement-list"}
+      page={"announcement"}
       title={"Announcement"}
     >
       {noEvent ? (

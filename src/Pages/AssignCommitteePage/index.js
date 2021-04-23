@@ -154,7 +154,7 @@ const AssignCommitteePage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"event-list"}
+      page={"event"}
       title={"Event / Assign Committee"}
     >
       <AssignCommittee
