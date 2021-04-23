@@ -19,4 +19,6 @@ export { default as AddAnnouncement } from "./AddAnnouncementPage";
 export { default as EditAnnouncement } from "./EditAnnouncementPage";
 export { default as LotteryList } from "./LotteryListPage";
 export { default as Lottery } from "./LotteryPage";
+export { default as AttendanceList } from "./AttendanceListPage";
+export { default as Attendance } from "./AttendancePage";
 export { default as SandBox } from "./SandBox";

@@ -74,7 +74,7 @@ const SideBar = (props) => {
             <NavItem>
               <NavLink
                 className={` sidebar-menu p-3 ${
-                  props.page === "attendance-list" ? "active" : ""
+                  props.page === "attendance" ? "active" : ""
                 }`}
                 to="/manage-event/attendance-list"
                 tag={Link}
