@@ -158,7 +158,12 @@ const EventList = (props) => {
                       <FontAwesomeIcon icon={faCog} /> Actions
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>Guest</DropdownItem>
+                      <DropdownItem
+                        tag={Link}
+                        to={`guest-list/${event.idEvent}`}
+                      >
+                        Guest
+                      </DropdownItem>
                       <DropdownItem
                         onClick={() => {
                           handleCommittee(event);
@@ -166,7 +171,12 @@ const EventList = (props) => {
                       >
                         Committee
                       </DropdownItem>
-                      <DropdownItem>Announcement</DropdownItem>
+                      <DropdownItem
+                        tag={Link}
+                        to={`announcement-list/${event.idEvent}`}
+                      >
+                        Announcement
+                      </DropdownItem>
                       <DropdownItem
                         onClick={() => {
                           handleDetail(event);

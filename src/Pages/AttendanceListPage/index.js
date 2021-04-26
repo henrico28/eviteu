@@ -57,7 +57,8 @@ const AttendanceListPage = (props) => {
           }
         });
     };
-    fetchData(); // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {

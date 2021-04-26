@@ -32,7 +32,10 @@ const CommitteeList = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
-  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [activateConfirmationModal, setActivateConfirmationModal] = useState(
+    false
+  );
+  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [committee, setCommittee] = useState("");
   const [alert, setAlert] = useState(props.alert);
   const [error] = useState(props.error);
@@ -66,13 +69,35 @@ const CommitteeList = (props) => {
     setNumberOfData(originalData.length);
   };
 
-  const toggleConfirmationModal = () => {
-    setConfirmationModal(!confirmationModal);
+  const toggleActivateConfirmationModal = () => {
+    setActivateConfirmationModal(!activateConfirmationModal);
   };
 
-  const handleConfirmation = (committee) => {
-    toggleConfirmationModal();
+  const toggleDeleteConfirmationModal = () => {
+    setDeleteConfirmationModal(!deleteConfirmationModal);
+  };
+
+  const handleConfirmation = (committee, confirmation) => {
+    switch (confirmation) {
+      case "activate":
+        toggleActivateConfirmationModal();
+        break;
+      case "delete":
+        toggleDeleteConfirmationModal();
+        break;
+      default:
+        console.log("Error");
+        break;
+    }
     setCommittee(committee);
+  };
+
+  const handleActivate = () => {
+    const data = {
+      idUser: committee.idUser,
+      idCommittee: committee.idCommittee,
+    };
+    props.activateCommittee(data);
   };
 
   const handleDelete = () => {
@@ -130,7 +155,11 @@ const CommitteeList = (props) => {
                         >
                           Assign
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem
+                          onClick={() => {
+                            handleConfirmation(committee, "activate");
+                          }}
+                        >
                           {committee.active ? "Re-Activate" : "Activate"}
                         </DropdownItem>
                         <DropdownItem
@@ -141,7 +170,7 @@ const CommitteeList = (props) => {
                         </DropdownItem>
                         <DropdownItem
                           onClick={() => {
-                            handleConfirmation(committee);
+                            handleConfirmation(committee, "delete");
                           }}
                         >
                           Delete
@@ -234,11 +263,36 @@ const CommitteeList = (props) => {
           </div>
         </Container>
         <Modal
-          isOpen={confirmationModal}
-          toggle={toggleConfirmationModal}
+          isOpen={activateConfirmationModal}
+          toggle={toggleActivateConfirmationModal}
           centered={true}
         >
-          <ModalHeader toggle={toggleConfirmationModal}>
+          <ModalHeader toggle={toggleActivateConfirmationModal}>
+            Confirmation
+          </ModalHeader>
+          <ModalBody>
+            Are you sure you want to activate Committee {committee.userName}?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="btn-indigo"
+              onClick={() => {
+                handleActivate();
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={toggleActivateConfirmationModal} color="danger">
+              No
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <Modal
+          isOpen={deleteConfirmationModal}
+          toggle={toggleDeleteConfirmationModal}
+          centered={true}
+        >
+          <ModalHeader toggle={toggleDeleteConfirmationModal}>
             Confirmation
           </ModalHeader>
           <ModalBody>
@@ -253,7 +307,7 @@ const CommitteeList = (props) => {
             >
               Yes
             </Button>
-            <Button onClick={toggleConfirmationModal} color="danger">
+            <Button onClick={toggleDeleteConfirmationModal} color="danger">
               No
             </Button>
           </ModalFooter>

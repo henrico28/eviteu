@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -19,56 +18,21 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "./style";
-import { Loading } from "../../Components";
-import useUserData from "../../LocalStorage/useUserData";
 
 const LogIn = (props) => {
-  const history = useHistory();
   const [type, setType] = useState("password");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [messageTitle, setMessageTitle] = useState("");
-  const [messageContent, setMessageContent] = useState("");
-  const { userData, setUserData } = useUserData();
-
-  useEffect(() => {
-    if (
-      userData.email &&
-      userData.name &&
-      userData.accessToken &&
-      userData.refreshToken
-    ) {
-      history.push("/manage-event/event-list");
-    }
-  });
+  const [modal, setModal] = useState(props.modal);
+  const [message] = useState(props.message);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
-    await axios
-      .post("http://localhost:8000/login", {
-        userEmail: email,
-        userPassword: password,
-      })
-      .then((res) => {
-        let data = {
-          email: email,
-          name: res.data.name,
-          role: res.data.role,
-          accessToken: res.data.accessToken,
-          refreshToken: res.data.refreshToken,
-        };
-        setUserData(data);
-        history.push("manage-event/event-list");
-      })
-      .catch((err) => {
-        setMessageTitle("Error");
-        setMessageContent(err.response.data.error);
-        setModal(true);
-        setLoading(false);
-      });
+    const data = {
+      userEmail: email,
+      userPassword: password,
+    };
+    props.logIn(data);
   };
 
   const handleEmail = (event) => {
@@ -86,10 +50,6 @@ const LogIn = (props) => {
   const toggleModal = () => {
     setModal(!modal);
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <Wrapper>
@@ -161,8 +121,8 @@ const LogIn = (props) => {
         </Row>
       </Container>
       <Modal isOpen={modal} toggle={toggleModal} centered={true}>
-        <ModalHeader toggle={toggleModal}>{messageTitle}</ModalHeader>
-        <ModalBody>{messageContent}</ModalBody>
+        <ModalHeader toggle={toggleModal}>Error</ModalHeader>
+        <ModalBody>{message}</ModalBody>
         <ModalFooter>
           <Button className="btn-indigo" onClick={toggleModal}>
             Close
