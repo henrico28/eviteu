@@ -25,7 +25,7 @@ import {
 
 const routes = [
   { path: "/signup", component: SignUp },
-  { path: "/login", component: LogIn },
+  { path: "/login/:token?", component: LogIn },
   { path: "/manage-event/event-list", component: EventList },
   { path: "/manage-event/add-event", component: AddEvent },
   { path: "/manage-event/edit-event/:id", component: EditEvent },
