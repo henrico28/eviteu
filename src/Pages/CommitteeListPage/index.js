@@ -60,6 +60,61 @@ const CommitteeListPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const activateAllCommittee = async () => {
+    setError(false);
+    setAlert(false);
+    setMessage("");
+    setLoading(true);
+    await axios
+      .put(
+        "http://localhost:8000/committee/activateAll",
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${userData.accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        setAlert(true);
+        setMessage(res.data.message);
+        setData(res.data.result);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (
+          err.response &&
+          err.response.data.error &&
+          err.response.data.error === "jwt expired"
+        ) {
+          axios
+            .post("http://localhost:8000/token", {
+              userEmail: userData.email,
+              refreshToken: userData.refreshToken,
+            })
+            .then((res) => {
+              let tmp = userData;
+              tmp.accessToken = res.data.accessToken;
+              setUserData(tmp);
+              deleteCommittee();
+            })
+            .catch((err) => {
+              removeUserData();
+              history.push("/");
+            });
+        } else {
+          setAlert(true);
+          setError(true);
+          let errorMessage = "Error";
+          if (err.response && err.response.data.error) {
+            errorMessage = err.response.data.error;
+          }
+          setMessage(errorMessage);
+          setLoading(false);
+        }
+      });
+  };
+
   const activateCommittee = async (committee) => {
     setError(false);
     setAlert(false);
@@ -183,6 +238,7 @@ const CommitteeListPage = (props) => {
         alert={alert}
         error={error}
         message={message}
+        activateAllCommittee={activateAllCommittee}
         activateCommittee={activateCommittee}
         deleteCommittee={deleteCommittee}
       />

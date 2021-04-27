@@ -92,6 +92,10 @@ const CommitteeList = (props) => {
     setCommittee(committee);
   };
 
+  const handleActivateAll = () => {
+    props.activateAllCommittee();
+  };
+
   const handleActivate = () => {
     const data = {
       idUser: committee.idUser,
@@ -214,7 +218,14 @@ const CommitteeList = (props) => {
               <Button className="btn-indigo" tag={Link} to="add-committee">
                 Add Committee
               </Button>
-              <Button className="btn-indigo mx-2">Activate All</Button>
+              <Button
+                className="btn-indigo mx-2"
+                onClick={() => {
+                  handleActivateAll();
+                }}
+              >
+                Activate All
+              </Button>
             </Col>
             <Col
               md={{ size: 6, offset: 2 }}
