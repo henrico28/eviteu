@@ -10,6 +10,10 @@ import {
   Input,
   Alert,
   FormFeedback,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { LocationSearch } from "../../Components";
 import { Wrapper } from "./style";
@@ -24,11 +28,13 @@ const AddEvent = (props) => {
   const [location, setLocation] = useState("");
   const [latlng, setLatLng] = useState([]);
   const [highlightImage, setHighlightImage] = useState([]);
-  const [primaryColor, setPrimaryColor] = useState("#000000");
-  const [secondaryColor, setSecondaryColor] = useState("#000000");
-  const [accentColor, setAccentColor] = useState("#000000");
+  const [primaryColor, setPrimaryColor] = useState("#F2EFE9");
+  const [secondaryColor, setSecondaryColor] = useState("#D9C8B4");
+  const [accentColor, setAccentColor] = useState("#A6783F");
+  const [textColor, setTextColor] = useState("#261711");
   const [max, setMax] = useState("");
   const [preview, setPreview] = useState(null);
+  const [modal, setModal] = useState(false);
   const [invalidImage, setInvalidImage] = useState("");
   const [alert] = useState(props.alert);
   const [error] = useState(props.error);
@@ -45,9 +51,10 @@ const AddEvent = (props) => {
     data.append("time", time);
     data.append("location", location);
     data.append("coordinates", latlng.lat + "&" + latlng.lng);
-    data.append("eventPrimary", primaryColor);
-    data.append("eventSecondary", secondaryColor);
-    data.append("eventAccent", accentColor);
+    data.append("primaryColor", primaryColor);
+    data.append("secondaryColor", secondaryColor);
+    data.append("accentColor", accentColor);
+    data.append("textColor", textColor);
     data.append("max", max);
     data.append("idType", type);
     props.addEvent(data);
@@ -107,8 +114,16 @@ const AddEvent = (props) => {
     setAccentColor(event.target.value);
   };
 
+  const handleTextColor = (event) => {
+    setTextColor(event.target.value);
+  };
+
   const handleMax = (event) => {
     setMax(event.target.value);
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -272,7 +287,24 @@ const AddEvent = (props) => {
                       />
                     </FormGroup>
                   </Col>
+                  <Col md={3}>
+                    <FormGroup>
+                      <Label for="eventTextColor">Text Color</Label>
+                      <Input
+                        type="color"
+                        name="eventTextColor"
+                        value={textColor}
+                        onChange={handleTextColor}
+                        required
+                      />
+                    </FormGroup>
+                  </Col>
                 </Row>
+                <div className="d-flex justify-content-center">
+                  <Button className="btn-indigo" onClick={toggleModal}>
+                    Preview Color Scheme
+                  </Button>
+                </div>
                 <FormGroup>
                   <Label for="eventMaxGuest">
                     Max Number Each Guest can Bring
@@ -296,6 +328,32 @@ const AddEvent = (props) => {
             </Col>
           </Row>
         </Container>
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>Color Scheme Preview</ModalHeader>
+          <ModalBody>
+            <div style={{ backgroundColor: `${primaryColor}` }}>
+              <p>Primary Color</p>
+              <div style={{ backgroundColor: `${secondaryColor}` }}>
+                <p>Secondary Color</p>
+                <p style={{ color: `${textColor}` }}>Text Color</p>
+                <Button
+                  style={{
+                    color: `${textColor}`,
+                    backgroundColor: `${accentColor}`,
+                    borderColor: `${accentColor}`,
+                  }}
+                >
+                  Button
+                </Button>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button className="btn-indigo" onClick={toggleModal}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </Wrapper>
   );

@@ -359,10 +359,10 @@ const EventList = (props) => {
             <div>
               <div>
                 <span className="font-weight-bold">Primary Color:</span>{" "}
-                {detail.eventPrimary}
+                {detail.primaryColor}
                 <FontAwesomeIcon
                   icon={faSquare}
-                  style={{ color: `${detail.eventPrimary}` }}
+                  style={{ color: `${detail.primaryColor}` }}
                   className="mx-1"
                 />
               </div>
@@ -370,10 +370,10 @@ const EventList = (props) => {
             <div>
               <div>
                 <span className="font-weight-bold">Secondary Color:</span>{" "}
-                {detail.eventSecondary}
+                {detail.secondaryColor}
                 <FontAwesomeIcon
                   icon={faSquare}
-                  style={{ color: `${detail.eventSecondary}` }}
+                  style={{ color: `${detail.secondaryColor}` }}
                   className="mx-1"
                 />
               </div>
@@ -381,10 +381,21 @@ const EventList = (props) => {
             <div>
               <div>
                 <span className="font-weight-bold">Accent Color:</span>{" "}
-                {detail.eventAccent}
+                {detail.accentColor}
                 <FontAwesomeIcon
                   icon={faSquare}
-                  style={{ color: `${detail.eventAccent}` }}
+                  style={{ color: `${detail.accentColor}` }}
+                  className="mx-1"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <span className="font-weight-bold">Text Color:</span>{" "}
+                {detail.textColor}
+                <FontAwesomeIcon
+                  icon={faSquare}
+                  style={{ color: `${detail.textColor}` }}
                   className="mx-1"
                 />
               </div>

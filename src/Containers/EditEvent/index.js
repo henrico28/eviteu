@@ -10,6 +10,10 @@ import {
   Input,
   Alert,
   FormFeedback,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { LocationSearch } from "../../Components";
 import { Wrapper } from "./style";
@@ -31,17 +35,20 @@ const EditEvent = (props) => {
     lng: tmpLatLng[1],
   });
   const [highlightImage, setHighlightImage] = useState(null);
-  const [primaryColor, setPrimaryColor] = useState(props.data.eventPrimary);
+  const [primaryColor, setPrimaryColor] = useState(props.data.primaryColor);
   const [secondaryColor, setSecondaryColor] = useState(
-    props.data.eventSecondary
+    props.data.secondaryColor
   );
-  const [accentColor, setAccentColor] = useState(props.data.eventAccent);
+  const [accentColor, setAccentColor] = useState(props.data.accentColor);
+  const [textColor, setTextColor] = useState(props.data.textColor);
   const [max, setMax] = useState(props.data.max);
   const [preview, setPreview] = useState(null);
+  const [modal, setModal] = useState(false);
   const [invalidImage, setInvalidImage] = useState("");
   const [alert] = useState(props.alert);
   const [error] = useState(props.error);
   const [message] = useState(props.message);
+  const [dif] = useState(Date.now());
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -55,9 +62,10 @@ const EditEvent = (props) => {
     data.append("time", time);
     data.append("location", location);
     data.append("coordinates", latlng.lat + "&" + latlng.lng);
-    data.append("eventPrimary", primaryColor);
-    data.append("eventSecondary", secondaryColor);
-    data.append("eventAccent", accentColor);
+    data.append("primaryColor", primaryColor);
+    data.append("secondaryColor", secondaryColor);
+    data.append("accentColor", accentColor);
+    data.append("textColor", textColor);
     data.append("max", max);
     data.append("idType", type);
     data.append("eventHighlight", highlightImage);
@@ -118,8 +126,16 @@ const EditEvent = (props) => {
     setAccentColor(event.target.value);
   };
 
+  const handleTextColor = (event) => {
+    setTextColor(event.target.value);
+  };
+
   const handleMax = (event) => {
     setMax(event.target.value);
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -241,9 +257,7 @@ const EditEvent = (props) => {
                   <img
                     src={
                       props.data.eventHighlight && preview === null
-                        ? `http://localhost:8000/images/${
-                            props.data.eventHighlight
-                          }?${Date.now()}`
+                        ? `http://localhost:8000/images/${props.data.eventHighlight}?${dif}`
                         : preview
                     }
                     className={`edit-event-preview-image mt-3 ${
@@ -290,7 +304,24 @@ const EditEvent = (props) => {
                       />
                     </FormGroup>
                   </Col>
+                  <Col md={3}>
+                    <FormGroup>
+                      <Label for="eventTextColor">Text Color</Label>
+                      <Input
+                        type="color"
+                        name="eventTextColor"
+                        value={textColor}
+                        onChange={handleTextColor}
+                        required
+                      />
+                    </FormGroup>
+                  </Col>
                 </Row>
+                <div className="d-flex justify-content-center">
+                  <Button className="btn-indigo" onClick={toggleModal}>
+                    Preview Color Scheme
+                  </Button>
+                </div>
                 <FormGroup>
                   <Label for="eventMaxGuest">
                     Max Number Each Guest can Bring
@@ -314,6 +345,32 @@ const EditEvent = (props) => {
             </Col>
           </Row>
         </Container>
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>Color Scheme Preview</ModalHeader>
+          <ModalBody>
+            <div style={{ backgroundColor: `${primaryColor}` }}>
+              <p>Primary Color</p>
+              <div style={{ backgroundColor: `${secondaryColor}` }}>
+                <p>Secondary Color</p>
+                <p style={{ color: `${textColor}` }}>Text Color</p>
+                <Button
+                  style={{
+                    color: `${textColor}`,
+                    backgroundColor: `${accentColor}`,
+                    borderColor: `${accentColor}`,
+                  }}
+                >
+                  Button
+                </Button>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button className="btn-indigo" onClick={toggleModal}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </Wrapper>
   );
