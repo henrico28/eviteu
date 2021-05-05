@@ -143,6 +143,7 @@ const SignUp = (props) => {
                     value={password}
                     onChange={handlePassword}
                     placeholder="Enter Password"
+                    minLength="10"
                     required
                   />
                   <Button

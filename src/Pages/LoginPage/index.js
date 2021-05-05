@@ -33,6 +33,8 @@ const LogInPage = (props) => {
             history.push("/manage-event/event-list");
           } else if (data.role === 2) {
             history.push("/manage-event/attendance-list");
+          } else if (data.role === 3) {
+            history.push("/event");
           }
         })
         .catch((err) => {
@@ -78,6 +80,8 @@ const LogInPage = (props) => {
           history.push("/manage-event/event-list");
         } else if (data.role === 2) {
           history.push("/manage-event/attendance-list");
+        } else if (data.role === 3) {
+          history.push("/event");
         }
       })
       .catch((err) => {
