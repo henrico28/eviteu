@@ -96,7 +96,7 @@ const CommitteeListPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              deleteCommittee();
+              activateAllCommittee();
             })
             .catch((err) => {
               removeUserData();
@@ -147,7 +147,7 @@ const CommitteeListPage = (props) => {
               let tmp = userData;
               tmp.accessToken = res.data.accessToken;
               setUserData(tmp);
-              deleteCommittee();
+              activateCommittee();
             })
             .catch((err) => {
               removeUserData();

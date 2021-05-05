@@ -73,6 +73,9 @@ const LogIn = (props) => {
           </Col>
           <Col md={{ size: 5, offset: 1 }}>
             <Form onSubmit={handleSubmit}>
+              <div>
+                <h1 className="text-center text-indigo">Log In</h1>
+              </div>
               <FormGroup>
                 <Label for="email">E-mail</Label>
                 <Input

@@ -97,9 +97,20 @@ const GuestList = (props) => {
     setGuest(guest);
   };
 
+  const handleInviteAll = () => {
+    const data = {
+      idEvent: id,
+    };
+    props.inviteAllGuest(data);
+  };
+
   const handleInvite = () => {
-    console.log("Invite");
-    // Do Something
+    const data = {
+      idUser: guest.idUser,
+      idGuest: guest.idGuest,
+      idEvent: guest.idEvent,
+    };
+    props.inviteGuest(data);
   };
 
   const handleDelete = () => {
@@ -247,7 +258,14 @@ const GuestList = (props) => {
               >
                 Add Guest
               </Button>
-              <Button className="btn-indigo ml-2">Invite All</Button>
+              <Button
+                className="btn-indigo ml-2"
+                onClick={() => {
+                  handleInviteAll();
+                }}
+              >
+                Invite All
+              </Button>
             </Col>
             <Col md={6} className="wrapper-guest-list-search">
               <Label className="mt-1 mr-2 text-muted">Search :</Label>

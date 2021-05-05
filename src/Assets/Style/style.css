@@ -6,9 +6,13 @@
 }
 
 .btn-indigo:not(.disabled):not(.active):hover {
-  background-color: #570ecc;
+  background-color: var(--indigo);
 }
 
 .btn-indigo:not(.disabled):not(.active):focus {
-  background-color: #570ecc;
+  background-color: var(--indigo);
+}
+
+.text-indigo {
+  color: var(--indigo);
 }
