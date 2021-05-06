@@ -1,11 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Wrapper } from "./style";
-
+import useUserData from "../../LocalStorage/useUserData";
 import notFoundIllusatrion from "../../Assets/Image/Profile/404.svg";
 
 const NotFound = (props) => {
+  const history = useHistory();
+  const { removeUserData } = useUserData();
+
+  const handleHomePage = () => {
+    history.push("/");
+    removeUserData();
+  };
+
   return (
     <Wrapper>
       <Container className="wrapper-notfound" fluid>
@@ -24,7 +32,7 @@ const NotFound = (props) => {
               </h3>
             </Row>
             <Row className="justify-content-center my-4">
-              <Button tag={Link} to="/" className="btn-indigo">
+              <Button onClick={handleHomePage} className="btn-indigo">
                 Go to Homepage
               </Button>
             </Row>

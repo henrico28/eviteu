@@ -1,10 +1,10 @@
 import React from "react";
-import { Error } from "../../Containers";
+import { DisplayLocation } from "../../Components";
 
 const SandBox = (props) => {
   return (
     <React.Fragment>
-      <Error />
+      <DisplayLocation />
     </React.Fragment>
   );
 };

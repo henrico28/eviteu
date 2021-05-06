@@ -22,10 +22,10 @@ const LayoutManageEvent = (props) => {
       })
       .then((res) => {
         removeUserData();
-        history.push("../..");
+        history.push("/");
       })
       .catch((err) => {
-        history.push("../..");
+        history.push("/");
       });
   };
 

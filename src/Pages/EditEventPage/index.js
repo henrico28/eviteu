@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, Error, EditEvent } from "../../Containers";
+import {
+  LayoutManageEvent,
+  Error,
+  EditEvent,
+  NotFound,
+} from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
@@ -10,6 +15,7 @@ const EditEventPage = (props) => {
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [errorRequest, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
   const [type, setType] = useState([]);
@@ -52,7 +58,8 @@ const EditEventPage = (props) => {
         })
         .then((res) => {
           if (res.data.length === 0) {
-            history.push("/404");
+            setNotFound(true);
+            setLoading(false);
           } else {
             setData(res.data.result[0]);
             axios
@@ -137,6 +144,10 @@ const EditEventPage = (props) => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (notFound) {
+    return <NotFound />;
   }
 
   if (errorRequest) {

@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import { GoogleApiWrapper } from "google-maps-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "./style";
@@ -73,4 +74,7 @@ const LocationSearch = (props) => {
   );
 };
 
-export default LocationSearch;
+// export default LocationSearch;
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyBTyGbzGGz2Qiv2yTCGsQvRZu4BCbNF29M",
+})(LocationSearch);

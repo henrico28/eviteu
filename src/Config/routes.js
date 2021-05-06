@@ -20,6 +20,7 @@ import {
   Lottery,
   AttendanceList,
   Attendance,
+  Event,
   SandBox,
 } from "../Pages";
 
@@ -44,6 +45,7 @@ const routes = [
   { path: "/manage-event/lottery/:id", component: Lottery },
   { path: "/manage-event/attendance-list", component: AttendanceList },
   { path: "/manage-event/attendance/:id", component: Attendance },
+  { path: "/event", component: Event },
   { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];

@@ -21,4 +21,5 @@ export { default as LotteryList } from "./LotteryListPage";
 export { default as Lottery } from "./LotteryPage";
 export { default as AttendanceList } from "./AttendanceListPage";
 export { default as Attendance } from "./AttendancePage";
+export { default as Event } from "./EventPage";
 export { default as SandBox } from "./SandBox";
