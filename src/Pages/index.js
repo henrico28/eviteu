@@ -23,4 +23,5 @@ export { default as AttendanceList } from "./AttendanceListPage";
 export { default as Attendance } from "./AttendancePage";
 export { default as Event } from "./EventPage";
 export { default as EventAnnouncementList } from "./EventAnnouncementListPage";
+export { default as EventAnnouncementDetail } from "./EventAnnouncementDetailPage";
 export { default as SandBox } from "./SandBox";

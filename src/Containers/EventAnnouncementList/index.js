@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Container, Row, Col, Button, Label } from "reactstrap";
 import { Pagination } from "../../Components";
 import { Wrapper } from "./style";
@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const EventAnnouncementList = (props) => {
+  const history = useHistory();
   const [event] = useState(props.data);
   const [announcements] = useState(props.announcement);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +38,11 @@ const EventAnnouncementList = (props) => {
                   key={announcement.idAnnouncement}
                   className="event-announcement-list-announcement event-announcement-list-text my-3"
                   md={4}
+                  onClick={() => {
+                    history.push(
+                      `/event/announcement-detail/${announcement.idAnnouncement}`
+                    );
+                  }}
                 >
                   <h4 className="text-center font-weight-bold">
                     {announcement.announcementTitle}

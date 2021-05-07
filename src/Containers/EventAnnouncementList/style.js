@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   .wrapper-event-announcement-list {
+    overflow: hidden;
+
     .event-announcement-list-back-button {
       left: 0;
       top: 0;
@@ -18,6 +20,7 @@ export const Wrapper = styled.div`
 
       .event-announcement-list-announcement {
         min-height: 30vh;
+        cursor: pointer;
       }
     }
 
