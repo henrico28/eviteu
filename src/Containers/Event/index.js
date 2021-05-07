@@ -31,7 +31,7 @@ const Event = (props) => {
   );
   const [detail, setDetail] = useState({});
   const [modal, setModal] = useState(false);
-  const [step, setStep] = useState(props.step);
+  const [step, setStep] = useState(props.step ? props.step : 0);
   const [qty, setQty] = useState(event.qty ? event.qty : 0);
 
   const toggleModal = () => {
@@ -138,6 +138,7 @@ const Event = (props) => {
                     onClick={() => {
                       setStep(1);
                     }}
+                    disabled={props.preview}
                   >
                     Yes
                   </Button>
@@ -279,6 +280,7 @@ const Event = (props) => {
             onClick={() => {
               props.logOut();
             }}
+            disabled={props.preview}
           >
             Log Out
           </Button>

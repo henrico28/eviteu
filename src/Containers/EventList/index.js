@@ -197,6 +197,12 @@ const EventList = (props) => {
                       >
                         Delete
                       </DropdownItem>
+                      <DropdownItem
+                        tag={Link}
+                        to={`/manage-event/preview-event/${event.idEvent}`}
+                      >
+                        Preview
+                      </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledButtonDropdown>
                 </td>

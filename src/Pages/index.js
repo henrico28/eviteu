@@ -7,6 +7,7 @@ export { default as EventList } from "./EventListPage";
 export { default as AddEvent } from "./AddEventPage";
 export { default as EditEvent } from "./EditEventPage";
 export { default as AssignCommittee } from "./AssignCommitteePage";
+export { default as PreviewEvent } from "./PreviewEventPage";
 export { default as GuestList } from "./GuestListPage";
 export { default as AddGuest } from "./AddGuestPage";
 export { default as EditGuest } from "./EditGuestPage";

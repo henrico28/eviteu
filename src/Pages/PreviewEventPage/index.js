@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { Container, Button } from "reactstrap";
 import { Loading } from "../../Components";
-import { Error, NotFound, EventAnnouncementDetail } from "../../Containers";
+import { Error, NotFound, Event } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
-const EventAnnouncementListPage = (props) => {
+const PreviewEventPage = (props) => {
   const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ const EventAnnouncementListPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/announcement/published/${id}`, {
+        .get(`http://localhost:8000/event/detail/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -76,9 +77,14 @@ const EventAnnouncementListPage = (props) => {
 
   return (
     <React.Fragment>
-      <EventAnnouncementDetail data={data} />
+      <Container className="bg-dark p-2" fluid>
+        <Button className="btn-indigo" tag={Link} to="/manage-event/event-list">
+          Back
+        </Button>
+      </Container>
+      <Event data={data} preview={true} />
     </React.Fragment>
   );
 };
 
-export default EventAnnouncementListPage;
+export default PreviewEventPage;
