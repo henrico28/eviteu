@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +19,11 @@ const Lottery = (props) => {
   return (
     <Wrapper>
       <Container className="wrapper-lottery" fluid>
-        <Button className="position-absolute lottery-back-button btn-indigo">
+        <Button
+          className="position-absolute lottery-back-button btn-indigo"
+          tag={Link}
+          to="/manage-event/lottery-list"
+        >
           <FontAwesomeIcon icon={faChevronLeft} /> Back
         </Button>
         <Row className="min-vh-100 align-items-center justify-content-center">

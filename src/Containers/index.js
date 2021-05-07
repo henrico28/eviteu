@@ -25,6 +25,7 @@ export { default as LotteryList } from "./LotteryList";
 export { default as Lottery } from "./Lottery ";
 export { default as AttendanceList } from "./AttendanceList";
 export { default as Attendance } from "./Attendance";
+export { default as QrScanAttendance } from "./QrScanAttendance";
 export { default as Event } from "./Event";
 export { default as EventAnnouncementList } from "./EventAnnouncementList";
 export { default as EventAnnouncementDetail } from "./EventAnnouncementDetail";

@@ -90,7 +90,11 @@ const AttendanceList = (props) => {
                   >
                     <FontAwesomeIcon icon={faList} />
                   </Button>
-                  <Button className="btn-indigo mx-1">
+                  <Button
+                    className="btn-indigo mx-1"
+                    tag={Link}
+                    to={`/manage-event/qrscan/${event.idEvent}`}
+                  >
                     <FontAwesomeIcon icon={faQrcode} />
                   </Button>
                 </td>

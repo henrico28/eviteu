@@ -21,6 +21,7 @@ import {
   Lottery,
   AttendanceList,
   Attendance,
+  QrScanAttendance,
   Event,
   EventAnnouncementList,
   EventAnnouncementDetail,
@@ -49,6 +50,7 @@ const routes = [
   { path: "/manage-event/lottery/:id", component: Lottery },
   { path: "/manage-event/attendance-list", component: AttendanceList },
   { path: "/manage-event/attendance/:id", component: Attendance },
+  { path: "/manage-event/qrscan/:id", component: QrScanAttendance },
   { path: "/event", component: Event },
   { path: "/event/announcement-list", component: EventAnnouncementList },
   {
