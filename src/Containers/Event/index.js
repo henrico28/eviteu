@@ -259,7 +259,7 @@ const Event = (props) => {
     <Wrapper>
       <div className="wrapper-event">
         <Container
-          className="min-vh-100"
+          className="min-vh-100 d-flex flex-column"
           style={{
             color: `${event.textColor}`,
             backgroundColor: `${event.primaryColor}`,
@@ -280,7 +280,7 @@ const Event = (props) => {
             Log Out
           </Button>
           <Row
-            className="wrapper-event-highlight align-items-center justify-content-center"
+            className="wrapper-event-highlight event-highlight align-items-center justify-content-center"
             style={{
               backgroundImage: `url(http://localhost:8000/images/${event.eventHighlight})`,
               textAlign: "center",
@@ -303,7 +303,7 @@ const Event = (props) => {
               </div>
             </Col>
           </Row>
-          <Row className="wrapper-event-content align-items-center justify-content-center">
+          <Row className="wrapper-event-content event-description align-items-center justify-content-center">
             <Col className="d-flex justify-content-center" md={5}>
               <div
                 className="d-inline-block py-1 px-2"
@@ -323,7 +323,7 @@ const Event = (props) => {
             </Col>
           </Row>
           <Row
-            className="wrapper-event-content align-items-center justify-content-center"
+            className="wrapper-event-content event-datetime-location align-items-center justify-content-center"
             style={{ backgroundColor: `${event.secondaryColor}` }}
           >
             <Col md={{ size: 5 }}>
@@ -364,7 +364,7 @@ const Event = (props) => {
               />
             </Col>
           </Row>
-          <Container className="py-5" fluid>
+          <Container className="py-5 event-announcement" fluid>
             <Row className="justify-content-center">
               <Col className="d-flex justify-content-center" md={12}>
                 <div
@@ -401,13 +401,13 @@ const Event = (props) => {
           </Container>
           <Row
             id="rsvp"
-            className="wrapper-event-content align-items-center justify-content-center"
+            className="wrapper-event-content event-rsvp align-items-center justify-content-center"
             style={{ backgroundColor: `${event.secondaryColor}` }}
           >
             {renderRSVP()}
           </Row>
           <Row
-            className="align-items-center justify-content-center  p-3"
+            className="align-items-center event-contacts justify-content-center  p-3"
             style={{ backgroundColor: `${event.accentColor}` }}
           >
             <Col>

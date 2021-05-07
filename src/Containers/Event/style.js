@@ -75,6 +75,30 @@ export const Wrapper = styled.div`
       .wrapper-event-contacts {
         height: 15vh;
       }
+
+      .event-highlight {
+        order: 1;
+      }
+
+      .event-description {
+        order: 3;
+      }
+
+      .event-datetime-location {
+        order: 4;
+      }
+
+      .event-announcement {
+        order: 5;
+      }
+
+      .event-rsvp {
+        order: 2;
+      }
+
+      .event-contacts {
+        order: 6;
+      }
     }
 
     @media only screen and (min-width: 800px) {
