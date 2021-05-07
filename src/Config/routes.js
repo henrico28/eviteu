@@ -21,6 +21,7 @@ import {
   AttendanceList,
   Attendance,
   Event,
+  EventAnnouncementList,
   SandBox,
 } from "../Pages";
 
@@ -46,6 +47,7 @@ const routes = [
   { path: "/manage-event/attendance-list", component: AttendanceList },
   { path: "/manage-event/attendance/:id", component: Attendance },
   { path: "/event", component: Event },
+  { path: "/event/announcement-list", component: EventAnnouncementList },
   { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -21,7 +22,9 @@ import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const Event = (props) => {
   const [event] = useState(props.data);
-  const [announcements] = useState(props.announcement);
+  const [announcements] = useState(
+    props.announcement ? props.announcement : []
+  );
   const [count] = useState(window.outerWidth <= 600 ? 1 : 3);
   const [latLng] = useState(
     event.coordinates ? event.coordinates.split("&") : []
@@ -393,6 +396,8 @@ const Event = (props) => {
                     borderColor: `${event.accentColor}`,
                   }}
                   disabled={announcements.length === 0}
+                  tag={Link}
+                  to="/event/announcement-list"
                 >
                   Show More
                 </Button>

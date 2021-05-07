@@ -45,7 +45,7 @@ const PaginationComponent = (props) => {
 
   return (
     <Wrapper>
-      <div className="wrapper-pagination">
+      <div className={`${props.backgroundColor ? "" : "wrapper-pagination"}`}>
         <Pagination size="md">
           {/* PREVIOUS BUTTON */}
           <PaginationItem

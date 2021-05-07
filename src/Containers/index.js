@@ -26,3 +26,4 @@ export { default as Lottery } from "./Lottery ";
 export { default as AttendanceList } from "./AttendanceList";
 export { default as Attendance } from "./Attendance";
 export { default as Event } from "./Event";
+export { default as EventAnnouncementList } from "./EventAnnouncementList";
