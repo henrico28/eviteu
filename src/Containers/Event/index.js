@@ -1,7 +1,23 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button, Label } from "reactstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Label,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Input,
+} from "reactstrap";
 import { DisplayLocation } from "../../Components";
+import QRCode from "react-qr-code";
 import { Wrapper } from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const Event = (props) => {
   const [event] = useState(props.data);
@@ -10,6 +26,42 @@ const Event = (props) => {
   const [latLng] = useState(
     event.coordinates ? event.coordinates.split("&") : []
   );
+  const [detail, setDetail] = useState({});
+  const [modal, setModal] = useState(false);
+  const [step, setStep] = useState(props.step);
+  const [qty, setQty] = useState(event.qty ? event.qty : 0);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  const handleNotAttend = () => {
+    const data = {
+      qty: 0,
+      status: 0,
+    };
+    setStep(0);
+    props.rsvpGuest(data);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      qty: qty,
+      status: 1,
+    };
+    setStep(2);
+    props.rsvpGuest(data);
+  };
+
+  const handleDetailAnnouncement = (announcement) => {
+    setDetail(announcement);
+    toggleModal();
+  };
+
+  const handleQty = (event) => {
+    setQty(event.target.value);
+  };
 
   const renderAnnouncement = () => {
     if (announcements.length === 0) {
@@ -29,9 +81,12 @@ const Event = (props) => {
               i++;
               return (
                 <Col
-                  className="mx-4 event-text"
+                  className="mx-4 wrapper-event-announcement"
                   key={announcement.idAnnouncement}
                   md={3}
+                  onClick={() => {
+                    handleDetailAnnouncement(announcement);
+                  }}
                 >
                   <h4 className="text-center font-weight-bold">
                     {announcement.announcementTitle}
@@ -51,6 +106,152 @@ const Event = (props) => {
           })}
         </>
       );
+    }
+  };
+
+  const renderRSVP = () => {
+    switch (step) {
+      case 0:
+        return (
+          <Col xs={{ order: 1, size: 8 }} md={5}>
+            <div
+              className="p-4"
+              style={{ backgroundColor: `${event.primaryColor}` }}
+            >
+              <div className="my-3">
+                <h3 className="text-center event-description-title">RSVP</h3>
+              </div>
+              <div className="d-flex justify-content-center flex-column">
+                <Label className="text-center event-text ">
+                  Are you attending?
+                </Label>
+                <div className="d-flex justify-content-center my-2">
+                  <Button
+                    style={{
+                      color: `${event.textColor}`,
+                      backgroundColor: `${event.accentColor}`,
+                      borderColor: `${event.accentColor}`,
+                    }}
+                    onClick={() => {
+                      setStep(1);
+                    }}
+                  >
+                    Yes
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Col>
+        );
+      case 1:
+        return (
+          <Col xs={{ order: 1, size: 8 }} md={5}>
+            <div
+              className="p-4"
+              style={{ backgroundColor: `${event.primaryColor}` }}
+            >
+              <div className="my-3">
+                <h3 className="text-center event-description-title">RSVP</h3>
+              </div>
+              <div className="d-flex justify-content-center flex-column">
+                <Form onSubmit={handleSubmit}>
+                  <FormGroup>
+                    <Label className="text-center event-text ">
+                      How many are you bringing?
+                    </Label>
+                    <Input
+                      type="number"
+                      onChange={handleQty}
+                      value={qty}
+                      min="1"
+                      max={event.max}
+                      placeholder="Enter number of guest"
+                      required
+                    />
+                  </FormGroup>
+                  <div className="d-flex justify-content-around my-2">
+                    <Button
+                      style={{
+                        color: `${event.textColor}`,
+                        backgroundColor: `${event.accentColor}`,
+                        borderColor: `${event.accentColor}`,
+                      }}
+                      onClick={() => {
+                        setQty(0);
+                        setStep(0);
+                      }}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      style={{
+                        color: `${event.textColor}`,
+                        backgroundColor: `${event.accentColor}`,
+                        borderColor: `${event.accentColor}`,
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </Form>
+              </div>
+            </div>
+          </Col>
+        );
+      case 2:
+        return (
+          <Col xs={{ order: 1, size: 8 }} md={5}>
+            <div
+              className="p-3"
+              style={{ backgroundColor: `${event.primaryColor}` }}
+            >
+              <div className="my-3">
+                <h3 className="text-center event-description-title">QR Code</h3>
+              </div>
+              <div className="d-flex justify-content-center flex-column">
+                <div className="d-flex justify-content-center event-qrcode">
+                  <QRCode
+                    value={`eviteu/${event && event.idEvent}/${
+                      event && event.idGuest
+                    }/${props.guest && props.guest}`}
+                    size={120}
+                  />
+                </div>
+                <div className="d-flex justify-content-around my-3">
+                  <Button
+                    className="mx-1"
+                    style={{
+                      color: `${event.textColor}`,
+                      backgroundColor: `${event.accentColor}`,
+                      borderColor: `${event.accentColor}`,
+                    }}
+                    onClick={() => {
+                      handleNotAttend();
+                    }}
+                  >
+                    Not Attending
+                  </Button>
+                  <Button
+                    className="mx-1"
+                    style={{
+                      color: `${event.textColor}`,
+                      backgroundColor: `${event.accentColor}`,
+                      borderColor: `${event.accentColor}`,
+                    }}
+                    onClick={() => {
+                      setStep(1);
+                    }}
+                  >
+                    Change Qty
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Col>
+        );
+      default:
+        console.log("Error");
+        break;
     }
   };
 
@@ -95,6 +296,7 @@ const Event = (props) => {
                     backgroundColor: `${event.accentColor}`,
                     borderColor: `${event.accentColor}`,
                   }}
+                  href="#rsvp"
                 >
                   RSVP
                 </Button>
@@ -177,8 +379,8 @@ const Event = (props) => {
             </Row>
             <Row
               className={`${
-                announcements.length === 0 ? "" : "wrapper-event-conten"
-              }t align-items-center justify-content-center my-md-4`}
+                announcements.length === 0 ? "" : "wrapper-event-content"
+              } align-items-center justify-content-center my-md-3`}
             >
               {renderAnnouncement()}
             </Row>
@@ -190,13 +392,87 @@ const Event = (props) => {
                     backgroundColor: `${event.accentColor}`,
                     borderColor: `${event.accentColor}`,
                   }}
+                  disabled={announcements.length === 0}
                 >
                   Show More
                 </Button>
               </Col>
             </Row>
           </Container>
+          <Row
+            id="rsvp"
+            className="wrapper-event-content align-items-center justify-content-center"
+            style={{ backgroundColor: `${event.secondaryColor}` }}
+          >
+            {renderRSVP()}
+          </Row>
+          <Row
+            className="align-items-center justify-content-center  p-3"
+            style={{ backgroundColor: `${event.accentColor}` }}
+          >
+            <Col>
+              <Row className="justify-content-center p-2">
+                <Col className="d-flex justify-content-center" md={5}>
+                  <div
+                    className="d-inline-block py-1 px-2"
+                    style={{ backgroundColor: `${event.secondaryColor}` }}
+                  >
+                    <h3 className="text-center event-description-title m-0">
+                      Contacts
+                    </h3>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="justify-content-center p-2">
+                <Col
+                  className="d-flex justify-content-center"
+                  md={{ order: 1, size: 3 }}
+                  xs={{ order: 1 }}
+                >
+                  <Label className="text-center">
+                    <FontAwesomeIcon icon={faEnvelope} /> {event.userEmail}
+                  </Label>
+                </Col>
+                <Col
+                  className="d-flex justify-content-center"
+                  md={{ order: 2, size: 4 }}
+                  xs={{ order: 3 }}
+                >
+                  <Label className="text-center font-weight-bold">
+                    Powered By EViteU
+                  </Label>
+                </Col>
+                <Col
+                  className="d-flex justify-content-center"
+                  md={{ order: 3, size: 3 }}
+                  xs={{ order: 2 }}
+                >
+                  <Label className="text-center">
+                    <FontAwesomeIcon icon={faPhone} /> {event.phoneNumber}
+                  </Label>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Container>
+        <Modal isOpen={modal} toggle={toggleModal} centered={true}>
+          <ModalHeader toggle={toggleModal}>
+            {detail.announcementTitle}
+          </ModalHeader>
+          <ModalBody>{detail.announcementDescription}</ModalBody>
+          <ModalFooter>
+            <Button
+              style={{
+                color: `${event.textColor}`,
+                backgroundColor: `${event.accentColor}`,
+                borderColor: `${event.accentColor}`,
+              }}
+              onClick={toggleModal}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </Wrapper>
   );

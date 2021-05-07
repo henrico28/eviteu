@@ -57,8 +57,10 @@ const LogInPage = (props) => {
       ) {
         if (userData.role === 1) {
           history.push("/manage-event/event-list");
-        } else {
+        } else if (userData.role === 2) {
           history.push("/manage-event/attendance-list");
+        } else if (userData.role === 3) {
+          history.push("/event");
         }
       }
     }
@@ -74,8 +76,6 @@ const LogInPage = (props) => {
           email: loginData.userEmail,
           name: res.data.name,
           role: res.data.role,
-          idRole: res.data.idRole,
-          idEvent: res.data.idEvent,
           accessToken: res.data.accessToken,
           refreshToken: res.data.refreshToken,
         };

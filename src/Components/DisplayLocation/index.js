@@ -31,7 +31,7 @@ const DisplayLocation = (props) => {
   return (
     <Map
       google={props.google}
-      zoom={16}
+      zoom={15}
       style={mapStyles}
       initialCenter={{
         lat: props.lat,

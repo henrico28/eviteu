@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
 import { Error, Event } from "../../Containers";
 import axios from "axios";
@@ -11,6 +11,7 @@ const EventPage = (props) => {
   const [errorRequest, setErrorRequest] = useState(false);
   const [data, setData] = useState([]);
   const [announcement, setAnnouncement] = useState([]);
+  const [step, setStep] = useState("");
   const { userData, setUserData, removeUserData } = useUserData();
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const EventPage = (props) => {
           },
         })
         .then((res) => {
+          setStep(res.data.result[0].status ? 2 : 0);
           setData(res.data.result[0]);
           axios
             .get("http://localhost:8000/announcement/publishedLists", {
@@ -91,7 +93,49 @@ const EventPage = (props) => {
         history.push("/");
       })
       .catch((err) => {
+        removeUserData();
         history.push("/");
+      });
+  };
+
+  const rsvpGuest = async (guest) => {
+    setLoading(true);
+    await axios
+      .put("http://localhost:8000/guest/rsvp", guest, {
+        headers: {
+          authorization: `Bearer ${userData.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setStep(guest.status ? 2 : 0);
+        setLoading(false);
+        console.log(res.data.message);
+      })
+      .catch((err) => {
+        if (
+          err.response &&
+          err.response.data.error &&
+          err.response.data.error === "jwt expired"
+        ) {
+          axios
+            .post("http://localhost:8000/token", {
+              userEmail: userData.email,
+              refreshToken: userData.refreshToken,
+            })
+            .then((res) => {
+              let tmp = userData;
+              tmp.accessToken = res.data.accessToken;
+              setUserData(tmp);
+              rsvpGuest(guest);
+            })
+            .catch((err) => {
+              removeUserData();
+              history.push("/");
+            });
+        } else {
+          setErrorRequest(true);
+          setLoading(false);
+        }
       });
   };
 
@@ -105,7 +149,14 @@ const EventPage = (props) => {
 
   return (
     <React.Fragment>
-      <Event data={data} announcement={announcement} logOut={logOut} />
+      <Event
+        step={step}
+        data={data}
+        guest={userData.name}
+        announcement={announcement}
+        logOut={logOut}
+        rsvpGuest={rsvpGuest}
+      />
     </React.Fragment>
   );
 };

@@ -24,9 +24,17 @@ export const Wrapper = styled.div`
       height: inherit;
     }
 
+    .wrapper-event-announcement {
+      cursor: pointer;
+    }
+
     .event-no-content {
       height: 20vh;
       margin-top: -20px;
+    }
+
+    .event-description-title {
+      font-weight: bold;
     }
 
     @media only screen and (max-width: 600px) {
@@ -59,6 +67,14 @@ export const Wrapper = styled.div`
       .wrapper-location-display {
         display: none;
       }
+
+      .wrapper-event-announcement {
+        font-size: 12px;
+      }
+
+      .wrapper-event-contacts {
+        height: 15vh;
+      }
     }
 
     @media only screen and (min-width: 800px) {
@@ -80,7 +96,15 @@ export const Wrapper = styled.div`
       }
 
       .event-text {
+        font-size: 18px;
+      }
+
+      .wrapper-event-announcement {
         font-size: 16px;
+      }
+
+      .wrapper-event-contacts {
+        height: 7vh;
       }
     }
   }
