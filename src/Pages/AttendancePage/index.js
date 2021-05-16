@@ -72,13 +72,8 @@ const AttendancePage = (props) => {
                 },
               })
               .then((res) => {
-                if (res.data.result.length === 0) {
-                  setNotFound(true);
-                  setLoading(false);
-                } else {
-                  setData(res.data.result);
-                  setLoading(false);
-                }
+                setData(res.data.result);
+                setLoading(false);
               })
               .catch((err) => {
                 let error = "";

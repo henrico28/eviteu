@@ -48,6 +48,7 @@ const LotteryPage = (props) => {
         })
         .then((res) => {
           const tmp = res.data.result;
+          console.log(tmp);
           const valid = tmp.some((event) => event.idEvent === Number(id));
           if (!valid) {
             setNotFound(true);
@@ -59,13 +60,8 @@ const LotteryPage = (props) => {
                 },
               })
               .then((res) => {
-                if (res.data.result.length === 0) {
-                  setNotFound(true);
-                  setLoading(false);
-                } else {
-                  setData(res.data.result);
-                  setLoading(false);
-                }
+                setData(res.data.result);
+                setLoading(false);
               })
               .catch((err) => {
                 let error = "";
