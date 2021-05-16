@@ -11,6 +11,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const AddAnnouncementPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -27,7 +28,7 @@ const AddAnnouncementPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/event/lists", {
+        .get(`${REACT_APP_REQUEST_URL}/event/lists`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -49,7 +50,7 @@ const AddAnnouncementPage = (props) => {
             err.response.data.error === "jwt expired"
           ) {
             axios
-              .post("http://localhost:8000/token", {
+              .post(`${REACT_APP_REQUEST_URL}/token`, {
                 userEmail: userData.email,
                 refreshToken: userData.refreshToken,
               })
@@ -79,7 +80,7 @@ const AddAnnouncementPage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .post("http://localhost:8000/announcement/create", announcement, {
+      .post(`${REACT_APP_REQUEST_URL}/announcement/create`, announcement, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -94,7 +95,7 @@ const AddAnnouncementPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

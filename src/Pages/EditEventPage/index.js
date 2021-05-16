@@ -11,6 +11,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const EditEventPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -28,7 +29,7 @@ const EditEventPage = (props) => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
         await axios
-          .post("http://localhost:8000/token", {
+          .post(`${REACT_APP_REQUEST_URL}/token`, {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
           })
@@ -51,7 +52,7 @@ const EditEventPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/event/detail/${id}`, {
+        .get(`${REACT_APP_REQUEST_URL}/event/detail/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -63,7 +64,7 @@ const EditEventPage = (props) => {
           } else {
             setData(res.data.result[0]);
             axios
-              .get("http://localhost:8000/type/lists", {
+              .get(`${REACT_APP_REQUEST_URL}/type/lists`, {
                 headers: {
                   authorization: `Bearer ${userData.accessToken}`,
                 },
@@ -99,7 +100,7 @@ const EditEventPage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/event/update", data, {
+      .put(`${REACT_APP_REQUEST_URL}/event/update`, data, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -115,7 +116,7 @@ const EditEventPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

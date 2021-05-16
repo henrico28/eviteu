@@ -11,6 +11,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const EditAnnouncementPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -27,7 +28,7 @@ const EditAnnouncementPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/announcement/detail/${id}`, {
+        .get(`${REACT_APP_REQUEST_URL}/announcement/detail/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -47,7 +48,7 @@ const EditAnnouncementPage = (props) => {
             err.response.data.error === "jwt expired"
           ) {
             axios
-              .post("http://localhost:8000/token", {
+              .post(`${REACT_APP_REQUEST_URL}/token`, {
                 userEmail: userData.email,
                 refreshToken: userData.refreshToken,
               })
@@ -77,7 +78,7 @@ const EditAnnouncementPage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/announcement/update", announcement, {
+      .put(`${REACT_APP_REQUEST_URL}/announcement/update`, announcement, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -93,7 +94,7 @@ const EditAnnouncementPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

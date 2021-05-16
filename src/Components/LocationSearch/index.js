@@ -76,5 +76,5 @@ const LocationSearch = (props) => {
 
 // export default LocationSearch;
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBTyGbzGGz2Qiv2yTCGsQvRZu4BCbNF29M",
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(LocationSearch);

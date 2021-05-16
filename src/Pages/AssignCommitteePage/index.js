@@ -11,6 +11,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const AssignCommitteePage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -28,7 +29,7 @@ const AssignCommitteePage = (props) => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
         axios
-          .post("http://localhost:8000/token", {
+          .post(`${REACT_APP_REQUEST_URL}/token`, {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
           })
@@ -55,7 +56,7 @@ const AssignCommitteePage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get(`http://localhost:8000/event/assigned/${id}`, {
+        .get(`${REACT_APP_REQUEST_URL}/event/assigned/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -63,7 +64,7 @@ const AssignCommitteePage = (props) => {
         .then((res) => {
           setData(res.data.result);
           axios
-            .get("http://localhost:8000/event/lists", {
+            .get(`${REACT_APP_REQUEST_URL}/event/lists`, {
               headers: {
                 authorization: `Bearer ${userData.accessToken}`,
               },
@@ -95,7 +96,7 @@ const AssignCommitteePage = (props) => {
   const assignCommittee = async (data) => {
     setLoading(true);
     await axios
-      .post("http://localhost:8000/event/assign", data, {
+      .post(`${REACT_APP_REQUEST_URL}/event/assign`, data, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -111,7 +112,7 @@ const AssignCommitteePage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

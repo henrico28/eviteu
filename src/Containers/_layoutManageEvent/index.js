@@ -7,6 +7,7 @@ import useUserData from "../../LocalStorage/useUserData";
 import axios from "axios";
 
 const LayoutManageEvent = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   let { userData, removeUserData } = useUserData();
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,7 @@ const LayoutManageEvent = (props) => {
   const logOut = async () => {
     setLoading(true);
     await axios
-      .delete("http://localhost:8000/logout", {
+      .delete(`${REACT_APP_REQUEST_URL}/logout`, {
         data: {
           userEmail: userData.email,
           refreshToken: userData.refreshToken,
@@ -25,6 +26,7 @@ const LayoutManageEvent = (props) => {
         history.push("/");
       })
       .catch((err) => {
+        removeUserData();
         history.push("/");
       });
   };

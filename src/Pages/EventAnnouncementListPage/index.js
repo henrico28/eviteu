@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const EventAnnouncementListPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [errorRequest, setErrorRequest] = useState(false);
@@ -17,7 +18,7 @@ const EventAnnouncementListPage = (props) => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
         await axios
-          .post("http://localhost:8000/token", {
+          .post(`${REACT_APP_REQUEST_URL}/token`, {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
           })
@@ -40,7 +41,7 @@ const EventAnnouncementListPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/event/information", {
+        .get(`${REACT_APP_REQUEST_URL}/event/information`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -48,7 +49,7 @@ const EventAnnouncementListPage = (props) => {
         .then((res) => {
           setData(res.data.result[0]);
           axios
-            .get("http://localhost:8000/announcement/publishedLists", {
+            .get(`${REACT_APP_REQUEST_URL}/announcement/publishedLists`, {
               headers: {
                 authorization: `Bearer ${userData.accessToken}`,
               },

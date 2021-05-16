@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const LogInPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { token } = useParams();
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const LogInPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .post("http://localhost:8000/verify", {
+        .post(`${REACT_APP_REQUEST_URL}/verify`, {
           verificationToken: token,
         })
         .then((res) => {
@@ -70,7 +71,7 @@ const LogInPage = (props) => {
   const logIn = async (loginData) => {
     setLoading(true);
     await axios
-      .post("http://localhost:8000/login", loginData)
+      .post(`${REACT_APP_REQUEST_URL}/login`, loginData)
       .then((res) => {
         const data = {
           email: loginData.userEmail,

@@ -53,5 +53,5 @@ const DisplayLocation = (props) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBTyGbzGGz2Qiv2yTCGsQvRZu4BCbNF29M",
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(DisplayLocation);

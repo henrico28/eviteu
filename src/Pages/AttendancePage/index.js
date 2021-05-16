@@ -11,6 +11,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const AttendancePage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -27,7 +28,7 @@ const AttendancePage = (props) => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
         await axios
-          .post("http://localhost:8000/token", {
+          .post(`${REACT_APP_REQUEST_URL}/token`, {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
           })
@@ -54,7 +55,7 @@ const AttendancePage = (props) => {
         url = "manage";
       }
       await axios
-        .get(`http://localhost:8000/event/${url}`, {
+        .get(`${REACT_APP_REQUEST_URL}/event/${url}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -66,7 +67,7 @@ const AttendancePage = (props) => {
             setNotFound(true);
           } else {
             axios
-              .get(`http://localhost:8000/guest/attendance/${id}`, {
+              .get(`${REACT_APP_REQUEST_URL}/guest/attendance/${id}`, {
                 headers: {
                   authorization: `Bearer ${userData.accessToken}`,
                 },
@@ -102,7 +103,7 @@ const AttendancePage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/guest/attend", guest, {
+      .put(`${REACT_APP_REQUEST_URL}/guest/attend`, guest, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -118,7 +119,7 @@ const AttendancePage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })
@@ -130,7 +131,7 @@ const AttendancePage = (props) => {
             })
             .catch((err) => {
               removeUserData();
-              history.push("../..");
+              history.push("/");
             });
         } else {
           setAlert(true);

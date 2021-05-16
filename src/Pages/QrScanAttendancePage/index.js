@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const QrScanAttendancePage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ const QrScanAttendancePage = (props) => {
         url = "manage";
       }
       await axios
-        .get(`http://localhost:8000/event/${url}`, {
+        .get(`${REACT_APP_REQUEST_URL}/event/${url}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -43,7 +44,7 @@ const QrScanAttendancePage = (props) => {
             err.response.data.error === "jwt expired"
           ) {
             axios
-              .post("http://localhost:8000/token", {
+              .post(`${REACT_APP_REQUEST_URL}/token`, {
                 userEmail: userData.email,
                 refreshToken: userData.refreshToken,
               })
@@ -73,7 +74,7 @@ const QrScanAttendancePage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/guest/attend", guest, {
+      .put(`${REACT_APP_REQUEST_URL}/guest/attend`, guest, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -88,7 +89,7 @@ const QrScanAttendancePage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

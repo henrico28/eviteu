@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const EventPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [errorRequest, setErrorRequest] = useState(false);
@@ -18,7 +19,7 @@ const EventPage = (props) => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
         await axios
-          .post("http://localhost:8000/token", {
+          .post(`${REACT_APP_REQUEST_URL}/token`, {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
           })
@@ -41,7 +42,7 @@ const EventPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/event/information", {
+        .get(`${REACT_APP_REQUEST_URL}/event/information`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -50,7 +51,7 @@ const EventPage = (props) => {
           setStep(res.data.result[0].status ? 2 : 0);
           setData(res.data.result[0]);
           axios
-            .get("http://localhost:8000/announcement/publishedLists", {
+            .get(`${REACT_APP_REQUEST_URL}/announcement/publishedLists`, {
               headers: {
                 authorization: `Bearer ${userData.accessToken}`,
               },
@@ -82,7 +83,7 @@ const EventPage = (props) => {
   const logOut = async () => {
     setLoading(true);
     await axios
-      .delete("http://localhost:8000/logout", {
+      .delete(`${REACT_APP_REQUEST_URL}/logout`, {
         data: {
           userEmail: userData.email,
           refreshToken: userData.refreshToken,
@@ -101,7 +102,7 @@ const EventPage = (props) => {
   const rsvpGuest = async (guest) => {
     setLoading(true);
     await axios
-      .put("http://localhost:8000/guest/rsvp", guest, {
+      .put(`${REACT_APP_REQUEST_URL}/guest/rsvp`, guest, {
         headers: {
           authorization: `Bearer ${userData.accessToken}`,
         },
@@ -118,7 +119,7 @@ const EventPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -20,7 +19,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "./style";
-import { Loading } from "../../Components";
 
 const SignUp = (props) => {
   const [type, setType] = useState("password");
@@ -28,39 +26,20 @@ const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [error, setError] = useState(false);
-  const [messageTitle, setMessageTitle] = useState("");
-  const [messageContent, setMessageContent] = useState("");
+  const [modal, setModal] = useState(props.modal);
+  const [error] = useState(props.error);
+  const [messageTitle] = useState(props.messageTitle);
+  const [messageContent] = useState(props.messageContent);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(false);
-    setLoading(true);
-    await axios
-      .post("http://localhost:8000/host/create", {
-        userName: name,
-        userEmail: email,
-        userPassword: password,
-        phoneNumber: phonenumber,
-      })
-      .then((res) => {
-        setName("");
-        setEmail("");
-        setPassword("");
-        setPhonenumber("");
-        setMessageTitle("Succesful");
-        setMessageContent("Succesfully created an account.");
-        setModal(true);
-      })
-      .catch((err) => {
-        setError(true);
-        setMessageTitle("Error");
-        setMessageContent(err.response.data.error);
-        setModal(true);
-      });
-    setLoading(false);
+    const data = {
+      userName: name,
+      userEmail: email,
+      userPassword: password,
+      phonenumber: phonenumber,
+    };
+    props.signUp(data);
   };
 
   const handleName = (event) => {
@@ -86,10 +65,6 @@ const SignUp = (props) => {
   const toggleModal = () => {
     setModal(!modal);
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <Wrapper>

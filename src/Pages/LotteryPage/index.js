@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const LotteryPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ const LotteryPage = (props) => {
     const errorHandling = async (error) => {
       if (error === "jwt expired") {
         await axios
-          .post("http://localhost:8000/token", {
+          .post(`${REACT_APP_REQUEST_URL}/token`, {
             userEmail: userData.email,
             refreshToken: userData.refreshToken,
           })
@@ -41,7 +42,7 @@ const LotteryPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/event/lists", {
+        .get(`${REACT_APP_REQUEST_URL}/event/lists`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -54,7 +55,7 @@ const LotteryPage = (props) => {
             setNotFound(true);
           } else {
             axios
-              .get(`http://localhost:8000/guest/attended/${id}`, {
+              .get(`${REACT_APP_REQUEST_URL}/guest/attended/${id}`, {
                 headers: {
                   authorization: `Bearer ${userData.accessToken}`,
                 },

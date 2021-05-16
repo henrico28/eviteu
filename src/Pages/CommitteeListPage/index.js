@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const CommitteeListPage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ const CommitteeListPage = (props) => {
     const fetchData = async () => {
       setLoading(true);
       await axios
-        .get("http://localhost:8000/committee/lists", {
+        .get(`${REACT_APP_REQUEST_URL}/committee/lists`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -36,7 +37,7 @@ const CommitteeListPage = (props) => {
             err.response.data.error === "jwt expired"
           ) {
             axios
-              .post("http://localhost:8000/token", {
+              .post(`${REACT_APP_REQUEST_URL}/token`, {
                 userEmail: userData.email,
                 refreshToken: userData.refreshToken,
               })
@@ -67,7 +68,7 @@ const CommitteeListPage = (props) => {
     setLoading(true);
     await axios
       .put(
-        "http://localhost:8000/committee/activateAll",
+        `${REACT_APP_REQUEST_URL}/committee/activateAll`,
         {},
         {
           headers: {
@@ -88,7 +89,7 @@ const CommitteeListPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })
@@ -121,7 +122,7 @@ const CommitteeListPage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .put("http://localhost:8000/committee/activate", committee, {
+      .put(`${REACT_APP_REQUEST_URL}/committee/activate`, committee, {
         headers: {
           authorization: `Bearer ${userData.accessToken}`,
         },
@@ -139,7 +140,7 @@ const CommitteeListPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })
@@ -172,7 +173,7 @@ const CommitteeListPage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .delete("http://localhost:8000/committee/delete", {
+      .delete(`${REACT_APP_REQUEST_URL}/committee/delete`, {
         headers: {
           authorization: `Bearer ${userData.accessToken}`,
         },
@@ -191,7 +192,7 @@ const CommitteeListPage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })

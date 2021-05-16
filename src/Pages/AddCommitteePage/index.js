@@ -6,6 +6,7 @@ import axios from "axios";
 import useUserData from "../../LocalStorage/useUserData";
 
 const AddCommitteePage = (props) => {
+  const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ const AddCommitteePage = (props) => {
     setMessage("");
     setLoading(true);
     await axios
-      .post("http://localhost:8000/committee/create", committee, {
+      .post(`${REACT_APP_REQUEST_URL}/committee/create`, committee, {
         headers: { authorization: `Bearer ${userData.accessToken}` },
       })
       .then((res) => {
@@ -35,7 +36,7 @@ const AddCommitteePage = (props) => {
           err.response.data.error === "jwt expired"
         ) {
           axios
-            .post("http://localhost:8000/token", {
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
               userEmail: userData.email,
               refreshToken: userData.refreshToken,
             })
