@@ -4,7 +4,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 
 const Error = (props) => {
   const history = useHistory();

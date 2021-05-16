@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { SideBar, Header, Loading } from "../../Components";
 import { Container } from "reactstrap";
 import { Wrapper } from "./style";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 import axios from "axios";
 
 const LayoutManageEvent = (props) => {

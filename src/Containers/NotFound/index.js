@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Wrapper } from "./style";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 import notFoundIllusatrion from "../../Assets/Image/Profile/404.svg";
 
 const NotFound = (props) => {

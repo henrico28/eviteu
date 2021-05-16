@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { Loading } from "../../Components";
 import { LayoutManageEvent, Error, CommitteeList } from "../../Containers";
 import axios from "axios";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 
 const CommitteeListPage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;

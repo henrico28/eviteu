@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { NavbarBrand, Nav, NavItem, NavLink, Button } from "reactstrap";
 import { Wrapper } from "./style";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 import logo from "./../../Assets/Image/Profile/Logo.png";
 
 const SideBar = (props) => {

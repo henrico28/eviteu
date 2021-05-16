@@ -8,7 +8,7 @@ import {
   AssignEvent,
 } from "../../Containers";
 import axios from "axios";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 
 const AssignEventPage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;

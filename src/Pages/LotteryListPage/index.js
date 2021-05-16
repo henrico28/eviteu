@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
 import { LayoutManageEvent, Error, LotteryList } from "../../Containers";
 import axios from "axios";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 
 const LotteryListPage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;

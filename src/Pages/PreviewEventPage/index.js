@@ -4,7 +4,7 @@ import { Container, Button } from "reactstrap";
 import { Loading } from "../../Components";
 import { Error, NotFound, Event } from "../../Containers";
 import axios from "axios";
-import useUserData from "../../LocalStorage/useUserData";
+import useUserData from "../../Hooks/useUserData";
 
 const PreviewEventPage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;
