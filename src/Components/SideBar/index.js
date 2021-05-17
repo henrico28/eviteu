@@ -60,7 +60,7 @@ const SideBar = (props) => {
                 Announcement
               </NavLink>
             </NavItem>
-            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
+            <NavItem>
               <NavLink
                 className={` sidebar-menu p-3 ${
                   props.page === "doorprize" ? "active" : ""

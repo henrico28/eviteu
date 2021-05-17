@@ -5,7 +5,7 @@ import { NotFound, Error, DoorPrize } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 
-const LotteryPage = (props) => {
+const DoorPrizePage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
@@ -41,8 +41,12 @@ const LotteryPage = (props) => {
 
     const fetchData = async () => {
       setLoading(true);
+      let url = "lists";
+      if (userData.role === 2) {
+        url = "manage";
+      }
       await axios
-        .get(`${REACT_APP_REQUEST_URL}/event/lists`, {
+        .get(`${REACT_APP_REQUEST_URL}/event/${url}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -104,4 +108,4 @@ const LotteryPage = (props) => {
   );
 };
 
-export default LotteryPage;
+export default DoorPrizePage;

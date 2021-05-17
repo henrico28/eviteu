@@ -94,6 +94,7 @@ const AssignEventPage = (props) => {
   }, [id]);
 
   const assignEvent = async (data) => {
+    setError(false);
     setLoading(true);
     await axios
       .post(`${REACT_APP_REQUEST_URL}/committee/assign`, data, {

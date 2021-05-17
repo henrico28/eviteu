@@ -5,7 +5,7 @@ import { LayoutManageEvent, Error, DoorPrizeList } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 
-const LotteryListPage = (props) => {
+const DoorPrizeListPage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -17,8 +17,12 @@ const LotteryListPage = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      let url = "lists";
+      if (userData.role === 2) {
+        url = "manage";
+      }
       await axios
-        .get(`${REACT_APP_REQUEST_URL}/event/wedding`, {
+        .get(`${REACT_APP_REQUEST_URL}/event/${url}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
@@ -78,4 +82,4 @@ const LotteryListPage = (props) => {
   );
 };
 
-export default LotteryListPage;
+export default DoorPrizeListPage;
