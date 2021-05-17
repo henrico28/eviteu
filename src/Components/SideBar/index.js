@@ -63,12 +63,12 @@ const SideBar = (props) => {
             <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
-                  props.page === "lottery" ? "active" : ""
+                  props.page === "doorprize" ? "active" : ""
                 }`}
-                to="/manage-event/lottery-list"
+                to="/manage-event/doorprize-list"
                 tag={Link}
               >
-                Lottery
+                Door Prize
               </NavLink>
             </NavItem>
             <NavItem>

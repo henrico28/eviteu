@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
-const LotteryList = (props) => {
+const DoorPrizeList = (props) => {
   const [originalData] = useState(props.data);
   const [data, setData] = useState(props.data);
   const [search, setSearch] = useState("");
@@ -82,9 +82,9 @@ const LotteryList = (props) => {
                   <Button
                     className="btn-indigo"
                     tag={Link}
-                    to={`/manage-event/lottery/${event.idEvent}`}
+                    to={`/manage-event/doorprize/${event.idEvent}`}
                   >
-                    Lottery
+                    Door Prize
                   </Button>
                 </td>
               </tr>
@@ -97,12 +97,12 @@ const LotteryList = (props) => {
 
   return (
     <Wrapper>
-      <div className="wrapper-lottery-list">
+      <div className="wrapper-doorprize-list">
         <Container fluid>
           <Row>
             <Col>
-              <h4 className="text-muted pt-2 font-weight-light lottery-list-title">
-                Lottery List
+              <h4 className="text-muted pt-2 font-weight-light doorprize-list-title">
+                Door Prize List
               </h4>
               <hr className="mt-0" />
             </Col>
@@ -110,10 +110,10 @@ const LotteryList = (props) => {
           <Row>
             <Col
               md={{ size: 6, offset: 6 }}
-              className="wrapper-lottery-list-search"
+              className="wrapper-doorprize-list-search"
             >
               <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="lottery-list-search-input">
+              <InputGroup className="doorprize-list-search-input">
                 <Input
                   type="text"
                   name="search"
@@ -157,4 +157,4 @@ const LotteryList = (props) => {
   );
 };
 
-export default LotteryList;
+export default DoorPrizeList;

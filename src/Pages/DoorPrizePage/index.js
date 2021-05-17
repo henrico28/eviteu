@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Loading } from "../../Components";
-import { NotFound, Error, Lottery } from "../../Containers";
+import { NotFound, Error, DoorPrize } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 
@@ -99,7 +99,7 @@ const LotteryPage = (props) => {
 
   return (
     <React.Fragment>
-      <Lottery data={data} />
+      <DoorPrize data={data} />
     </React.Fragment>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../Components";
-import { LayoutManageEvent, Error, LotteryList } from "../../Containers";
+import { LayoutManageEvent, Error, DoorPrizeList } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 
@@ -70,10 +70,10 @@ const LotteryListPage = (props) => {
     <LayoutManageEvent
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      page={"lottery"}
-      title={"Lottery"}
+      page={"doorprize"}
+      title={"Door Prize"}
     >
-      <LotteryList data={data} />
+      <DoorPrizeList data={data} />
     </LayoutManageEvent>
   );
 };

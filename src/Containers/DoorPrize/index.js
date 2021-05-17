@@ -5,7 +5,7 @@ import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-const Lottery = (props) => {
+const DoorPrize = (props) => {
   const [data] = useState(props.data);
   const [winner, setWinner] = useState(
     props.data.length === 0 ? "No guest attended yet" : ""
@@ -18,11 +18,11 @@ const Lottery = (props) => {
 
   return (
     <Wrapper>
-      <Container className="wrapper-lottery" fluid>
+      <Container className="wrapper-doorprize" fluid>
         <Button
-          className="position-absolute lottery-back-button btn-indigo"
+          className="position-absolute doorprize-back-button btn-indigo"
           tag={Link}
-          to="/manage-event/lottery-list"
+          to="/manage-event/doorprize-list"
         >
           <FontAwesomeIcon icon={faChevronLeft} /> Back
         </Button>
@@ -33,12 +33,14 @@ const Lottery = (props) => {
                 props.data.length === 0 ? "d-none" : ""
               }`}
             >
-              <h4 className="lottery-congratulations-text">Congratulations!</h4>
+              <h4 className="doorprize-congratulations-text">
+                Congratulations!
+              </h4>
             </Row>
             <Row className="justify-content-center">
               <Col
                 md={6}
-                className="border rounded shadow wrapper-lottery-winner d-flex align-items-center justify-content-center"
+                className="border rounded shadow wrapper-doorprize-winner d-flex align-items-center justify-content-center"
               >
                 <h1 className="text-center">{winner}</h1>
               </Col>
@@ -62,4 +64,4 @@ const Lottery = (props) => {
   );
 };
 
-export default Lottery;
+export default DoorPrize;

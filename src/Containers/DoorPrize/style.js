@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  .wrapper-lottery {
-    .lottery-back-button {
+  .wrapper-doorprize {
+    .doorprize-back-button {
       margin-top: 10px;
     }
 
-    .lottery-congratulations-text {
+    .doorprize-congratulations-text {
       color: var(--indigo);
     }
 
-    .wrapper-lottery-winner {
+    .wrapper-doorprize-winner {
       min-height: 10vh;
     }
   }
