@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Container, Button } from "reactstrap";
-import { Loading } from "../../Components";
-import { Error, NotFound, Event } from "../../Containers";
+import { Loading, Error, NotFound, Event } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 

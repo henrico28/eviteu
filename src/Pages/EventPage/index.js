@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../Components";
-import { Error, Event } from "../../Containers";
+import { Loading, Error, Event } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SideBar, Header, Loading } from "../../Components";
+import { SideBar, Header } from "../../Components";
+import { Loading } from "../";
 import { Container } from "reactstrap";
 import { Wrapper } from "./style";
 import useUserData from "../../Hooks/useUserData";

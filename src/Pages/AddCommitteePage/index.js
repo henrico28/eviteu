@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../Components";
-import { LayoutManageEvent, AddCommittee } from "../../Containers";
+import { Loading, LayoutManageEvent, AddCommittee } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 

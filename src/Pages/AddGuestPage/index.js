@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Loading } from "../../Components";
-import { LayoutManageEvent, NotFound, Error, AddGuest } from "../../Containers";
+import {
+  Loading,
+  LayoutManageEvent,
+  NotFound,
+  Error,
+  AddGuest,
+} from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 

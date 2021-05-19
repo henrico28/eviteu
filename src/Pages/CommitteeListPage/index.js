@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { Loading } from "../../Components";
-import { LayoutManageEvent, Error, CommitteeList } from "../../Containers";
+import {
+  Loading,
+  LayoutManageEvent,
+  Error,
+  CommitteeList,
+} from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { Loading } from "../../Components";
 import {
+  Loading,
   LayoutManageEvent,
   Error,
   EditEvent,

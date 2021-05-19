@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Loading } from "../../Components";
-import { SignUp } from "../../Containers";
+import { Loading, SignUp } from "../../Containers";
 import axios from "axios";
 
 const SignUpPage = (props) => {
