@@ -25,72 +25,44 @@ const AttendancePage = (props) => {
   const { userData, setUserData, removeUserData } = useUserData();
 
   useEffect(() => {
-    const errorHandling = async (error) => {
-      if (error === "jwt expired") {
-        await axios
-          .post(`${REACT_APP_REQUEST_URL}/token`, {
-            userEmail: userData.email,
-            refreshToken: userData.refreshToken,
-          })
-          .then((res) => {
-            let tmp = userData;
-            tmp.accessToken = res.data.accessToken;
-            setUserData(tmp);
-            fetchData();
-          })
-          .catch((err) => {
-            removeUserData();
-            history.push("/");
-          });
-      } else {
-        setErrorRequest(true);
-        setLoading(false);
-      }
-    };
-
     const fetchData = async () => {
       setLoading(true);
-      let url = "lists";
-      if (userData.role === 2) {
-        url = "manage";
-      }
-      await axios
-        .get(`${REACT_APP_REQUEST_URL}/event/${url}`, {
+      axios
+        .get(`${REACT_APP_REQUEST_URL}/guest/attendance/${id}`, {
           headers: {
             authorization: `Bearer ${userData.accessToken}`,
           },
         })
         .then((res) => {
-          const tmp = res.data.result;
-          const valid = tmp.some((event) => event.idEvent === Number(id));
-          if (!valid) {
-            setNotFound(true);
-          } else {
-            axios
-              .get(`${REACT_APP_REQUEST_URL}/guest/attendance/${id}`, {
-                headers: {
-                  authorization: `Bearer ${userData.accessToken}`,
-                },
-              })
-              .then((res) => {
-                setData(res.data.result);
-                setLoading(false);
-              })
-              .catch((err) => {
-                let error = "";
-                if (err.response && err.response.data.error) {
-                  error = err.response.data.error;
-                }
-                errorHandling(error);
-              });
-          }
+          setData(res.data.result);
+          setLoading(false);
         })
         .catch((err) => {
-          let error = "";
           if (err.response && err.response.data.error) {
-            error = err.response.data.error;
+            if (err.response.data.error === "jwt expired") {
+              axios
+                .post(`${REACT_APP_REQUEST_URL}/token`, {
+                  userEmail: userData.email,
+                  refreshToken: userData.refreshToken,
+                })
+                .then((res) => {
+                  let tmp = userData;
+                  tmp.accessToken = res.data.accessToken;
+                  setUserData(tmp);
+                  fetchData();
+                })
+                .catch((err) => {
+                  removeUserData();
+                  history.push("/");
+                });
+            } else if (err.response.data.error === "No event found") {
+              setNotFound(true);
+              setLoading(false);
+            }
+          } else {
+            setErrorRequest(true);
+            setLoading(false);
           }
-          errorHandling(error);
         });
     };
     fetchData();
