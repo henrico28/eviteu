@@ -58,7 +58,7 @@ const EditEventPage = (props) => {
           },
         })
         .then((res) => {
-          if (res.data.length === 0) {
+          if (res.data.result.length === 0) {
             setNotFound(true);
             setLoading(false);
           } else {

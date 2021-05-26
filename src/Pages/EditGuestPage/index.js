@@ -34,7 +34,7 @@ const EditGuestPage = (props) => {
           },
         })
         .then((res) => {
-          if (res.data.length === 0) {
+          if (res.data.result.length === 0) {
             setNotFound(true);
           } else {
             setData(res.data.result[0]);

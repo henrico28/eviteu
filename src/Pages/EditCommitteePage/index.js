@@ -23,6 +23,7 @@ const EditCommitteePage = (props) => {
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
   const { userData, setUserData, removeUserData } = useUserData();
+  console.log(notFound);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +35,7 @@ const EditCommitteePage = (props) => {
           },
         })
         .then((res) => {
-          if (res.data.length === 0) {
+          if (res.data.result.length === 0) {
             setNotFound(true);
           } else {
             setData(res.data.result[0]);
