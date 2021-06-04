@@ -160,7 +160,8 @@ const EditEventPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"event"}
-      title={"Event / Edit Event"}
+      breadcrumb={"Event / Edit Event"}
+      title={"Edit Event"}
     >
       <EditEvent
         data={data}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -11,7 +10,6 @@ import {
   Badge,
   Alert,
 } from "reactstrap";
-import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
@@ -97,21 +95,21 @@ const Attendance = (props) => {
                 <td className="align-middle justify-content-center d-flex">
                   {guest.attend ? (
                     <Button
-                      className="attendance-button"
                       color="danger"
                       onClick={() => {
                         handleAttend(guest);
                       }}
+                      style={{ width: "80%" }}
                     >
                       Un-Attend
                     </Button>
                   ) : (
                     <Button
-                      className="attendance-button"
                       color="success"
                       onClick={() => {
                         handleAttend(guest);
                       }}
+                      style={{ width: "80%" }}
                     >
                       Attend
                     </Button>
@@ -126,80 +124,65 @@ const Attendance = (props) => {
   };
 
   return (
-    <Wrapper>
-      <div className="wrapper-attendance">
-        <Container fluid>
-          <Row>
-            <Col>
-              <h4 className="text-muted pt-2 font-weight-light attendance-title">
-                Guest Attendance
-              </h4>
-              <hr className="mt-0" />
-            </Col>
-          </Row>
-          <div>
-            <Alert
-              isOpen={alert}
-              toggle={() => {
-                setAlert(false);
-              }}
-              color={error ? "danger" : "success"}
-            >
-              {message}
-            </Alert>
-          </div>
-          <Row>
-            <Col
-              md={{ size: 6, offset: 6 }}
-              className="wrapper-attendance-search"
-            >
-              <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="attendance-search-input">
-                <Input
-                  type="text"
-                  name="search"
-                  value={search}
-                  onChange={handleSearch}
-                  placeholder="Search event here"
-                />
-                <Button
-                  className="btn-indigo"
-                  onClick={handleClear}
-                  disabled={search === ""}
-                >
-                  <FontAwesomeIcon icon={faTimesCircle} />
-                </Button>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row className="justify-content-center px-3 pt-3 pb-1">
-            <Table className="border table-responsive-sm" striped>
-              <thead>
-                <tr>
-                  <th width="3%">No.</th>
-                  <th>Name</th>
-                  <th className="text-center" width="15%">
-                    Attendance
-                  </th>
-                  <th className="text-center" width="15%">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>{renderGuest()}</tbody>
-            </Table>
-          </Row>
-          <div className="d-flex justify-content-center">
-            <Pagination
-              currentPage={currentPage}
-              totalData={numberOfData}
-              dataPerPage={dataPerPage}
-              setPage={setCurrentPage}
-            />
-          </div>
-        </Container>
+    <div>
+      <div>
+        <Alert
+          isOpen={alert}
+          toggle={() => {
+            setAlert(false);
+          }}
+          color={error ? "danger" : "success"}
+        >
+          {message}
+        </Alert>
       </div>
-    </Wrapper>
+      <Row>
+        <Col md={{ size: 6, offset: 6 }} className="d-flex justify-content-end">
+          <Label className="mt-1 mr-2 text-muted">Search :</Label>
+          <InputGroup style={{ width: "60%" }}>
+            <Input
+              type="text"
+              name="search"
+              value={search}
+              onChange={handleSearch}
+              placeholder="Search event here"
+            />
+            <Button
+              className="btn-indigo"
+              onClick={handleClear}
+              disabled={search === ""}
+            >
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </Button>
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row className="justify-content-center px-3 pt-3 pb-1">
+        <Table className="border table-responsive-sm" striped>
+          <thead>
+            <tr>
+              <th width="3%">No.</th>
+              <th>Name</th>
+              <th className="text-center" width="15%">
+                Attendance
+              </th>
+              <th className="text-center" width="15%">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>{renderGuest()}</tbody>
+        </Table>
+      </Row>
+      <div className="d-flex justify-content-center">
+        <Pagination
+          currentPage={currentPage}
+          totalData={numberOfData}
+          dataPerPage={dataPerPage}
+          setPage={setCurrentPage}
+        />
+      </div>
+    </div>
   );
 };
 

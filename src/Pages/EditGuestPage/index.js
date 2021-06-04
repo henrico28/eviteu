@@ -138,7 +138,8 @@ const EditGuestPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"guest"}
-      title={"Guest / Edit Guest"}
+      breadcrumb={"Guest / Edit Guest"}
+      title={"Edit Guest"}
     >
       <EditGuest
         data={data}

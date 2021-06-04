@@ -79,7 +79,8 @@ const AttendanceListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"attendance"}
-      title={"Attendance"}
+      breadcrumb={"Attendance"}
+      title={"Attendance List"}
     >
       <AttendanceList data={data} />
     </LayoutManageEvent>

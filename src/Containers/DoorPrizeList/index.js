@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  InputGroup,
-  Input,
-  Label,
-  Table,
-} from "reactstrap";
-import { Wrapper } from "./style";
+import { Row, Col, Button, InputGroup, Input, Label, Table } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
@@ -96,64 +86,49 @@ const DoorPrizeList = (props) => {
   };
 
   return (
-    <Wrapper>
-      <div className="wrapper-doorprize-list">
-        <Container fluid>
-          <Row>
-            <Col>
-              <h4 className="text-muted pt-2 font-weight-light doorprize-list-title">
-                Door Prize List
-              </h4>
-              <hr className="mt-0" />
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              md={{ size: 6, offset: 6 }}
-              className="wrapper-doorprize-list-search"
-            >
-              <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="doorprize-list-search-input">
-                <Input
-                  type="text"
-                  name="search"
-                  value={search}
-                  onChange={handleSearch}
-                  placeholder="Search event here"
-                />
-                <Button
-                  className="btn-indigo"
-                  onClick={handleClear}
-                  disabled={search === ""}
-                >
-                  <FontAwesomeIcon icon={faTimesCircle} />
-                </Button>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row className="justify-content-center px-3 pt-3 pb-1">
-            <Table className="border table-responsive-sm" striped>
-              <thead>
-                <tr>
-                  <th width="3%">No.</th>
-                  <th>Event</th>
-                  <th width="15%">Actions</th>
-                </tr>
-              </thead>
-              <tbody>{renderEvent()}</tbody>
-            </Table>
-          </Row>
-          <div className="d-flex justify-content-center">
-            <Pagination
-              currentPage={currentPage}
-              totalData={numberOfData}
-              dataPerPage={dataPerPage}
-              setPage={setCurrentPage}
+    <div>
+      <Row>
+        <Col md={{ size: 6, offset: 6 }} className="d-flex justify-content-end">
+          <Label className="mt-1 mr-2 text-muted">Search :</Label>
+          <InputGroup style={{ width: "60%" }}>
+            <Input
+              type="text"
+              name="search"
+              value={search}
+              onChange={handleSearch}
+              placeholder="Search event here"
             />
-          </div>
-        </Container>
+            <Button
+              className="btn-indigo"
+              onClick={handleClear}
+              disabled={search === ""}
+            >
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </Button>
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row className="justify-content-center px-3 pt-3 pb-1">
+        <Table className="border table-responsive-sm" striped>
+          <thead>
+            <tr>
+              <th width="3%">No.</th>
+              <th>Event</th>
+              <th width="15%">Actions</th>
+            </tr>
+          </thead>
+          <tbody>{renderEvent()}</tbody>
+        </Table>
+      </Row>
+      <div className="d-flex justify-content-center">
+        <Pagination
+          currentPage={currentPage}
+          totalData={numberOfData}
+          dataPerPage={dataPerPage}
+          setPage={setCurrentPage}
+        />
       </div>
-    </Wrapper>
+    </div>
   );
 };
 

@@ -277,7 +277,8 @@ const GuestListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"guest"}
-      title={"Guest"}
+      breadcrumb={"Guest"}
+      title={"Guest List"}
     >
       {noEvent ? (
         <WarningNoEvent />

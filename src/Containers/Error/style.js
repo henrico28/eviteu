@@ -2,10 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   .wrapper-error {
-    .error-text {
-      color: var(--purple);
-    }
-
     @media only screen and (max-width: 600px) {
       .error-text {
         font-size: 24px;

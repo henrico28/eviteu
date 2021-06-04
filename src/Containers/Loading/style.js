@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
     .loading-spinner {
       width: 2rem;
       height: 2rem;
-      background-color: var(--indigo);
     }
   }
 `;

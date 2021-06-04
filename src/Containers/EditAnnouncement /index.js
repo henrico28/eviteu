@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -10,7 +9,6 @@ import {
   Input,
   Alert,
 } from "reactstrap";
-import { Wrapper } from "./style";
 
 const EditAnnouncement = (props) => {
   const [title, setTitle] = useState(props.data.announcementTitle);
@@ -50,71 +48,59 @@ const EditAnnouncement = (props) => {
   };
 
   return (
-    <Wrapper>
-      <div className="wrapper-edit-announcement">
-        <Container fluid>
-          <Row>
-            <Col>
-              <h4 className="text-muted pt-2 font-weight-light edit-announcement-title">
-                Edit Announcement
-              </h4>
-              <hr className="mt-0" />
-            </Col>
-          </Row>
-          <div>
-            <Alert isOpen={alert} color={error ? "danger" : "success"}>
-              {message}
-            </Alert>
-          </div>
-          <Row className="justify-content-center">
-            <Col>
-              <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                  <Label for="announcementTitle">Announcement Title</Label>
-                  <Input
-                    type="text"
-                    name="announcementTitle"
-                    value={title}
-                    onChange={handleTitle}
-                    placeholder="Enter announcement title"
-                    required
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="announcementDescription">
-                    Announcement Description
-                  </Label>
-                  <Input
-                    type="textarea"
-                    name="announcementDescription"
-                    value={description}
-                    onChange={handleDescription}
-                    placeholder="Enter announcement description"
-                    required
-                  />
-                </FormGroup>
-                <Label>Announcement Status</Label>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="announcementStatus"
-                      checked={status}
-                      onChange={handleStatus}
-                      value={1}
-                    />{" "}
-                    Publish
-                  </Label>
-                </FormGroup>
-                <div className="d-flex my-3 justify-content-center">
-                  <Button className="btn-indigo">Update</Button>
-                </div>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
+    <div>
+      <div>
+        <Alert isOpen={alert} color={error ? "danger" : "success"}>
+          {message}
+        </Alert>
       </div>
-    </Wrapper>
+      <Row className="justify-content-center">
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Label for="announcementTitle">Announcement Title</Label>
+              <Input
+                type="text"
+                name="announcementTitle"
+                value={title}
+                onChange={handleTitle}
+                placeholder="Enter announcement title"
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="announcementDescription">
+                Announcement Description
+              </Label>
+              <Input
+                type="textarea"
+                name="announcementDescription"
+                value={description}
+                onChange={handleDescription}
+                placeholder="Enter announcement description"
+                required
+              />
+            </FormGroup>
+            <Label>Announcement Status</Label>
+            <FormGroup check>
+              <Label check>
+                <Input
+                  type="checkbox"
+                  name="announcementStatus"
+                  checked={status}
+                  onChange={handleStatus}
+                  value={1}
+                />{" "}
+                Publish
+              </Label>
+            </FormGroup>
+            <div className="d-flex my-3 justify-content-center">
+              <Button className="btn-indigo">Update</Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faTimes,
+  faChevronLeft,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "./../../Assets/Image/Profile/Logo.png";
@@ -25,7 +25,7 @@ const Header = (props) => {
           >
             <FontAwesomeIcon
               className="fa-lg"
-              icon={props.isOpen ? faTimes : faBars}
+              icon={props.isOpen ? faChevronLeft : faBars}
             />
           </Button>
         </Col>

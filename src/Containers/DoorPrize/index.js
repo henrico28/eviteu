@@ -33,9 +33,7 @@ const DoorPrize = (props) => {
                 props.data.length === 0 ? "d-none" : ""
               }`}
             >
-              <h4 className="doorprize-congratulations-text">
-                Congratulations!
-              </h4>
+              <h4 className="text-indigo">Congratulations!</h4>
             </Row>
             <Row className="justify-content-center">
               <Col

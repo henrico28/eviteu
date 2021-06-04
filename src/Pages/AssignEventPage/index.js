@@ -157,7 +157,8 @@ const AssignEventPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"committee"}
-      title={"Committee / Assign Event"}
+      breadcrumb={"Committee / Assign Event"}
+      title={"Assign Event"}
     >
       <AssignEvent
         id={id}

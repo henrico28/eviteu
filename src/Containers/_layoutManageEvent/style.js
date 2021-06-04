@@ -16,7 +16,13 @@ export const Wrapper = styled.div`
       margin-left: 300px;
     }
   }
-  .wrapper-title {
-    background-color: var(--white);
+
+  .wrapper-manage-event-content {
+    min-height: 83vh;
+    margin: 10px 8px;
+
+    .manage-event-content-title {
+      font-size: 16px;
+    }
   }
 `;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   .wrapper-login {
     .wrapper-login-title {
-      background-color: var(--indigo);
       height: 400px;
 
       .login-title {
@@ -29,8 +28,6 @@ export const Wrapper = styled.div`
     .login-back-button {
       right: 0;
       top: 0;
-
-      color: var(--indigo);
     }
   }
 `;

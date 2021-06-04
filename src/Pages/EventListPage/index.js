@@ -162,7 +162,8 @@ const EventListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"event"}
-      title={"Event"}
+      breadcrumb={"Event"}
+      title={"Event List"}
     >
       <EventList
         data={data}

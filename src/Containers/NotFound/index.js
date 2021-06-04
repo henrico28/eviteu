@@ -27,9 +27,7 @@ const NotFound = (props) => {
               />
             </Row>
             <Row className="justify-content-center my-4">
-              <h3 className="text-center notfound-text">
-                Oops! Page not Found
-              </h3>
+              <h3 className="text-center text-purple">Oops! Page not Found</h3>
             </Row>
             <Row className="justify-content-center my-4">
               <Button onClick={handleHomePage} className="btn-indigo">

@@ -9,9 +9,9 @@ const Loading = (props) => {
         className="wrapper-loading d-flex flex-row justify-content-center align-items-center min-vh-100"
         fluid
       >
-        <Spinner type="grow" className="loading-spinner mx-2" />
-        <Spinner type="grow" className="loading-spinner mx-2" />
-        <Spinner type="grow" className="loading-spinner mx-2" />
+        <Spinner type="grow" className="bg-indigo loading-spinner mx-2" />
+        <Spinner type="grow" className="bg-indigo loading-spinner mx-2" />
+        <Spinner type="grow" className="bg-indigo loading-spinner mx-2" />
       </Container>
     </Wrapper>
   );

@@ -2,12 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   .wrapper-signup {
-    background-color: var(--indigo);
-
-    .signup-title {
-      background-color: var(--indigo);
-    }
-
     .signup-button-hide {
       width: 45px;
     }

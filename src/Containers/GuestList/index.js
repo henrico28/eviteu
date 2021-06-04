@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -20,7 +19,6 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
@@ -208,164 +206,152 @@ const GuestList = (props) => {
   };
 
   return (
-    <Wrapper>
-      <div className="wrapper-guest-list">
-        <Container fluid>
-          <Row>
-            <Col>
-              <h4 className="text-muted pt-2 font-weight-light guest-list-title">
-                Guest List
-              </h4>
-              <hr className="mt-0" />
-            </Col>
-          </Row>
-          <div>
-            <Alert
-              isOpen={alert}
-              toggle={() => {
-                setAlert(false);
-              }}
-              color={error ? "danger" : "success"}
-            >
-              {message}
-            </Alert>
-          </div>
-          <Row>
-            <Col md={6} className="d-flex">
-              <InputGroup className="guest-list-event-select">
-                <Input
-                  type="select"
-                  name="event"
-                  defaultValue={id}
-                  onChange={handleSelect}
-                >
-                  {props.event &&
-                    props.event.map((event) => (
-                      <option
-                        key={event.idEvent}
-                        value={event.idEvent}
-                        checked={event.idEvent === id}
-                      >
-                        {event.eventTitle}
-                      </option>
-                    ))}
-                </Input>
-              </InputGroup>
-              <Button
-                className="btn-indigo ml-2"
-                tag={Link}
-                to={`/manage-event/add-guest/${id}`}
-              >
-                Add Guest
-              </Button>
-              <Button
-                className="btn-indigo ml-2"
-                onClick={() => {
-                  handleInviteAll();
-                }}
-              >
-                Invite All
-              </Button>
-            </Col>
-            <Col md={6} className="wrapper-guest-list-search">
-              <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="guest-list-search-input">
-                <Input
-                  type="text"
-                  name="search"
-                  value={search}
-                  onChange={handleSearch}
-                  placeholder="Search guest name or email here"
-                />
-                <Button
-                  className="btn-indigo"
-                  onClick={handleClear}
-                  disabled={search === ""}
-                >
-                  <FontAwesomeIcon icon={faTimesCircle} />
-                </Button>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row className="justify-content-center px-3 pt-3 pb-1">
-            <Table className="border table-responsive-sm" striped>
-              <thead>
-                <tr>
-                  <th width="3%">No.</th>
-                  <th width="20%">Name</th>
-                  <th width="20%">E-mail</th>
-                  <th width="10%">Num of People</th>
-                  <th width="10%">RSVP</th>
-                  <th width="10%">Invited</th>
-                  <th width="10%">Attendance</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>{renderGuest()}</tbody>
-            </Table>
-          </Row>
-          <div className="d-flex justify-content-center">
-            <Pagination
-              currentPage={currentPage}
-              totalData={numberOfData}
-              dataPerPage={dataPerPage}
-              setPage={setCurrentPage}
-            />
-          </div>
-        </Container>
-        <Modal
-          isOpen={inviteConfirmationModal}
-          toggle={toggleInviteConfirmationModal}
-          centered={true}
+    <div>
+      <div>
+        <Alert
+          isOpen={alert}
+          toggle={() => {
+            setAlert(false);
+          }}
+          color={error ? "danger" : "success"}
         >
-          <ModalHeader toggle={toggleInviteConfirmationModal}>
-            Confirmation
-          </ModalHeader>
-          <ModalBody>
-            Are you sure you want to {guest.invited ? "re-invite" : "invite"}{" "}
-            Guest {guest.userName}?
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              className="btn-indigo"
-              onClick={() => {
-                handleInvite();
-              }}
-            >
-              Yes
-            </Button>
-            <Button onClick={toggleInviteConfirmationModal} color="danger">
-              No
-            </Button>
-          </ModalFooter>
-        </Modal>
-        <Modal
-          isOpen={deleteConfirmationModal}
-          toggle={toggleDeleteConfirmationModal}
-          centered={true}
-        >
-          <ModalHeader toggle={toggleDeleteConfirmationModal}>
-            Confirmation
-          </ModalHeader>
-          <ModalBody>
-            Are you sure you want to delete Guest {guest.userName}?
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              className="btn-indigo"
-              onClick={() => {
-                handleDelete();
-              }}
-            >
-              Yes
-            </Button>
-            <Button onClick={toggleDeleteConfirmationModal} color="danger">
-              No
-            </Button>
-          </ModalFooter>
-        </Modal>
+          {message}
+        </Alert>
       </div>
-    </Wrapper>
+      <Row>
+        <Col md={6} className="d-flex">
+          <InputGroup style={{ width: "50%" }}>
+            <Input
+              type="select"
+              name="event"
+              defaultValue={id}
+              onChange={handleSelect}
+            >
+              {props.event &&
+                props.event.map((event) => (
+                  <option
+                    key={event.idEvent}
+                    value={event.idEvent}
+                    checked={event.idEvent === id}
+                  >
+                    {event.eventTitle}
+                  </option>
+                ))}
+            </Input>
+          </InputGroup>
+          <Button
+            className="btn-indigo ml-2"
+            tag={Link}
+            to={`/manage-event/add-guest/${id}`}
+          >
+            Add Guest
+          </Button>
+          <Button
+            className="btn-indigo ml-2"
+            onClick={() => {
+              handleInviteAll();
+            }}
+          >
+            Invite All
+          </Button>
+        </Col>
+        <Col md={6} className="d-flex justify-content-end">
+          <Label className="mt-1 mr-2 text-muted">Search :</Label>
+          <InputGroup style={{ width: "70%" }}>
+            <Input
+              type="text"
+              name="search"
+              value={search}
+              onChange={handleSearch}
+              placeholder="Search guest name or email here"
+            />
+            <Button
+              className="btn-indigo"
+              onClick={handleClear}
+              disabled={search === ""}
+            >
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </Button>
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row className="justify-content-center px-3 pt-3 pb-1">
+        <Table className="border table-responsive-sm" striped>
+          <thead>
+            <tr>
+              <th width="3%">No.</th>
+              <th width="20%">Name</th>
+              <th width="20%">E-mail</th>
+              <th width="10%">Num of People</th>
+              <th width="10%">RSVP</th>
+              <th width="10%">Invited</th>
+              <th width="10%">Attendance</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>{renderGuest()}</tbody>
+        </Table>
+      </Row>
+      <div className="d-flex justify-content-center">
+        <Pagination
+          currentPage={currentPage}
+          totalData={numberOfData}
+          dataPerPage={dataPerPage}
+          setPage={setCurrentPage}
+        />
+      </div>
+      <Modal
+        isOpen={inviteConfirmationModal}
+        toggle={toggleInviteConfirmationModal}
+        centered={true}
+      >
+        <ModalHeader toggle={toggleInviteConfirmationModal}>
+          Confirmation
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to {guest.invited ? "re-invite" : "invite"}{" "}
+          Guest {guest.userName}?
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-indigo"
+            onClick={() => {
+              handleInvite();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={toggleInviteConfirmationModal} color="danger">
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={deleteConfirmationModal}
+        toggle={toggleDeleteConfirmationModal}
+        centered={true}
+      >
+        <ModalHeader toggle={toggleDeleteConfirmationModal}>
+          Confirmation
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete Guest {guest.userName}?
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-indigo"
+            onClick={() => {
+              handleDelete();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={toggleDeleteConfirmationModal} color="danger">
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div>
   );
 };
 

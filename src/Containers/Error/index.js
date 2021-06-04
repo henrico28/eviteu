@@ -25,7 +25,7 @@ const Error = (props) => {
             </Row>
             <Row className="justify-content-center d-flex flex-column my-4">
               <div className="my-1">
-                <h3 className="text-center error-text">
+                <h3 className="text-center text-purple error-text">
                   Oops! Something went wrong.
                 </h3>
               </div>

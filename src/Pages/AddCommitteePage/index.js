@@ -71,7 +71,8 @@ const AddCommitteePage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"committee"}
-      title={"Committee / Add Committee"}
+      breadcrumb={"Committee / Add Committee"}
+      title={"Add Committee"}
     >
       <AddCommittee
         alert={alert}

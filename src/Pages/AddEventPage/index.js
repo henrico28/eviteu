@@ -121,7 +121,8 @@ const AddEventPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"event"}
-      title={"Event / Add Event"}
+      breadcrumb={"Event / Add Event"}
+      title={"Add Event"}
     >
       <AddEvent
         type={type}

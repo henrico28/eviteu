@@ -6,10 +6,6 @@ export const Wrapper = styled.div`
       margin-top: 10px;
     }
 
-    .doorprize-congratulations-text {
-      color: var(--indigo);
-    }
-
     .wrapper-doorprize-winner {
       min-height: 10vh;
     }

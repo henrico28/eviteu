@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -20,7 +19,6 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
@@ -32,9 +30,8 @@ const CommitteeList = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
-  const [activateConfirmationModal, setActivateConfirmationModal] = useState(
-    false
-  );
+  const [activateConfirmationModal, setActivateConfirmationModal] =
+    useState(false);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [committee, setCommittee] = useState("");
   const [alert, setAlert] = useState(props.alert);
@@ -191,140 +188,125 @@ const CommitteeList = (props) => {
   };
 
   return (
-    <Wrapper>
-      <div className="wrapper-committee-list">
-        <Container fluid>
-          <Row>
-            <Col>
-              <h4 className="text-muted pt-2 font-weight-light committee-list-title">
-                Committee List
-              </h4>
-              <hr className="mt-0" />
-            </Col>
-          </Row>
-          <div>
-            <Alert
-              isOpen={alert}
-              toggle={() => {
-                setAlert(false);
-              }}
-              color={error ? "danger" : "success"}
-            >
-              {message}
-            </Alert>
-          </div>
-          <Row>
-            <Col md={4}>
-              <Button className="btn-indigo" tag={Link} to="add-committee">
-                Add Committee
-              </Button>
-              <Button
-                className="btn-indigo mx-2"
-                onClick={() => {
-                  handleActivateAll();
-                }}
-              >
-                Activate All
-              </Button>
-            </Col>
-            <Col
-              md={{ size: 6, offset: 2 }}
-              className="wrapper-committee-list-search"
-            >
-              <Label className="mt-1 mr-2 text-muted">Search :</Label>
-              <InputGroup className="committee-list-search-input">
-                <Input
-                  type="text"
-                  name="search"
-                  value={search}
-                  onChange={handleSearch}
-                  placeholder="Search committee name & email here"
-                />
-                <Button
-                  className="btn-indigo"
-                  onClick={handleClear}
-                  disabled={search === ""}
-                >
-                  <FontAwesomeIcon icon={faTimesCircle} />
-                </Button>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row className="justify-content-center px-3 pt-3 pb-1">
-            <Table className="border table-responsive-sm" striped>
-              <thead>
-                <tr>
-                  <th width="3%">No.</th>
-                  <th>Name</th>
-                  <th>E-mail</th>
-                  <th>Active</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>{renderCommittee()}</tbody>
-            </Table>
-          </Row>
-          <div className="d-flex justify-content-center">
-            <Pagination
-              currentPage={currentPage}
-              totalData={numberOfData}
-              dataPerPage={dataPerPage}
-              setPage={setCurrentPage}
-            />
-          </div>
-        </Container>
-        <Modal
-          isOpen={activateConfirmationModal}
-          toggle={toggleActivateConfirmationModal}
-          centered={true}
+    <div>
+      <div>
+        <Alert
+          isOpen={alert}
+          toggle={() => {
+            setAlert(false);
+          }}
+          color={error ? "danger" : "success"}
         >
-          <ModalHeader toggle={toggleActivateConfirmationModal}>
-            Confirmation
-          </ModalHeader>
-          <ModalBody>
-            Are you sure you want to activate Committee {committee.userName}?
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              className="btn-indigo"
-              onClick={() => {
-                handleActivate();
-              }}
-            >
-              Yes
-            </Button>
-            <Button onClick={toggleActivateConfirmationModal} color="danger">
-              No
-            </Button>
-          </ModalFooter>
-        </Modal>
-        <Modal
-          isOpen={deleteConfirmationModal}
-          toggle={toggleDeleteConfirmationModal}
-          centered={true}
-        >
-          <ModalHeader toggle={toggleDeleteConfirmationModal}>
-            Confirmation
-          </ModalHeader>
-          <ModalBody>
-            Are you sure you want to delete Committee {committee.userName}?
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              className="btn-indigo"
-              onClick={() => {
-                handleDelete();
-              }}
-            >
-              Yes
-            </Button>
-            <Button onClick={toggleDeleteConfirmationModal} color="danger">
-              No
-            </Button>
-          </ModalFooter>
-        </Modal>
+          {message}
+        </Alert>
       </div>
-    </Wrapper>
+      <Row>
+        <Col md={4}>
+          <Button className="btn-indigo" tag={Link} to="add-committee">
+            Add Committee
+          </Button>
+          <Button
+            className="btn-indigo mx-2"
+            onClick={() => {
+              handleActivateAll();
+            }}
+          >
+            Activate All
+          </Button>
+        </Col>
+        <Col md={{ size: 6, offset: 2 }} className="d-flex justify-content-end">
+          <Label className="mt-1 mr-2 text-muted">Search :</Label>
+          <InputGroup style={{ width: "60%" }}>
+            <Input
+              type="text"
+              name="search"
+              value={search}
+              onChange={handleSearch}
+              placeholder="Search committee name & email here"
+            />
+            <Button
+              className="btn-indigo"
+              onClick={handleClear}
+              disabled={search === ""}
+            >
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </Button>
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row className="justify-content-center px-3 pt-3 pb-1">
+        <Table className="border table-responsive-sm" striped>
+          <thead>
+            <tr>
+              <th width="3%">No.</th>
+              <th>Name</th>
+              <th>E-mail</th>
+              <th>Active</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>{renderCommittee()}</tbody>
+        </Table>
+      </Row>
+      <div className="d-flex justify-content-center">
+        <Pagination
+          currentPage={currentPage}
+          totalData={numberOfData}
+          dataPerPage={dataPerPage}
+          setPage={setCurrentPage}
+        />
+      </div>
+      <Modal
+        isOpen={activateConfirmationModal}
+        toggle={toggleActivateConfirmationModal}
+        centered={true}
+      >
+        <ModalHeader toggle={toggleActivateConfirmationModal}>
+          Confirmation
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to activate Committee {committee.userName}?
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-indigo"
+            onClick={() => {
+              handleActivate();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={toggleActivateConfirmationModal} color="danger">
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={deleteConfirmationModal}
+        toggle={toggleDeleteConfirmationModal}
+        centered={true}
+      >
+        <ModalHeader toggle={toggleDeleteConfirmationModal}>
+          Confirmation
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete Committee {committee.userName}?
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-indigo"
+            onClick={() => {
+              handleDelete();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={toggleDeleteConfirmationModal} color="danger">
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div>
   );
 };
 

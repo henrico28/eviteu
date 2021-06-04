@@ -20,13 +20,11 @@ export const Wrapper = styled.div`
     .home-description {
       @media only screen and (max-width: 600px) {
         .description-title {
-          color: var(--purple);
           font-size: 24px;
           text-align: center;
         }
 
         .description-text {
-          color: var(--indigo);
           font-size: 16px;
           text-align: center;
         }
@@ -39,12 +37,10 @@ export const Wrapper = styled.div`
 
       @media only screen and (min-width: 800px) {
         .description-title {
-          color: var(--purple);
           font-size: 30px;
         }
 
         .description-text {
-          color: var(--indigo);
           font-size: 18px;
         }
       }

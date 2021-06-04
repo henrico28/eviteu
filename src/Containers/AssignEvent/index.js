@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -11,7 +10,6 @@ import {
   Input,
   Alert,
 } from "reactstrap";
-import { Wrapper } from "./style";
 
 const AssignEvent = (props) => {
   const history = useHistory();
@@ -72,61 +70,49 @@ const AssignEvent = (props) => {
   };
 
   return (
-    <Wrapper>
-      <div className="wrapper-assign-event">
-        <Container fluid>
-          <Row>
-            <Col>
-              <h4 className="text-muted pt-2 font-weight-light assign-event-title">
-                Assign Committee
-              </h4>
-              <hr className="mt-0" />
-            </Col>
-          </Row>
-          <div>
-            <Alert isOpen={alert} color={error ? "danger" : "success"}>
-              {message}
-            </Alert>
-          </div>
-          <Row>
-            <Col>
-              <Form onSubmit={handleSubmit}>
-                <FormGroup row>
-                  <Label for="committee" sm={1}>
-                    Committee
-                  </Label>
-                  <Col sm={7}>
-                    <Input
-                      type="select"
-                      name="committee"
-                      defaultValue={id}
-                      onChange={handleSelect}
-                    >
-                      {props.committee &&
-                        props.committee.map((committee) => (
-                          <option
-                            key={committee.idCommittee}
-                            value={committee.idCommittee}
-                            checked={committee.idCommittee === id}
-                          >
-                            {committee.userName}
-                          </option>
-                        ))}
-                    </Input>
-                  </Col>
-                </FormGroup>
-                <Label>Event List:</Label> {renderEvent()}
-                <div className="d-flex my-3 justify-content-center">
-                  <Button className="btn-indigo" disabled={data.length === 0}>
-                    Assign
-                  </Button>
-                </div>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
+    <div>
+      <div>
+        <Alert isOpen={alert} color={error ? "danger" : "success"}>
+          {message}
+        </Alert>
       </div>
-    </Wrapper>
+      <Row>
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup row>
+              <Label for="committee" sm={1}>
+                Committee
+              </Label>
+              <Col sm={7}>
+                <Input
+                  type="select"
+                  name="committee"
+                  defaultValue={id}
+                  onChange={handleSelect}
+                >
+                  {props.committee &&
+                    props.committee.map((committee) => (
+                      <option
+                        key={committee.idCommittee}
+                        value={committee.idCommittee}
+                        checked={committee.idCommittee === id}
+                      >
+                        {committee.userName}
+                      </option>
+                    ))}
+                </Input>
+              </Col>
+            </FormGroup>
+            <Label>Event List:</Label> {renderEvent()}
+            <div className="d-flex my-3 justify-content-center">
+              <Button className="btn-indigo" disabled={data.length === 0}>
+                Assign
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

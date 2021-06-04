@@ -224,7 +224,8 @@ const AnnouncementListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"announcement"}
-      title={"Announcement"}
+      breadcrumb={"Announcement"}
+      title={"Announcement List"}
     >
       {noEvent ? (
         <WarningNoEvent />

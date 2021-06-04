@@ -18,10 +18,10 @@ const Home = (props) => {
             />
           </Col>
           <Col md={6} className="home-description">
-            <h3 className="description-title text-xs-center text-md-left my-3">
+            <h3 className="description-title text-purple text-xs-center text-md-left my-3">
               EViteU
             </h3>
-            <p className="description-text text-xs-center text-md-left my-3">
+            <p className="description-text text-indigo text-xs-center text-md-left my-3">
               Is a website that enables you to create pages about events that
               you will be hosting and send digital invites of this events to
               your guests.

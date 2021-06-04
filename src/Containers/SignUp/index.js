@@ -68,7 +68,7 @@ const SignUp = (props) => {
 
   return (
     <Wrapper>
-      <Container className="wrapper-signup" fluid>
+      <Container className="wrapper-signup bg-indigo" fluid>
         <Button
           onClick={changeType}
           className="position-absolute bg-transparent border-0 signup-back-button"
@@ -80,7 +80,7 @@ const SignUp = (props) => {
         <Row className="justify-content-center min-vh-100 align-items-center">
           <Col className="shadow-lg p-4 bg-white" md={5} lg={4}>
             <div className="d-flex justify-content-center my-2">
-              <h1 className="px-3 py-2 d-inline-block text-white signup-title">
+              <h1 className="px-3 py-2 d-inline-block text-white bg-indigo">
                 Sign Up
               </h1>
             </div>

@@ -139,7 +139,8 @@ const AddGuestPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"guest"}
-      title={"Guest / Add Guest"}
+      breadcrumb={"Guest / Add Guest"}
+      title={"Add Guest"}
     >
       <AddGuest
         id={id}

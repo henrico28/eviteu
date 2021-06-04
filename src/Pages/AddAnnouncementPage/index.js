@@ -139,7 +139,8 @@ const AddAnnouncementPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"announcement"}
-      title={"Announcement / Add Announcement"}
+      breadcrumb={"Announcement / Add Announcement"}
+      title={"Add Announcement"}
     >
       <AddAnnouncement
         id={id}

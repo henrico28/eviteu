@@ -236,7 +236,8 @@ const CommitteeListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"committee"}
-      title={"Committee"}
+      breadcrumb={"Committee"}
+      title={"Committee List"}
     >
       <CommitteeList
         data={data}

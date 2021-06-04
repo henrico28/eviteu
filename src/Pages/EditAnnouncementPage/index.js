@@ -138,7 +138,8 @@ const EditAnnouncementPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"announcement"}
-      title={"Announcement / Edit Announcement"}
+      breadcrumb={"Announcement / Edit Announcement"}
+      title={"Edit Announcement"}
     >
       <EditAnnouncement
         data={data}

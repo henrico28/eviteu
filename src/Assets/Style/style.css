@@ -13,6 +13,20 @@
   background-color: #570ecc;
 }
 
+/* TEXT */
 .text-indigo {
   color: var(--indigo);
+}
+
+.text-purple {
+  color: var(--purple);
+}
+
+/* BACKGROUND */
+.bg-indigo {
+  background-color: var(--indigo);
+}
+
+.bg-purple {
+  background-color: var(--purple);
 }

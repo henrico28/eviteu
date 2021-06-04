@@ -56,7 +56,7 @@ const LogIn = (props) => {
       <Container className="wrapper-login" fluid>
         <Button
           onClick={changeType}
-          className="position-absolute bg-transparent border-0 login-back-button"
+          className="position-absolute bg-transparent border-0 text-indigo login-back-button"
           tag={Link}
           to=""
         >
@@ -64,7 +64,7 @@ const LogIn = (props) => {
         </Button>
         <Row className="justify-content-center align-items-center min-vh-100">
           <Col
-            className="wrapper-login-title d-flex justify-content-center align-items-center shadow-lg"
+            className="bg-indigo wrapper-login-title d-flex justify-content-center align-items-center shadow-lg"
             md={5}
           >
             <h1 className="text-white text-center font-weight-bold login-title">

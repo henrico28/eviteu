@@ -135,7 +135,8 @@ const AttendancePage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"attendance"}
-      title={"Attendance / Guest Attendance"}
+      breadcrumb={"Attendance / Guest Attendance"}
+      title={"Guest Attendance"}
     >
       <Attendance
         id={id}

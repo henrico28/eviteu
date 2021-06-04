@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { SideBar, Header } from "../../Components";
 import { Loading } from "../";
-import { Container } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import { Wrapper } from "./style";
 import useUserData from "../../Hooks/useUserData";
 import axios from "axios";
@@ -47,10 +47,22 @@ const LayoutManageEvent = (props) => {
             userName={userData.name}
             handleLogOut={logOut}
           />
-          <div className="wrapper-title text-muted py-2 px-3 mt-1">
-            <h3>{props.title}</h3>
+          <div className="bg-white text-muted py-2 px-3 mt-1">
+            <h3>{props.breadcrumb}</h3>
           </div>
-          {props.children}
+          <div className="wrapper-manage-event-content bg-white">
+            <Container fluid>
+              <Row>
+                <Col>
+                  <h4 className="text-muted pt-2 font-weight-light manage-event-content-title">
+                    {props.title}
+                  </h4>
+                  <hr className="mt-0" />
+                </Col>
+              </Row>
+              {props.children}
+            </Container>
+          </div>
         </Container>
       </div>
     </Wrapper>

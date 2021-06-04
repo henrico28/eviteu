@@ -139,7 +139,8 @@ const EditCommitteePage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"committee"}
-      title={"Committee / Edit Committee"}
+      breadcrumb={"Committee / Edit Committee"}
+      title={"Edit Committee"}
     >
       <EditCommittee
         data={data}
