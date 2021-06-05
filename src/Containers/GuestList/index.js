@@ -33,6 +33,8 @@ const GuestList = (props) => {
   const [dataPerPage] = useState(6);
   const [numberOfData, setNumberOfData] = useState(props.data.length);
   const [inviteConfirmationModal, setInviteConfirmationModal] = useState(false);
+  const [uninviteConfirmationModal, setUninviteConfirmationModal] =
+    useState(false);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [guest, setGuest] = useState("");
   const [alert, setAlert] = useState(props.alert);
@@ -76,6 +78,10 @@ const GuestList = (props) => {
     setInviteConfirmationModal(!inviteConfirmationModal);
   };
 
+  const toggleUninviteConfirmationModal = () => {
+    setUninviteConfirmationModal(!uninviteConfirmationModal);
+  };
+
   const toggleDeleteConfirmationModal = () => {
     setDeleteConfirmationModal(!deleteConfirmationModal);
   };
@@ -84,6 +90,9 @@ const GuestList = (props) => {
     switch (confirmation) {
       case "invite":
         toggleInviteConfirmationModal();
+        break;
+      case "uninvite":
+        toggleUninviteConfirmationModal();
         break;
       case "delete":
         toggleDeleteConfirmationModal();
@@ -109,6 +118,15 @@ const GuestList = (props) => {
       idEvent: guest.idEvent,
     };
     props.inviteGuest(data);
+  };
+
+  const handleUninvite = () => {
+    const data = {
+      idUser: guest.idUser,
+      idGuest: guest.idGuest,
+      idEvent: guest.idEvent,
+    };
+    props.uninviteGuest(data);
   };
 
   const handleDelete = () => {
@@ -180,6 +198,14 @@ const GuestList = (props) => {
                         }}
                       >
                         {guest.invited ? "Re-Invite" : "Invite"}
+                      </DropdownItem>
+                      <DropdownItem
+                        className={`${guest.invited ? "" : "d-none"}`}
+                        onClick={() => {
+                          handleConfirmation(guest, "uninvite");
+                        }}
+                      >
+                        Uninvite
                       </DropdownItem>
                       <DropdownItem
                         tag={Link}
@@ -322,6 +348,31 @@ const GuestList = (props) => {
             Yes
           </Button>
           <Button onClick={toggleInviteConfirmationModal} color="danger">
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={uninviteConfirmationModal}
+        toggle={toggleUninviteConfirmationModal}
+        centered={true}
+      >
+        <ModalHeader toggle={toggleUninviteConfirmationModal}>
+          Confirmation
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to uninvite Guest {guest.userName}?
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-indigo"
+            onClick={() => {
+              handleUninvite();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={toggleUninviteConfirmationModal} color="danger">
             No
           </Button>
         </ModalFooter>

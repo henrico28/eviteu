@@ -171,6 +171,57 @@ const CommitteeListPage = (props) => {
       });
   };
 
+  const deactivateCommittee = async (committee) => {
+    setError(false);
+    setAlert(false);
+    setMessage("");
+    setLoading(true);
+    await axios
+      .put(`${REACT_APP_REQUEST_URL}/committee/deactivate`, committee, {
+        headers: {
+          authorization: `Bearer ${userData.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setAlert(true);
+        setMessage(res.data.message);
+        setData(res.data.result);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (
+          err.response &&
+          err.response.data.error &&
+          err.response.data.error === "jwt expired"
+        ) {
+          axios
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
+              userEmail: userData.email,
+              refreshToken: userData.refreshToken,
+            })
+            .then((res) => {
+              let tmp = userData;
+              tmp.accessToken = res.data.accessToken;
+              setUserData(tmp);
+              activateAllCommittee();
+            })
+            .catch((err) => {
+              removeUserData();
+              history.push("/");
+            });
+        } else {
+          setAlert(true);
+          setError(true);
+          let errorMessage = "Error";
+          if (err.response && err.response.data.error) {
+            errorMessage = err.response.data.error;
+          }
+          setMessage(errorMessage);
+          setLoading(false);
+        }
+      });
+  };
+
   const deleteCommittee = async (committee) => {
     setError(false);
     setAlert(false);
@@ -246,6 +297,7 @@ const CommitteeListPage = (props) => {
         message={message}
         activateAllCommittee={activateAllCommittee}
         activateCommittee={activateCommittee}
+        deactivateCommittee={deactivateCommittee}
         deleteCommittee={deleteCommittee}
       />
     </LayoutManageEvent>

@@ -208,6 +208,57 @@ const GuestListPage = (props) => {
       });
   };
 
+  const uninviteGuest = async (guest) => {
+    setError(false);
+    setAlert(false);
+    setMessage("");
+    setLoading(true);
+    await axios
+      .put(`${REACT_APP_REQUEST_URL}/guest/uninvite`, guest, {
+        headers: {
+          authorization: `Bearer ${userData.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setAlert(true);
+        setMessage(res.data.message);
+        setData(res.data.result);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (
+          err.response &&
+          err.response.data.error &&
+          err.response.data.error === "jwt expired"
+        ) {
+          axios
+            .post(`${REACT_APP_REQUEST_URL}/token`, {
+              userEmail: userData.email,
+              refreshToken: userData.refreshToken,
+            })
+            .then((res) => {
+              let tmp = userData;
+              tmp.accessToken = res.data.accessToken;
+              setUserData(tmp);
+              inviteGuest();
+            })
+            .catch((err) => {
+              removeUserData();
+              history.push("/");
+            });
+        } else {
+          setAlert(true);
+          setError(true);
+          let errorMessage = "Error";
+          if (err.response && err.response.data.error) {
+            errorMessage = err.response.data.error;
+          }
+          setMessage(errorMessage);
+          setLoading(false);
+        }
+      });
+  };
+
   const deleteGuest = async (guest) => {
     setError(false);
     setAlert(false);
@@ -293,6 +344,7 @@ const GuestListPage = (props) => {
           message={message}
           inviteAllGuest={inviteAllGuest}
           inviteGuest={inviteGuest}
+          uninviteGuest={uninviteGuest}
           deleteGuest={deleteGuest}
         />
       )}

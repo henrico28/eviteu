@@ -32,6 +32,8 @@ const CommitteeList = (props) => {
   const [numberOfData, setNumberOfData] = useState(props.data.length);
   const [activateConfirmationModal, setActivateConfirmationModal] =
     useState(false);
+  const [deactivateConfirmationModal, setDeactivateConfirmationModal] =
+    useState(false);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [committee, setCommittee] = useState("");
   const [alert, setAlert] = useState(props.alert);
@@ -70,6 +72,10 @@ const CommitteeList = (props) => {
     setActivateConfirmationModal(!activateConfirmationModal);
   };
 
+  const toggleDeactivateConfirmationModal = () => {
+    setDeactivateConfirmationModal(!deactivateConfirmationModal);
+  };
+
   const toggleDeleteConfirmationModal = () => {
     setDeleteConfirmationModal(!deleteConfirmationModal);
   };
@@ -78,6 +84,9 @@ const CommitteeList = (props) => {
     switch (confirmation) {
       case "activate":
         toggleActivateConfirmationModal();
+        break;
+      case "deactivate":
+        toggleDeactivateConfirmationModal();
         break;
       case "delete":
         toggleDeleteConfirmationModal();
@@ -99,6 +108,14 @@ const CommitteeList = (props) => {
       idCommittee: committee.idCommittee,
     };
     props.activateCommittee(data);
+  };
+
+  const handleDeactivate = () => {
+    const data = {
+      idUser: committee.idUser,
+      idCommittee: committee.idCommittee,
+    };
+    props.deactivateCommittee(data);
   };
 
   const handleDelete = () => {
@@ -162,6 +179,14 @@ const CommitteeList = (props) => {
                           }}
                         >
                           {committee.active ? "Re-Activate" : "Activate"}
+                        </DropdownItem>
+                        <DropdownItem
+                          className={`${committee.active ? "" : "d-none"}`}
+                          onClick={() => {
+                            handleConfirmation(committee, "deactivate");
+                          }}
+                        >
+                          Deactivate
                         </DropdownItem>
                         <DropdownItem
                           tag={Link}
@@ -265,7 +290,9 @@ const CommitteeList = (props) => {
           Confirmation
         </ModalHeader>
         <ModalBody>
-          Are you sure you want to activate Committee {committee.userName}?
+          Are you sure you want to{" "}
+          {committee.active ? "re-activate" : "activate"} Committee{" "}
+          {committee.userName}?
         </ModalBody>
         <ModalFooter>
           <Button
@@ -277,6 +304,31 @@ const CommitteeList = (props) => {
             Yes
           </Button>
           <Button onClick={toggleActivateConfirmationModal} color="danger">
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={deactivateConfirmationModal}
+        toggle={toggleDeactivateConfirmationModal}
+        centered={true}
+      >
+        <ModalHeader toggle={toggleDeactivateConfirmationModal}>
+          Confirmation
+        </ModalHeader>
+        <ModalBody>
+          Are you sure you want to deactivate Committee {committee.userName}?
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="btn-indigo"
+            onClick={() => {
+              handleDeactivate();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={toggleDeactivateConfirmationModal} color="danger">
             No
           </Button>
         </ModalFooter>
