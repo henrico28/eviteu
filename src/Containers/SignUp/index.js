@@ -37,7 +37,7 @@ const SignUp = (props) => {
       userName: name,
       userEmail: email,
       userPassword: password,
-      phonenumber: phonenumber,
+      phoneNumber: phonenumber,
     };
     props.signUp(data);
   };

@@ -30,6 +30,17 @@ const SideBar = (props) => {
             <NavItem className={userData.role !== 1 ? "d-none" : ""}>
               <NavLink
                 className={` sidebar-menu p-3 ${
+                  props.page === "announcement" ? "active" : ""
+                }`}
+                to="/manage-event/announcement-list"
+                tag={Link}
+              >
+                Announcement
+              </NavLink>
+            </NavItem>
+            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
+              <NavLink
+                className={` sidebar-menu p-3 ${
                   props.page === "guest" ? "active" : ""
                 }`}
                 to="/manage-event/guest-list"
@@ -47,17 +58,6 @@ const SideBar = (props) => {
                 tag={Link}
               >
                 Committee
-              </NavLink>
-            </NavItem>
-            <NavItem className={userData.role !== 1 ? "d-none" : ""}>
-              <NavLink
-                className={` sidebar-menu p-3 ${
-                  props.page === "announcement" ? "active" : ""
-                }`}
-                to="/manage-event/announcement-list"
-                tag={Link}
-              >
-                Announcement
               </NavLink>
             </NavItem>
             <NavItem>

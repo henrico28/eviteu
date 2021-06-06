@@ -118,7 +118,7 @@ const Event = (props) => {
         return (
           <Col xs={{ order: 1, size: 8 }} md={5}>
             <div
-              className="p-4"
+              className="py-2"
               style={{ backgroundColor: `${event.primaryColor}` }}
             >
               <div className="my-3">
@@ -151,7 +151,7 @@ const Event = (props) => {
         return (
           <Col xs={{ order: 1, size: 8 }} md={5}>
             <div
-              className="p-4"
+              className="p-3"
               style={{ backgroundColor: `${event.primaryColor}` }}
             >
               <div className="my-3">
@@ -206,7 +206,7 @@ const Event = (props) => {
         return (
           <Col xs={{ order: 1, size: 8 }} md={5}>
             <div
-              className="p-3"
+              className="py-2"
               style={{ backgroundColor: `${event.primaryColor}` }}
             >
               <div className="my-3">
@@ -414,7 +414,7 @@ const Event = (props) => {
             {renderRSVP()}
           </Row>
           <Row
-            className="align-items-center event-contacts justify-content-center  p-3"
+            className="align-items-center event-contacts justify-content-center p-3"
             style={{ backgroundColor: `${event.accentColor}` }}
           >
             <Col>
