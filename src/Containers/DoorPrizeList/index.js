@@ -74,7 +74,7 @@ const DoorPrizeList = (props) => {
                     tag={Link}
                     to={`/manage-event/doorprize/${event.idEvent}`}
                   >
-                    Door Prize
+                    Doorprize
                   </Button>
                 </td>
               </tr>

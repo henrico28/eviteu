@@ -68,7 +68,7 @@ const SideBar = (props) => {
                 to="/manage-event/doorprize-list"
                 tag={Link}
               >
-                Door Prize
+                Doorprize
               </NavLink>
             </NavItem>
             <NavItem>

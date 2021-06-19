@@ -79,8 +79,8 @@ const DoorPrizeListPage = (props) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       page={"doorprize"}
-      breadcrumb={"Door Prize"}
-      title={"Door Prize List"}
+      breadcrumb={"Doorprize"}
+      title={"Doorprize List"}
     >
       <DoorPrizeList data={data} />
     </LayoutManageEvent>
