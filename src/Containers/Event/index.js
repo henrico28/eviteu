@@ -161,7 +161,7 @@ const Event = (props) => {
                 <Form onSubmit={handleSubmit}>
                   <FormGroup>
                     <Label className="text-center event-text ">
-                      How many are you bringing?
+                      How many people are comming?
                     </Label>
                     <Input
                       type="number"

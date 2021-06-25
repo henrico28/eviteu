@@ -283,8 +283,9 @@ const AnnouncementList = (props) => {
           Confirmation
         </ModalHeader>
         <ModalBody>
-          Are you sure you want to publish Announcement{" "}
-          {announcement.announcementTitle}?
+          Are you sure you want to{" "}
+          {announcement.announcementStatus ? "unpublish" : "publish"}{" "}
+          Announcement {announcement.announcementTitle}?
         </ModalBody>
         <ModalFooter>
           <Button
