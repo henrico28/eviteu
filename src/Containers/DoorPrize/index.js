@@ -5,7 +5,7 @@ import { Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-const DoorPrize = (props) => {
+const Doorprize = (props) => {
   const [data] = useState(props.data);
   const [winner, setWinner] = useState(
     props.data.length === 0 ? "No guest attended yet" : ""
@@ -62,4 +62,4 @@ const DoorPrize = (props) => {
   );
 };
 
-export default DoorPrize;
+export default Doorprize;

@@ -4,12 +4,12 @@ import {
   Loading,
   LayoutManageEvent,
   Error,
-  DoorPrizeList,
+  DoorprizeList,
 } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 
-const DoorPrizeListPage = (props) => {
+const DoorprizeListPage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(window.outerWidth <= 600 ? false : true);
@@ -82,9 +82,9 @@ const DoorPrizeListPage = (props) => {
       breadcrumb={"Doorprize"}
       title={"Doorprize List"}
     >
-      <DoorPrizeList data={data} />
+      <DoorprizeList data={data} />
     </LayoutManageEvent>
   );
 };
 
-export default DoorPrizeListPage;
+export default DoorprizeListPage;

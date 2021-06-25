@@ -17,15 +17,14 @@ import {
   AnnouncementList,
   AddAnnouncement,
   EditAnnouncement,
-  DoorPrizeList,
-  DoorPrize,
+  DoorprizeList,
+  Doorprize,
   AttendanceList,
   Attendance,
   QrScanAttendance,
   Event,
   EventAnnouncementList,
   EventAnnouncementDetail,
-  SandBox,
 } from "../Pages";
 
 const routes = [
@@ -46,8 +45,8 @@ const routes = [
   { path: "/manage-event/announcement-list/:id?", component: AnnouncementList },
   { path: "/manage-event/add-announcement/:id", component: AddAnnouncement },
   { path: "/manage-event/edit-announcement/:id", component: EditAnnouncement },
-  { path: "/manage-event/doorprize-list", component: DoorPrizeList },
-  { path: "/manage-event/doorprize/:id", component: DoorPrize },
+  { path: "/manage-event/doorprize-list", component: DoorprizeList },
+  { path: "/manage-event/doorprize/:id", component: Doorprize },
   { path: "/manage-event/attendance-list", component: AttendanceList },
   { path: "/manage-event/attendance/:id", component: Attendance },
   { path: "/manage-event/qrscan/:id", component: QrScanAttendance },
@@ -57,7 +56,6 @@ const routes = [
     path: "/event/announcement-detail/:id",
     component: EventAnnouncementDetail,
   },
-  { path: "/sandbox", component: SandBox },
   { path: "/", component: Home },
 ];
 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../../Components";
 
-const DoorPrizeList = (props) => {
+const DoorprizeList = (props) => {
   const [originalData] = useState(props.data);
   const [data, setData] = useState(props.data);
   const [search, setSearch] = useState("");
@@ -132,4 +132,4 @@ const DoorPrizeList = (props) => {
   );
 };
 
-export default DoorPrizeList;
+export default DoorprizeList;

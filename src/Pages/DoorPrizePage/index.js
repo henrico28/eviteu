@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Loading, NotFound, Error, DoorPrize } from "../../Containers";
+import { Loading, NotFound, Error, Doorprize } from "../../Containers";
 import axios from "axios";
 import useUserData from "../../Hooks/useUserData";
 
-const DoorPrizePage = (props) => {
+const DoorprizePage = (props) => {
   const { REACT_APP_REQUEST_URL } = process.env;
   const history = useHistory();
   const { id } = useParams();
@@ -73,9 +73,9 @@ const DoorPrizePage = (props) => {
 
   return (
     <React.Fragment>
-      <DoorPrize data={data} />
+      <Doorprize data={data} />
     </React.Fragment>
   );
 };
 
-export default DoorPrizePage;
+export default DoorprizePage;
